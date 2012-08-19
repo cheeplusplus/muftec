@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace MuftecLib
@@ -10,7 +11,8 @@ namespace MuftecLib
 	{
 	    private readonly Dictionary<string, OpCodePointer> _opcodeCache = new Dictionary<string, OpCodePointer>();
 	    private readonly Dictionary<string, MuftecStackItem> _globalVariableList = new Dictionary<string, MuftecStackItem>();
-		private List<Assembly> _libraryList = new List<Assembly>();
+        private readonly Dictionary<string, Queue<MuftecStackItem>> _globalFunctionList = new Dictionary<string, Queue<MuftecStackItem>>();
+		private readonly List<Assembly> _libraryList = new List<Assembly>();
 		
 		/// <summary>
 		/// Register special opcodes that must be handled from inside THIS class
@@ -100,22 +102,36 @@ namespace MuftecLib
         /// <param name="classAssembly"></param>
         public void AddLibrary(Assembly classAssembly)
         {
-            foreach (var classModule in classAssembly.GetModules())
-			{
-				Console.WriteLine("Module: " + classModule);
+            // Ignore if already loaded
+            if (_libraryList.Contains(classAssembly)) return;
 
-                foreach (var info in classModule.GetMethods())
-			    {
-					Console.WriteLine("Method: " + info);
+            // Get all opcode methods
+            var methods = classAssembly.GetTypes().SelectMany(t => t.GetMethods()).Where(m => m.GetCustomAttributes(typeof(OpCodeAttribute), false).Length > 0);
 
-				    var codes = (OpCodeAttribute[])info.GetCustomAttributes(typeof(OpCodeAttribute), false);
-				    if (codes.Length > 0)
-				    {
-				        var opc = (OpCodePointer)Delegate.CreateDelegate(typeof(OpCodePointer), info);
-				        _opcodeCache.Add(codes[0].OpCodeName, opc);
-				    }
-			    }
-			}
+            // Add opcodes to index
+            foreach (var info in methods)
+            {
+                var code = info.GetCustomAttributes(typeof(OpCodeAttribute), false).FirstOrDefault() as OpCodeAttribute;
+                if (code != null)
+                {
+                    var opc = (OpCodePointer)Delegate.CreateDelegate(typeof(OpCodePointer), info);
+
+                    try
+                    {
+                        _opcodeCache.Add(code.OpCodeName, opc);
+                    }
+                    catch (ArgumentException)
+                    {
+                        // OpCode already exists, ignore
+                        if (!Shared.IsDebug()) continue;
+                    }
+                }
+
+                Console.WriteLine();
+            }
+
+            // Add to library list
+            _libraryList.Add(classAssembly);
 		}
 
 		public void ExecOpCode(string opCode, Stack<MuftecStackItem> runtimeStack)
@@ -127,20 +143,61 @@ namespace MuftecLib
 
             if (Shared.IsDebug())
             {
-                // TODO: Perform a mini stack trace like MUF flag DEBUG
+                //MuftecGeneralException.MuftecStackTrace(runtimeStack);
             }
 
 		    // Handle exception catching inside the language here
 		    _opcodeCache[opCode].Invoke(runtimeStack);
 		}
 
-		public void Run(ref Queue<MuftecStackItem> execStack, Stack<MuftecStackItem> runtimeStack)
+		public void Run(Queue<MuftecStackItem> execStack, Stack<MuftecStackItem> runtimeStack, IEnumerable<string> variableList = null, IEnumerable<KeyValuePair<string, Queue<MuftecStackItem>>> functionList = null)
 		{
+            if (variableList != null)
+            {
+                foreach (var variable in variableList.Where(w => !_globalVariableList.ContainsKey(w)))
+                {
+                    _globalVariableList.Add(variable, null);
+                }
+            }
+
+            if (functionList != null)
+            {
+                foreach (var function in functionList)
+                {
+                    if (_globalFunctionList.ContainsKey(function.Key))
+                    {
+                        _globalFunctionList[function.Key] = function.Value;
+                    }
+                    else
+                    {
+                        _globalFunctionList.Add(function.Key, function.Value);
+                    }
+                }
+
+            }
+
 		    while (execStack.Count > 0)
 			{
 			    var currStackItem = execStack.Dequeue();
 
-			    if (currStackItem.Type == MuftecType.OpCode)
+                if (currStackItem.Type == MuftecType.Function)
+                {
+                    var funcName = currStackItem.Item.ToString();
+
+                    if (_globalFunctionList.ContainsKey(funcName))
+                    {
+                        // Make a copy of the function as it will be popped to execute
+                        var queue = new Queue<MuftecStackItem>(_globalFunctionList[funcName]);
+
+                        // TODO: Support local variables
+                        Run(queue, runtimeStack, variableList);
+                    }
+                    else
+                    {
+                        throw new MuftecInvalidStackItemTypeException(runtimeStack);
+                    }
+                }
+			    else if (currStackItem.Type == MuftecType.OpCode)
 				{
 					ExecOpCode(currStackItem.Item.ToString(), runtimeStack);
 				}

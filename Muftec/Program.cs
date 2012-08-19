@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using MuftecBCL;
+using MuftecLib;
 
 namespace Muftec
 {
-	class Program
+	public class Program
 	{
-		static void Main(string[] args)
+		public static void Main(string[] args)
 		{
 			if (args.Length == 0)
 			{
@@ -20,11 +23,22 @@ namespace Muftec
 			else if (args[0] == "-x")
 			{
 				// Run a program
+                var text = File.ReadAllText(args[1]);
+                var output = Compiler.ParseString(text);
+
+                var system = new MuftecLibSystem();
+                var bcl = new MuftecBaseClassLibrary();
+                system.AddLibrary(bcl);
+
+                var runtime = new Stack<MuftecStackItem>();
+                system.Run(output.Queue, runtime, output.Variables, output.Functions);
 			}
 			else if (args[0] == "-c")
 			{
 				// Compile a program
-				var comp = new Compiler(args[1]);
+			    var text = File.ReadAllText(args[1]);
+			    var output = Compiler.ParseString(text);
+                Compiler.SaveAssembly(output.Queue, args[1] + ".exe");
 			}
 			else
 			{

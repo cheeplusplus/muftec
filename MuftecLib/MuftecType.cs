@@ -30,7 +30,12 @@ namespace MuftecLib
         /// <summary>
         /// Variable (ex. somevar)
         /// </summary>
-        Variable
+        Variable,
+
+        /// <summary>
+        /// Function
+        /// </summary>
+        Function
     }
 
     /// <summary>
@@ -46,6 +51,11 @@ namespace MuftecLib
         /// <summary>
         /// Variable (ex. somevar)
         /// </summary>
-        Variable
+        Variable,
+
+        /// <summary>
+        /// Function
+        /// </summary>
+        Function
     }
 }

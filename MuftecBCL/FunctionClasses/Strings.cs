@@ -83,7 +83,7 @@ namespace MuftecBCL.FunctionClasses
 		/// "Concave" 2 strleft ( returns ) "Co"
 		/// </example>
 		/// <param name="runtimeStack">Reference to the current execution stack</param>
-		[OpCode("strcut")]
+		[OpCode("strleft")]
 		public static void StrLeft(Stack<MuftecStackItem> runtimeStack)
 		{
 			var item2 = Shared.PopInt(runtimeStack);

@@ -3,20 +3,6 @@ using System;
 namespace MuftecLib
 {
 	/// <summary>
-	/// Attribute applied to Muftec Class Libraries
-	/// </summary>
-	[AttributeUsage(AttributeTargets.Class)]
-	public class MuftecClassLibraryAttribute : Attribute
-	{
-	    public string Name { get; set; }
-
-	    public MuftecClassLibraryAttribute(string name)
-		{
-		    Name = name;
-		}
-	}
-
-	/// <summary>
 	/// Attribute applied to opcodes
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Method)]

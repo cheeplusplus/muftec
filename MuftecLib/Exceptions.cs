@@ -36,16 +36,16 @@ namespace MuftecLib
         /// Perform a stack trace
         /// </summary>
         /// <param name="runtimeStack">Reference to the current execution stack</param>
-        protected void MuftecStackTrace(Stack<MuftecStackItem> runtimeStack)
+        public static void MuftecStackTrace(Stack<MuftecStackItem> runtimeStack)
         {
             if (!Shared.IsDebug()) return;
 
             Console.WriteLine("== STACK TRACE ==");
 
-            while (runtimeStack.Count > 0)
-            {
-                var item = Shared.Pop(runtimeStack);
+            var fixedStack = runtimeStack.ToArray();
 
+            foreach (var item in fixedStack)
+            {
                 string displayText;
 
                 if (item.Type == MuftecType.String)

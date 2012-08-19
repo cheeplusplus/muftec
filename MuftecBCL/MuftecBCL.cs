@@ -3,7 +3,9 @@ using MuftecLib;
 
 namespace MuftecBCL
 {
-	[MuftecClassLibrary("Muftec Base Class Library")]
+    /// <summary>
+    /// Descriptor class for the Muftec BCL.
+    /// </summary>
 	public class MuftecBaseClassLibrary : IMuftecClassLibrary
 	{
 		public string ClassLibraryName { get { return "Muftec Base Class Library"; } }

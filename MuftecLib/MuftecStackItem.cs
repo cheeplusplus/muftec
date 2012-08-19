@@ -44,6 +44,10 @@ namespace MuftecLib
             {
                 Type = MuftecType.Variable;
             }
+            else if (type == MuftecAdvType.Function)
+            {
+                Type = MuftecType.Function;
+            }
 
             Item = value;
         }
