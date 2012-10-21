@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace MuftecLib.CompilerStates
+namespace Muftec.Lib.CompilerStates
 {
     class StringState : ICompilerState
     {

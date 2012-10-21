@@ -1,4 +1,4 @@
-namespace MuftecLib.CompilerStates
+namespace Muftec.Lib.CompilerStates
 {
     class VariableState : ICompilerState
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using MuftecLib.CompilerStates;
+using Muftec.Lib.CompilerStates;
 
-namespace MuftecLib
+namespace Muftec.Lib
 {
     /// <summary>
     /// Class that describes a Muftec compiler.

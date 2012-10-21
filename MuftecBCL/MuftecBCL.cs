@@ -1,7 +1,6 @@
-﻿using System;
-using MuftecLib;
+﻿using Muftec.Lib;
 
-namespace MuftecBCL
+namespace Muftec.BCL
 {
     /// <summary>
     /// Descriptor class for the Muftec BCL.

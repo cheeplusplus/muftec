@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 
-namespace MuftecLib
+namespace Muftec.Lib
 {
     public static class Shared
     {

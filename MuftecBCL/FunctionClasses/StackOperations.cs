@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
-using MuftecLib;
+using Muftec.Lib;
 
-namespace MuftecBCL.FunctionClasses
+namespace Muftec.BCL.FunctionClasses
 {
 	public class StackOperations : IMuftecGroup
 	{

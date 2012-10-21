@@ -8,8 +8,8 @@
     <ProjectGuid>{3336A310-29EA-4DB1-A108-A0DEC74E9620}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MuftecBCL</RootNamespace>
-    <AssemblyName>MuftecBCL</AssemblyName>
+    <RootNamespace>Muftec.BCL</RootNamespace>
+    <AssemblyName>Muftec.BCL</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>

@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using MuftecBCL;
-using MuftecLib;
+using Muftec.BCL;
+using Muftec.Lib;
 
 namespace Muftec
 {

@@ -1,6 +1,4 @@
-using System;
-
-namespace MuftecLib
+namespace Muftec.Lib
 {
     /// <summary>
     /// The type of item in the stack.

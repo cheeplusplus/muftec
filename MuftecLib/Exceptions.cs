@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MuftecLib
+namespace Muftec.Lib
 {
     /// <summary>
     /// This is the general exception class for Muftec.

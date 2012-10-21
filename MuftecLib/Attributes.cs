@@ -1,6 +1,6 @@
 using System;
 
-namespace MuftecLib
+namespace Muftec.Lib
 {
 	/// <summary>
 	/// Attribute applied to opcodes

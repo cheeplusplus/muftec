@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MuftecLib;
+using Muftec.Lib;
 
-namespace MuftecTest
+namespace Muftec.Test
 {
-    public static class Shared
+    public static class TestShared
     {
         public static void CompareStacks(Stack<MuftecStackItem> runtimeStack, Stack<MuftecStackItem> runtimeStackExpected)
         {

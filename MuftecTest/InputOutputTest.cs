@@ -1,9 +1,9 @@
-﻿using MuftecBCL.FunctionClasses;
+﻿using Muftec.BCL.FunctionClasses;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MuftecLib;
+using Muftec.Lib;
 using System.Collections.Generic;
 
-namespace MuftecTest
+namespace Muftec.Test
 {
     /// <summary>
     ///This is a test class for InputOutputTest and is intended
@@ -73,7 +73,7 @@ namespace MuftecTest
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(null));
 
-            Shared.CompareStacks(runtimeStack, runtimeStackExpected);
+            TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
 		}
 
 		/// <summary>
@@ -88,7 +88,7 @@ namespace MuftecTest
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 
-            Shared.CompareStacks(runtimeStack, runtimeStackExpected);
+            TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
 		}
 	}
 }

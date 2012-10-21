@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace MuftecLib.CompilerStates
+namespace Muftec.Lib.CompilerStates
 {
     class FunctionState : ICompilerState
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace MuftecLib
+namespace Muftec.Lib
 {
 	public delegate void OpCodePointer(Stack<MuftecStackItem> stack);
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace MuftecLib.CompilerStates
+﻿namespace Muftec.Lib.CompilerStates
 {
     class EvaluatorState : ICompilerState
     {

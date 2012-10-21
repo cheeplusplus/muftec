@@ -1,6 +1,6 @@
 using System;
 
-namespace MuftecLib
+namespace Muftec.Lib
 {
     /// <summary>
     /// This structure holds an item in the stack, and its type.
