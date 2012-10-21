@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using MuftecLib.CompilerStates;
 
 namespace MuftecLib
 {
@@ -17,11 +18,6 @@ namespace MuftecLib
         public class CompilerOutput
         {
             /// <summary>
-            /// Gets or sets the execution queue.
-            /// </summary>
-            public Queue<MuftecStackItem> Queue { get; set; }
-
-            /// <summary>
             /// Gets or sets the variable list.
             /// </summary>
             public List<string> Variables { get; set; }
@@ -30,6 +26,11 @@ namespace MuftecLib
             /// Gets or sets the function dictionary.
             /// </summary>
             public Dictionary<string, Queue<MuftecStackItem>> Functions { get; set; }
+
+            /// <summary>
+            /// Gets or sets the main function.
+            /// </summary>
+            public string MainFunction { get; set; }
         }
 
         /// <summary>
@@ -39,109 +40,64 @@ namespace MuftecLib
         /// <returns>Returns compiler output.</returns>
         public static CompilerOutput ParseString(string text)
         {
-            var queue = new Queue<MuftecStackItem>();
-
-            var tokens = text.Split(new[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
-            // TODO: Find sections () "" :;
             var variables = new List<string>();
             var functions = new Dictionary<string, Queue<MuftecStackItem>>();
+            var appState = new ApplicationCore(variables, functions);
+            var evaluator = new EvaluatorState(appState);
 
             // Parse sections
-			foreach (var token in tokens.Select(s => s.Trim()))
-			{
-                // Comments
-                // Discard
+            var lineNum = 1;
 
-                // Variable initialization (var varname)
-
-                // Functions
-                // TODO: Figure out parsing : function ... ;
-
-                // Strings
-                // TODO: Figure out how to parse "test text"
-
-			    // Floats
-                double floatVal;
-                if (double.TryParse(token, out floatVal))
-			    {
-                    if (token.Contains("."))
-                    {
-                        queue.Enqueue(new MuftecStackItem(floatVal));
-                        continue;
-                    }			        
-			    }
-
-			    // Integers
-			    int intVal;
-			    if (int.TryParse(token, out intVal))
-			    {
-			        queue.Enqueue(new MuftecStackItem(intVal));
-			        continue;
-			    }
-                
-			    // Symbols
-                if (variables.Contains(token))
+            foreach (var tokens in text.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries).Select(line => line.Split(' ')))
+            {
+                foreach (var token in tokens.Select(s => s.Trim()))
                 {
-                    queue.Enqueue(new MuftecStackItem(token, MuftecAdvType.Variable));
-                    continue;
+                    evaluator.Core.LineNumber = lineNum;
+                    evaluator.EvaluateToken(token);
                 }
 
-                if (functions.ContainsKey(token))
-                {
-                    queue.Enqueue(new MuftecStackItem(token, MuftecAdvType.Function));
-                }
+                lineNum++;
+            }
 
-			    // OpCodes - assume any remaining value is an opcode, don't need to check
-                queue.Enqueue(new MuftecStackItem(token, MuftecAdvType.OpCode));
-			}
-
-            return new CompilerOutput { Queue = queue, Variables = variables, Functions = functions };
-        }
-
-        private enum CompilerRegion
-        {
-            Comment,
-            String,
-            Function
+            return new CompilerOutput { Variables = variables, Functions = functions, MainFunction = evaluator.LastFunction };
         }
 
         /// <summary>
-        /// Save a stack queue into a byte array.
+        /// Save a compiled application into a byte array.
         /// </summary>
-        /// <param name="queue">Queue to save.</param>
+        /// <param name="compiled">Compiled application to save.</param>
         /// <returns>Saved queue.</returns>
-        public static byte[] SaveStack(Queue<MuftecStackItem> queue)
+        public static byte[] SaveApplication(CompilerOutput compiled)
         {
             using (var ms = new MemoryStream())
             {
                 var bf = new BinaryFormatter();
-                bf.Serialize(ms, queue);
+                bf.Serialize(ms, compiled);
                 return ms.ToArray();
             }
         }
 
         /// <summary>
-        /// Load a stack queue from a byte array.
+        /// Load a compiled application from a byte array.
         /// </summary>
         /// <param name="data">Saved queue to decode.</param>
         /// <returns>Original queue.</returns>
-        public static Queue<MuftecStackItem> LoadStack(byte[] data)
+        public static CompilerOutput LoadApplication(byte[] data)
         {
             using (var ms = new MemoryStream(data))
             {
                 var bf = new BinaryFormatter();
-                var stack = bf.Deserialize(ms) as Queue<MuftecStackItem>;
+                var stack = bf.Deserialize(ms) as CompilerOutput;
                 return stack;
             }
         }
 
         /// <summary>
-        /// Compile a stack queue into an assembly.
+        /// Compile a compiled application into an assembly.
         /// </summary>
-        /// <param name="queue"></param>
+        /// <param name="compiled"></param>
         /// <param name="filename"></param>
-        public static void SaveAssembly(Queue<MuftecStackItem> queue, string filename)
+        public static void SaveAssembly(CompilerOutput compiled, string filename)
         {
             throw new NotImplementedException();
         }

@@ -30,15 +30,17 @@ namespace Muftec
                 var bcl = new MuftecBaseClassLibrary();
                 system.AddLibrary(bcl);
 
+			    var queue = new Queue<MuftecStackItem>();
+                queue.Enqueue(new MuftecStackItem(output.MainFunction, MuftecAdvType.Function));
                 var runtime = new Stack<MuftecStackItem>();
-                system.Run(output.Queue, runtime, output.Variables, output.Functions);
+                system.Run(queue, runtime, output.Variables, output.Functions);
 			}
 			else if (args[0] == "-c")
 			{
 				// Compile a program
 			    var text = File.ReadAllText(args[1]);
 			    var output = Compiler.ParseString(text);
-                Compiler.SaveAssembly(output.Queue, args[1] + ".exe");
+                Compiler.SaveAssembly(output, args[1] + ".exe");
 			}
 			else
 			{

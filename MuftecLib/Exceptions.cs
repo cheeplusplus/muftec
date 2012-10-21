@@ -40,6 +40,7 @@ namespace MuftecLib
         {
             if (!Shared.IsDebug()) return;
 
+            // TODO: Put this in a string instead of printing to the console
             Console.WriteLine("== STACK TRACE ==");
 
             var fixedStack = runtimeStack.ToArray();
@@ -107,5 +108,14 @@ namespace MuftecLib
     {
         public MuftecInvalidOpcodeException(Stack<MuftecStackItem> runtimeStack) : base(runtimeStack) { }
         public MuftecInvalidOpcodeException(Stack<MuftecStackItem> runtimeStack, string exceptionMessage) : base(runtimeStack, exceptionMessage) { }
+    }
+
+    /// <summary>
+    /// This exception occours when there is a compiler error.
+    /// </summary>
+    public class MuftecCompilerException : Exception
+    {
+        public MuftecCompilerException(string message) : base("Compile error\r\n" + message) { }
+        public MuftecCompilerException(string message, int lineNum) : base(String.Format("Compile error on line {0}:\r\n{1}", lineNum, message)) { }
     }
 }
