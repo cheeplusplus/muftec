@@ -13,7 +13,7 @@ namespace Muftec.Lib.CompilerStates
         {
             Core = core;
             FunctionCore = CreateFunctionCore(core);
-            InternalMachine = new EvaluatorState(FunctionCore, true);
+            InternalMachine = new FunctionEvaluatorState(FunctionCore);
         }
 
         private ApplicationCore CreateFunctionCore(ApplicationCore existingCore)
@@ -24,6 +24,7 @@ namespace Muftec.Lib.CompilerStates
 
         public bool EvaluateToken(string token)
         {
+            // Name will be the first arg after the :
             if (Name == null)
             {
                 if (Core.Functions.ContainsKey(token))
@@ -33,12 +34,14 @@ namespace Muftec.Lib.CompilerStates
                 return true;
             }
 
+            // ; ends a function
             if (token == ";")
             {
                 Core.Functions.Add(Name, FunctionCore.Queue);
                 return false;
             }
 
+            // Send all other tokens to the evaluator
             return InternalMachine.EvaluateToken(token);
         }
     }

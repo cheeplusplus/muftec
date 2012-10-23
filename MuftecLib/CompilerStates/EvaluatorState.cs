@@ -3,17 +3,32 @@
     class EvaluatorState : ICompilerState
     {
         public ApplicationCore Core { get; set; }
-        private ICompilerState CurrentMachine { get; set; }
-        private bool IsFunction { get; set; }
+        protected ICompilerState CurrentMachine { get; set; }
+        protected bool IsFunction { get; set; }
         public string LastFunction { get; set; }
 
-        public EvaluatorState(ApplicationCore core, bool isFunction = false)
+        public EvaluatorState(ApplicationCore core)
         {
             Core = core;
-            IsFunction = isFunction;
         }
 
-        public bool EvaluateToken(string token)
+        public virtual bool EvaluateToken(string token)
+        {
+            if (!EvaluateAllToken(token))
+            {
+                // Only allow item types that use the queue after this point
+                throw new MuftecCompilerException("Invalid token outside of a function: \"" + token + "\"", Core.LineNumber);
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Evaluate a token on all global operations.
+        /// </summary>
+        /// <param name="token">Token to evaluate.</param>
+        /// <returns>True if an evaluation occoured, false if not.</returns>
+        protected bool EvaluateAllToken(string token)
         {
             if (CurrentMachine != null)
             {
@@ -59,53 +74,7 @@
                 return true;
             }
 
-            // Only allow item types that use the queue after this point
-            if (!IsFunction)
-                throw new MuftecCompilerException("Invalid token outside of a function: \"" + token + "\"", Core.LineNumber);
-
-            // Strings
-            if (token.StartsWith("\""))
-            {
-                CurrentMachine = new StringState(Core, "\"");
-                CurrentMachine.EvaluateToken(token);
-                return true;
-            }
-
-            // Floats
-            double floatVal;
-            if (double.TryParse(token, out floatVal))
-            {
-                if (token.Contains("."))
-                {
-                    Core.Queue.Enqueue(new MuftecStackItem(floatVal));
-                    return true;
-                }
-            }
-
-            // Integers
-            int intVal;
-            if (int.TryParse(token, out intVal))
-            {
-                Core.Queue.Enqueue(new MuftecStackItem(intVal));
-                return true;
-            }
-
-            // Symbols
-            if (Core.Variables.Contains(token))
-            {
-                Core.Queue.Enqueue(new MuftecStackItem(token, MuftecAdvType.Variable));
-                return true;
-            }
-
-            if (Core.Functions.ContainsKey(token))
-            {
-                Core.Queue.Enqueue(new MuftecStackItem(token, MuftecAdvType.Function));
-                return true;
-            }
-
-            // OpCodes - assume any remaining value is an opcode, don't need to check
-            Core.Queue.Enqueue(new MuftecStackItem(token, MuftecAdvType.OpCode));
-            return true;
+            return false;
         }
     }
 }
