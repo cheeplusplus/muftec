@@ -3,7 +3,7 @@ using Muftec.Lib;
 
 namespace Muftec.BCL.FunctionClasses
 {
-	public class Logic : IMuftecGroup
+	public static class Logic
 	{
 		/// <summary>
 		/// = (n1 n2 -- n3)

@@ -4,7 +4,7 @@ using Muftec.Lib;
 
 namespace Muftec.BCL.FunctionClasses
 {
-	public class Strings : IMuftecGroup
+	public static class Strings
 	{
 		/// <summary>
 		/// strcat (str1 str2 -- str3)

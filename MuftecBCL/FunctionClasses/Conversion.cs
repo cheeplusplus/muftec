@@ -4,7 +4,7 @@ using Muftec.Lib;
 
 namespace Muftec.BCL.FunctionClasses
 {
-    public class Conversion : IMuftecGroup
+    public static class Conversion
 	{
 		/// <summary>
 		/// itof (n1 -- float1)

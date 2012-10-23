@@ -4,7 +4,7 @@ using Muftec.Lib;
 
 namespace Muftec.BCL.FunctionClasses
 {
-	public class InputOutput : IMuftecGroup
+	public static class InputOutput
 	{
 		/// <summary>
 		/// print (a1 -- )

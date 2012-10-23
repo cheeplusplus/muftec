@@ -3,7 +3,7 @@ using Muftec.Lib;
 
 namespace Muftec.BCL.FunctionClasses
 {
-	public class StackOperations : IMuftecGroup
+    public static class StackOperations
 	{
 		/// <summary>
 		/// depth ( -- str1)
