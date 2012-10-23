@@ -49,7 +49,7 @@
             // Comments
             if (token.StartsWith("("))
             {
-                CurrentMachine = new StringState(Core, "(", ")");
+                CurrentMachine = new StringState(Core, "(", ")", true);
                 CurrentMachine.EvaluateToken(token);
                 return true;
             }

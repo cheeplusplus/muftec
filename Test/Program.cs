@@ -44,14 +44,14 @@ namespace Test
 
 		    var text = System.IO.File.ReadAllText("Sample.muf");
 
-            /*try
-            {*/
+            try
+            {
                 var output = Compiler.ParseString(text);
                 variables = output.Variables;
                 functions = output.Functions;
                 execQueue = new Queue<MuftecStackItem>();
                 execQueue.Enqueue(new MuftecStackItem(output.MainFunction, MuftecAdvType.Function));
-            /*}
+            }
             catch (MuftecCompilerException ex)
             {
                 Console.WriteLine("Compiler exception: " + ex.Message);
@@ -59,7 +59,7 @@ namespace Test
             catch (Exception ex)
             {
                 Console.WriteLine("Exception: " + ex.Message);
-            }*/
+            }
 
 		    runStack = new Stack<MuftecStackItem>();
 
