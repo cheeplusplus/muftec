@@ -9,7 +9,7 @@ namespace Muftec.Lib.CompilerStates
     {
         public ApplicationCore Core { get; set; }
 
-        private FunctionEvaluatorState _evaluator;
+        private ConditionalFunctionEvaluatorState _evaluator;
         private bool _isFalseSide;
         private readonly ApplicationCore _trueCore;
         private readonly ApplicationCore _falseCore;
@@ -25,25 +25,25 @@ namespace Muftec.Lib.CompilerStates
         {
             // Start out as the true side
             if (_evaluator == null)
-                _evaluator = new FunctionEvaluatorState(_trueCore, true);
+                _evaluator = new ConditionalFunctionEvaluatorState(_trueCore);
 
             // Evaluate current arguments
             _evaluator.EvaluateToken(token);
 
             // Get the result if it hit a conditional token
-            if (_evaluator.ConditionalStatus != FunctionEvaluatorState.ConditionalStatusType.None)
+            if (_evaluator.ConditionalStatus != ConditionalFunctionEvaluatorState.ConditionalStatusType.None)
             {
-                if (_evaluator.ConditionalStatus == FunctionEvaluatorState.ConditionalStatusType.Else)
+                if (_evaluator.ConditionalStatus == ConditionalFunctionEvaluatorState.ConditionalStatusType.Else)
                 {
                     if (_isFalseSide)
                         throw new MuftecCompilerException("Encountered else after else", Core.LineNumber);
 
                     // Switch to false side
-                    _evaluator = new FunctionEvaluatorState(_falseCore, true);
+                    _evaluator = new ConditionalFunctionEvaluatorState(_falseCore);
                     _isFalseSide = true;
                     return true;
                 }
-                if (_evaluator.ConditionalStatus == FunctionEvaluatorState.ConditionalStatusType.Then)
+                if (_evaluator.ConditionalStatus == ConditionalFunctionEvaluatorState.ConditionalStatusType.Then)
                 {
                     // Done here, wrap up
                     var container = new ConditionalContainer { TrueQueue = _trueCore.Queue, FalseQueue = _falseCore.Queue };

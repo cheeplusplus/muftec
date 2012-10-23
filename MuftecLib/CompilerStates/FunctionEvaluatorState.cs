@@ -4,20 +4,9 @@ namespace Muftec.Lib.CompilerStates
 {
     class FunctionEvaluatorState : EvaluatorState
     {
-        internal enum ConditionalStatusType
-        {
-            None,
-            Else,
-            Then
-        }
-
-        private readonly bool _insideConditional;
-        internal ConditionalStatusType ConditionalStatus { get; set; }
-
-        public FunctionEvaluatorState(ApplicationCore core, bool insideConditional = false) : base(core)
+        public FunctionEvaluatorState(ApplicationCore core) : base(core)
         {
             IsFunction = true;
-            _insideConditional = insideConditional;
         }
 
         public new bool EvaluateToken(string token)
@@ -42,27 +31,11 @@ namespace Muftec.Lib.CompilerStates
                 CurrentMachine = new ConditionalState(Core);
                 return true;
             }
-            if (token.ToLower() == "else")
-            {
-                if (!_insideConditional)
-                    throw new MuftecCompilerException("Encountered else outside of if", Core.LineNumber);
 
-                // Already inside an if statement, so drop out
-                ConditionalStatus = ConditionalStatusType.Else;
+            if (EvaluateSuperToken(token))
+            {
                 return true;
             }
-            if (token.ToLower() == "then")
-            {
-                if (!_insideConditional)
-                    throw new MuftecCompilerException("Encountered then outside of if", Core.LineNumber);
-
-                // Already inside an if statement, so drop out
-                ConditionalStatus = ConditionalStatusType.Then;
-                return true;
-            }
-            
-            // Reset conditional status
-            ConditionalStatus = ConditionalStatusType.None;
 
             // Floats
             double floatVal;
@@ -99,6 +72,11 @@ namespace Muftec.Lib.CompilerStates
             // OpCodes - assume any remaining value is an opcode, don't need to check
             Core.Queue.Enqueue(new MuftecStackItem(token, MuftecAdvType.OpCode));
             return true;
+        }
+
+        protected virtual bool EvaluateSuperToken(string token)
+        {
+            return false;
         }
     }
 }
