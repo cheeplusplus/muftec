@@ -1,4 +1,6 @@
-﻿namespace Muftec.Lib.CompilerStates
+﻿using System;
+
+namespace Muftec.Lib.CompilerStates
 {
     class EvaluatorState : ICompilerState
     {
@@ -12,7 +14,7 @@
             Core = core;
         }
 
-        public virtual bool EvaluateToken(string token)
+        public bool EvaluateToken(string token)
         {
             if (!EvaluateAllToken(token))
             {
@@ -32,7 +34,9 @@
         {
             if (CurrentMachine != null)
             {
-                if (!CurrentMachine.EvaluateToken(token))
+                var result = CurrentMachine.EvaluateToken(token);
+
+                if (!result)
                 {
                     var fState = CurrentMachine as FunctionState;
                     if (fState != null)
@@ -49,7 +53,7 @@
             // Comments
             if (token.StartsWith("("))
             {
-                CurrentMachine = new StringState(Core, "(", ")", true);
+                CurrentMachine = new StringState(Core, "(", ")", true, true);
                 CurrentMachine.EvaluateToken(token);
                 return true;
             }

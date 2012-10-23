@@ -1,7 +1,14 @@
-﻿: dodup
-	1 1 + dup
+﻿( Sample program for testing simple Muftec stuff )
+
+: btos ( i -- s )
+	(Converts a 'boolean' to a string)
+	if "true" else "false" then
+;
+
+: add
+	1 1 +
 ;
 
 : main
-	dodup print 2 = print
+	add dup print 2 = dup btos print
 ;

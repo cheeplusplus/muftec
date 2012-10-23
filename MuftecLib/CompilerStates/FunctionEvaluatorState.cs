@@ -4,12 +4,23 @@ namespace Muftec.Lib.CompilerStates
 {
     class FunctionEvaluatorState : EvaluatorState
     {
-        public FunctionEvaluatorState(ApplicationCore core) : base(core)
+        internal enum ConditionalStatusType
         {
-            IsFunction = true;
+            None,
+            Else,
+            Then
         }
 
-        public override bool EvaluateToken(string token)
+        private readonly bool _insideConditional;
+        internal ConditionalStatusType ConditionalStatus { get; set; }
+
+        public FunctionEvaluatorState(ApplicationCore core, bool insideConditional = false) : base(core)
+        {
+            IsFunction = true;
+            _insideConditional = insideConditional;
+        }
+
+        public new bool EvaluateToken(string token)
         {
             if (EvaluateAllToken(token))
                 return true;
@@ -18,9 +29,40 @@ namespace Muftec.Lib.CompilerStates
             if (token.StartsWith("\""))
             {
                 CurrentMachine = new StringState(Core, "\"");
-                CurrentMachine.EvaluateToken(token);
+                if (!CurrentMachine.EvaluateToken(token))
+                {
+                    CurrentMachine = null;
+                }
                 return true;
             }
+
+            // Conditionals
+            if (token.ToLower() == "if")
+            {
+                CurrentMachine = new ConditionalState(Core);
+                return true;
+            }
+            if (token.ToLower() == "else")
+            {
+                if (!_insideConditional)
+                    throw new MuftecCompilerException("Encountered else outside of if", Core.LineNumber);
+
+                // Already inside an if statement, so drop out
+                ConditionalStatus = ConditionalStatusType.Else;
+                return true;
+            }
+            if (token.ToLower() == "then")
+            {
+                if (!_insideConditional)
+                    throw new MuftecCompilerException("Encountered then outside of if", Core.LineNumber);
+
+                // Already inside an if statement, so drop out
+                ConditionalStatus = ConditionalStatusType.Then;
+                return true;
+            }
+            
+            // Reset conditional status
+            ConditionalStatus = ConditionalStatusType.None;
 
             // Floats
             double floatVal;

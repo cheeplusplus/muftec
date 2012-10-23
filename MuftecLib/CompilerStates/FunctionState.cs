@@ -5,7 +5,7 @@ namespace Muftec.Lib.CompilerStates
     class FunctionState : ICompilerState
     {
         public ApplicationCore Core { get; set; }
-        private ICompilerState InternalMachine { get; set; }
+        private FunctionEvaluatorState Evaluator { get; set; }
         private ApplicationCore FunctionCore { get; set; }
         public string Name { get; set; }
 
@@ -13,7 +13,7 @@ namespace Muftec.Lib.CompilerStates
         {
             Core = core;
             FunctionCore = CreateFunctionCore(core);
-            InternalMachine = new FunctionEvaluatorState(FunctionCore);
+            Evaluator = new FunctionEvaluatorState(FunctionCore);
         }
 
         private ApplicationCore CreateFunctionCore(ApplicationCore existingCore)
@@ -42,7 +42,7 @@ namespace Muftec.Lib.CompilerStates
             }
 
             // Send all other tokens to the evaluator
-            return InternalMachine.EvaluateToken(token);
+            return Evaluator.EvaluateToken(token);
         }
     }
 }

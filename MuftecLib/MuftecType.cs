@@ -33,7 +33,12 @@ namespace Muftec.Lib
         /// <summary>
         /// Function
         /// </summary>
-        Function
+        Function,
+
+        /// <summary>
+        /// Conditional
+        /// </summary>
+        Conditional
     }
 
     /// <summary>

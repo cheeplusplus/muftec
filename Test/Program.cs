@@ -61,6 +61,7 @@ namespace Test
                 Console.WriteLine("Exception: " + ex.Message);
             }
 
+            Console.WriteLine("Executing compiled code.");
 		    runStack = new Stack<MuftecStackItem>();
 
             try
@@ -72,6 +73,8 @@ namespace Test
                 Console.WriteLine("Exception: " + ex.Message);
             }
 
+		    Console.WriteLine();
+            Console.WriteLine("Complete.");
 		    Console.WriteLine();
             Console.WriteLine("Press any key.");
 		    Console.ReadKey(true);

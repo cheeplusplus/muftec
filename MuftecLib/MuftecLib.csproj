@@ -59,12 +59,14 @@
     <Compile Include="Attributes.cs" />
     <Compile Include="Compiler.cs" />
     <Compile Include="CompilerStates\ApplicationCore.cs" />
+    <Compile Include="CompilerStates\ConditionalState.cs" />
     <Compile Include="CompilerStates\EvaluatorState.cs" />
     <Compile Include="CompilerStates\FunctionEvaluatorState.cs" />
     <Compile Include="CompilerStates\FunctionState.cs" />
     <Compile Include="CompilerStates\ICompilerState.cs" />
     <Compile Include="CompilerStates\StringState.cs" />
     <Compile Include="CompilerStates\VariableState.cs" />
+    <Compile Include="ConditionalContainer.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="IMuftecClassLibrary.cs" />
     <Compile Include="IMuftecGroup.cs" />

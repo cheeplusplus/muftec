@@ -9,19 +9,23 @@ namespace Muftec.Lib.CompilerStates
         public string StartKey { get; private set; }
         public string EndKey { get; private set; }
         public bool Discard { get; private set; }
+        public bool Nested { get; private set; }
+
+        private int _nest;
 
         private StringBuilder Builder { get; set; }
 
-        public StringState(ApplicationCore core, string startKey, bool discard = false) : this(core, startKey, startKey, discard)
+        public StringState(ApplicationCore core, string startKey, bool discard = false, bool nested = false) : this(core, startKey, startKey, discard, nested)
         {
         }
 
-        public StringState(ApplicationCore core, string startKey, string endKey, bool discard = false)
+        public StringState(ApplicationCore core, string startKey, string endKey, bool discard = false, bool nested = false)
         {
             Core = core;
             StartKey = startKey;
             EndKey = endKey;
             Discard = discard;
+            Nested = nested;
             Builder = new StringBuilder();
         }
 
@@ -32,6 +36,10 @@ namespace Muftec.Lib.CompilerStates
 
             Builder.Append(token);
 
+            // Only count nests if we're nested
+            if (Nested && token.StartsWith(StartKey))
+                _nest++;
+
             if (token.EndsWith(EndKey))
             {
                 if (!Discard)
@@ -40,7 +48,11 @@ namespace Muftec.Lib.CompilerStates
                     Core.Queue.Enqueue(item);
                 }
 
-                return false;
+                _nest--;
+
+                // Only exit if we've unnested
+                if (_nest <= 0)
+                    return false;
             }
 
             return true;

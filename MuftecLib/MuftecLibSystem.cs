@@ -182,6 +182,7 @@ namespace Muftec.Lib
 		}
         #endregion
 
+        #region Execution functions
         /// <summary>
         /// Execute an opcode.
         /// </summary>
@@ -215,6 +216,7 @@ namespace Muftec.Lib
         /// <param name="functionList">List of defined functions.</param>
 		public void Run(Queue<MuftecStackItem> execStack, Stack<MuftecStackItem> runtimeStack, IEnumerable<string> variableList = null, IEnumerable<KeyValuePair<string, Queue<MuftecStackItem>>> functionList = null)
 		{
+            // Add variables to global variable list
             if (variableList != null)
             {
                 foreach (var variable in variableList.Where(w => !_globalVariableList.ContainsKey(w)))
@@ -223,6 +225,7 @@ namespace Muftec.Lib
                 }
             }
 
+            // Add functions to function list
             if (functionList != null)
             {
                 foreach (var function in functionList)
@@ -239,36 +242,54 @@ namespace Muftec.Lib
 
             }
 
+            // Iterate through each item on the execution stack
 		    while (execStack.Count > 0)
-			{
-			    var currStackItem = execStack.Dequeue();
+		    {
+		        var currStackItem = execStack.Dequeue();
 
-                if (currStackItem.Type == MuftecType.Function)
-                {
-                    var funcName = currStackItem.Item.ToString();
+		        switch (currStackItem.Type)
+		        {
+                    // Run a user defined function
+		            case MuftecType.Function:
+		                var funcName = currStackItem.Item.ToString();
 
-                    if (_globalFunctionList.ContainsKey(funcName))
-                    {
-                        // Make a copy of the function as it will be popped to execute
-                        var queue = new Queue<MuftecStackItem>(_globalFunctionList[funcName]);
+		                if (_globalFunctionList.ContainsKey(funcName))
+		                {
+		                    // Make a copy of the function as it will be popped to execute
+		                    var queue = new Queue<MuftecStackItem>(_globalFunctionList[funcName]);
 
-                        // TODO: Support local variables
-                        Run(queue, runtimeStack, variableList);
-                    }
-                    else
-                    {
-                        throw new MuftecInvalidStackItemTypeException(runtimeStack);
-                    }
-                }
-			    else if (currStackItem.Type == MuftecType.OpCode)
-				{
-					ExecOpCode(currStackItem.Item.ToString(), runtimeStack);
-				}
-				else
-				{
-					runtimeStack.Push(currStackItem);
-				}
-			}
+		                    // TODO: Support local variables
+		                    Run(queue, runtimeStack);
+		                }
+		                else
+		                {
+		                    throw new MuftecInvalidStackItemTypeException(runtimeStack);
+		                }
+		                break;
+
+                    // Execute a library opcode
+		            case MuftecType.OpCode:
+		                ExecOpCode(currStackItem.Item.ToString(), runtimeStack);
+		                break;
+
+                    // Handle a conditional container
+		            case MuftecType.Conditional:
+		                var container = currStackItem.Item as ConditionalContainer;
+		                if (container == null)
+		                    throw new MuftecGeneralException(runtimeStack, "Unable to process conditional statement.");
+
+		                var check = Shared.PopInt(runtimeStack);
+		                var queueToExecute = (check > 0) ? container.TrueQueue : container.FalseQueue;
+		                Run(queueToExecute, runtimeStack);
+		                break;
+
+                    // Add item to runtime stack
+		            default:
+		                runtimeStack.Push(currStackItem);
+		                break;
+		        }
+		    }
 		}
-	}
+        #endregion
+    }
 }

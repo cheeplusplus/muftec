@@ -52,6 +52,12 @@ namespace Muftec.Lib
             Item = value;
         }
 
+        internal MuftecStackItem(ConditionalContainer container)
+        {
+            Type = MuftecType.Conditional;
+            Item = container;
+        }
+
         public override bool Equals(object obj)
         {
             var tmp = obj as MuftecStackItem;
