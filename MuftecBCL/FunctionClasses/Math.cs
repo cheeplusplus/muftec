@@ -12,12 +12,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 2 3 + ( returns ) 5
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("+")]
-		public static void Add(Stack<MuftecStackItem> runtimeStack)
+		public static void Add(OpCodeData data)
 		{
-			var item2 = Shared.Pop(runtimeStack);
-			var item1 = Shared.Pop(runtimeStack);
+			var item2 = Shared.Pop(data.RuntimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
@@ -30,10 +30,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -43,13 +43,13 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 5 2 - ( returns ) 3
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		/// <exception cref="MuftecInvalidStackItemTypeException">Raised when values other than a float or integer are used</exception>
 		[OpCode("-")]
-		public static void Subtract(Stack<MuftecStackItem> runtimeStack)
+		public static void Subtract(OpCodeData data)
 		{
-			var item2 = Shared.Pop(runtimeStack);
-			var item1 = Shared.Pop(runtimeStack);
+			var item2 = Shared.Pop(data.RuntimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
@@ -62,10 +62,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -75,12 +75,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 2 3 * ( returns ) 6
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("*")]
-		public static void Multiply(Stack<MuftecStackItem> runtimeStack)
+		public static void Multiply(OpCodeData data)
 		{
-			var item2 = Shared.Pop(runtimeStack);
-			var item1 = Shared.Pop(runtimeStack);
+			var item2 = Shared.Pop(data.RuntimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
@@ -93,10 +93,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -106,12 +106,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 5 10 / ( returns ) 2
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("/")]
-		public static void Divide(Stack<MuftecStackItem> runtimeStack)
+		public static void Divide(OpCodeData data)
 		{
-			var item2 = Shared.Pop(runtimeStack);
-			var item1 = Shared.Pop(runtimeStack);
+			var item2 = Shared.Pop(data.RuntimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
@@ -124,10 +124,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -137,12 +137,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 2 3 % ( returns ) 1
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("%")]
-		public static void Modulus(Stack<MuftecStackItem> runtimeStack)
+		public static void Modulus(OpCodeData data)
 		{
-			var item2 = Shared.Pop(runtimeStack);
-			var item1 = Shared.Pop(runtimeStack);
+			var item2 = Shared.Pop(data.RuntimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
@@ -155,10 +155,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -168,12 +168,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 4 5 ^ ( returns ) 1024.0
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("^")]
-		public static void Exponent(Stack<MuftecStackItem> runtimeStack)
+		public static void Exponent(OpCodeData data)
 		{
-			var item2 = Shared.Pop(runtimeStack);
-			var item1 = Shared.Pop(runtimeStack);
+			var item2 = Shared.Pop(data.RuntimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if (((item1.Type == MuftecType.Float) || (item1.Type == MuftecType.Integer)) &&
@@ -183,10 +183,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -196,11 +196,11 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 3 ++ ( returns ) 4
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("++")]
-		public static void PlusPlus(Stack<MuftecStackItem> runtimeStack)
+		public static void PlusPlus(OpCodeData data)
 		{
-			var item1 = Shared.Pop(runtimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if (item1.Type == MuftecType.Float)
@@ -213,10 +213,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -226,11 +226,11 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 3 -- ( returns ) 2
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("--")]
-		public static void MinusMinus(Stack<MuftecStackItem> runtimeStack)
+		public static void MinusMinus(OpCodeData data)
 		{
-			var item1 = Shared.Pop(runtimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if (item1.Type == MuftecType.Float)
@@ -243,10 +243,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -256,11 +256,11 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// -3 abs ( returns ) -3
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("abs")]
-		public static void AbsoluteVal(Stack<MuftecStackItem> runtimeStack)
+		public static void AbsoluteVal(OpCodeData data)
 		{
-			var item1 = Shared.Pop(runtimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if (item1.Type == MuftecType.Float)
@@ -273,10 +273,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -286,11 +286,11 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// -3 sign ( returns ) -1
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("sign")]
-		public static void Sign(Stack<MuftecStackItem> runtimeStack)
+		public static void Sign(OpCodeData data)
 		{
-			var item1 = Shared.Pop(runtimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if (item1.Type == MuftecType.Float)
@@ -303,10 +303,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -316,12 +316,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 2.7 floor ( returns ) 2
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("floor")]
-		public static void Floor(Stack<MuftecStackItem> runtimeStack)
+		public static void Floor(OpCodeData data)
 		{
-			var item1 = Shared.Pop(runtimeStack, MuftecType.Float);
-			runtimeStack.Push(new MuftecStackItem(System.Math.Floor(item1.AsDouble())));
+			var item1 = Shared.Pop(data.RuntimeStack, MuftecType.Float);
+			data.RuntimeStack.Push(new MuftecStackItem(System.Math.Floor(item1.AsDouble())));
 		}
 
 		/// <summary>
@@ -331,12 +331,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 2.2 floor ( returns ) 3
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("ceil")]
-		public static void Ceiling(Stack<MuftecStackItem> runtimeStack)
+		public static void Ceiling(OpCodeData data)
 		{
-			var item1 = Shared.Pop(runtimeStack, MuftecType.Float);
-			runtimeStack.Push(new MuftecStackItem(System.Math.Ceiling(item1.AsDouble())));
+			var item1 = Shared.Pop(data.RuntimeStack, MuftecType.Float);
+			data.RuntimeStack.Push(new MuftecStackItem(System.Math.Ceiling(item1.AsDouble())));
 		}
 
 		/// <summary>
@@ -346,19 +346,19 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 9 sqrt ( returns ) 3
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("sqrt")]
-		public static void SquareRoot(Stack<MuftecStackItem> runtimeStack)
+		public static void SquareRoot(OpCodeData data)
 		{
-			var item1 = Shared.Pop(runtimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 
 			if ((item1.Type == MuftecType.Float) || (item1.Type == MuftecType.Integer))
 			{
-				runtimeStack.Push(new MuftecStackItem(System.Math.Sqrt(item1.AsDouble())));
+				data.RuntimeStack.Push(new MuftecStackItem(System.Math.Sqrt(item1.AsDouble())));
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 		}
 
@@ -369,13 +369,13 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 7.899 1 round ( returns ) 7.9
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("round")]
-		public static void Round(Stack<MuftecStackItem> runtimeStack)
+		public static void Round(OpCodeData data)
 		{
-			var item2 = Shared.Pop(runtimeStack, MuftecType.Integer);
-			var item1 = Shared.Pop(runtimeStack, MuftecType.Float);
-			runtimeStack.Push(new MuftecStackItem(System.Math.Round(item1.AsDouble(), (int)item2.Item)));
+			var item2 = Shared.Pop(data.RuntimeStack, MuftecType.Integer);
+			var item1 = Shared.Pop(data.RuntimeStack, MuftecType.Float);
+			data.RuntimeStack.Push(new MuftecStackItem(System.Math.Round(item1.AsDouble(), (int)item2.Item)));
 		}
 	}
 }

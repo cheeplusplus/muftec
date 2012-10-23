@@ -6,7 +6,7 @@
 ;
 
 : add
-	1 1 +
+	1 1 + "test!" abort
 ;
 
 : main

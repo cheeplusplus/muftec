@@ -59,18 +59,18 @@ namespace Muftec.Lib.CompilerStates
             // Symbols
             if (Core.Variables.Contains(token))
             {
-                Core.Queue.Enqueue(new MuftecStackItem(token, MuftecAdvType.Variable));
+                Core.Queue.Enqueue(new MuftecStackItem(token, MuftecAdvType.Variable, Core.LineNumber));
                 return true;
             }
 
             if (Core.Functions.ContainsKey(token))
             {
-                Core.Queue.Enqueue(new MuftecStackItem(token, MuftecAdvType.Function));
+                Core.Queue.Enqueue(new MuftecStackItem(token, MuftecAdvType.Function, Core.LineNumber));
                 return true;
             }
 
             // OpCodes - assume any remaining value is an opcode, don't need to check
-            Core.Queue.Enqueue(new MuftecStackItem(token, MuftecAdvType.OpCode));
+            Core.Queue.Enqueue(new MuftecStackItem(token, MuftecAdvType.OpCode, Core.LineNumber));
             return true;
         }
 

@@ -8,7 +8,9 @@ namespace Muftec.Lib
 	[AttributeUsage(AttributeTargets.Method)]
 	public class OpCodeAttribute : Attribute
 	{
-	    public string OpCodeName { get; set; }
+	    public string OpCodeName { get; private set; }
+
+        public MagicOpcodes Magic { get; set; }
 
 	    /// <summary>
 		/// Sets the OpCode name for this function.
@@ -19,4 +21,10 @@ namespace Muftec.Lib
 			OpCodeName = opCodeName;
 		}
 	}
+
+    public enum MagicOpcodes
+    {
+        None,
+        Abort
+    }
 }

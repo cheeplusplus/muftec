@@ -67,8 +67,9 @@ namespace Muftec.Test
 		[TestMethod]
 		public void ReadLineTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			InputOutput.ReadLine(runtimeStack);
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    InputOutput.ReadLine(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(null));
@@ -82,9 +83,10 @@ namespace Muftec.Test
 		[TestMethod]
 		public void PrintTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("Sample string"));
-			InputOutput.Print(runtimeStack);
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("Sample string"));
+			InputOutput.Print(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 

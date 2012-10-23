@@ -13,14 +13,14 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "Con" "cave" strcat ( returns ) "Concave"
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("strcat")]
-		public static void Concatenate(Stack<MuftecStackItem> runtimeStack)
+		public static void Concatenate(OpCodeData data)
 		{
-			var item2 = Shared.PopStr(runtimeStack);
-			var item1 = Shared.PopStr(runtimeStack);
+			var item2 = Shared.PopStr(data.RuntimeStack);
+			var item1 = Shared.PopStr(data.RuntimeStack);
 
-			runtimeStack.Push(new MuftecStackItem(String.Concat(item1, item2)));
+			data.RuntimeStack.Push(new MuftecStackItem(String.Concat(item1, item2)));
 		}
 
 		/// <summary>
@@ -30,14 +30,14 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "Concave" "conCaVE" strcmp ( returns ) 0
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("strcmp")]
-		public static void StringCompare(Stack<MuftecStackItem> runtimeStack)
+		public static void StringCompare(OpCodeData data)
 		{
-			var item2 = Shared.PopStr(runtimeStack);
-			var item1 = Shared.PopStr(runtimeStack);
+			var item2 = Shared.PopStr(data.RuntimeStack);
+			var item1 = Shared.PopStr(data.RuntimeStack);
 
-			runtimeStack.Push(new MuftecStackItem(item1 == item2));
+			data.RuntimeStack.Push(new MuftecStackItem(item1 == item2));
 		}
 
 		/// <summary>
@@ -47,14 +47,14 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "Concave" "conCaVE" strcmpi ( returns ) 1
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("strcmpi")]
-		public static void StringCompareI(Stack<MuftecStackItem> runtimeStack)
+		public static void StringCompareI(OpCodeData data)
 		{
-			var item2 = Shared.PopStr(runtimeStack);
-			var item1 = Shared.PopStr(runtimeStack);
+			var item2 = Shared.PopStr(data.RuntimeStack);
+			var item1 = Shared.PopStr(data.RuntimeStack);
 
-			runtimeStack.Push(new MuftecStackItem(item1.ToLower() == item2.ToLower()));
+			data.RuntimeStack.Push(new MuftecStackItem(item1.ToLower() == item2.ToLower()));
 		}
 
 		/// <summary>
@@ -64,15 +64,15 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "TEST_A_B_C" " " "_" subst ( returns ) "TEST A B C"
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("subst")]
-		public static void Substitute(Stack<MuftecStackItem> runtimeStack)
+		public static void Substitute(OpCodeData data)
 		{
-			var item3 = Shared.PopStr(runtimeStack);
-			var item2 = Shared.PopStr(runtimeStack);
-			var item1 = Shared.PopStr(runtimeStack);
+			var item3 = Shared.PopStr(data.RuntimeStack);
+			var item2 = Shared.PopStr(data.RuntimeStack);
+			var item1 = Shared.PopStr(data.RuntimeStack);
 
-			runtimeStack.Push(new MuftecStackItem(item1.Replace(item3, item2)));
+			data.RuntimeStack.Push(new MuftecStackItem(item1.Replace(item3, item2)));
 		}
 
 		/// <summary>
@@ -82,14 +82,14 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "Concave" 2 strleft ( returns ) "Co"
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("strleft")]
-		public static void StrLeft(Stack<MuftecStackItem> runtimeStack)
+		public static void StrLeft(OpCodeData data)
 		{
-			var item2 = Shared.PopInt(runtimeStack);
-			var item1 = Shared.PopStr(runtimeStack);
+			var item2 = Shared.PopInt(data.RuntimeStack);
+			var item1 = Shared.PopStr(data.RuntimeStack);
 
-			runtimeStack.Push(new MuftecStackItem(item1.Substring(0, item2)));
+			data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(0, item2)));
 		}
 
 		/// <summary>
@@ -99,14 +99,14 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "Concave" 2 strright ( returns ) "ve"
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("strright")]
-		public static void StrRight(Stack<MuftecStackItem> runtimeStack)
+		public static void StrRight(OpCodeData data)
 		{
-			var item2 = Shared.PopInt(runtimeStack);
-			var item1 = Shared.PopStr(runtimeStack);
+			var item2 = Shared.PopInt(data.RuntimeStack);
+			var item1 = Shared.PopStr(data.RuntimeStack);
 
-			runtimeStack.Push(new MuftecStackItem(item1.Substring(item1.Length - item2, item2)));
+			data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(item1.Length - item2, item2)));
 		}
 
 		/// <summary>
@@ -116,15 +116,15 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "Concave" 3 4 midstr ( returns ) "ncav"
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("midstr")]
-		public static void StrMid(Stack<MuftecStackItem> runtimeStack)
+		public static void StrMid(OpCodeData data)
 		{
-			var item3 = Shared.PopInt(runtimeStack);
-			var item2 = Shared.PopInt(runtimeStack);
-			var item1 = Shared.PopStr(runtimeStack);
+			var item3 = Shared.PopInt(data.RuntimeStack);
+			var item2 = Shared.PopInt(data.RuntimeStack);
+			var item1 = Shared.PopStr(data.RuntimeStack);
 
-			runtimeStack.Push(new MuftecStackItem(item1.Substring(item2 + 1, item3)));
+			data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(item2 + 1, item3)));
 		}
 
 		/// <summary>
@@ -134,19 +134,19 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "feed,eat,drink" "," explode ( returns ) "drink" "eat" "feed" 3
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("explode")]
-		public static void Explode(Stack<MuftecStackItem> runtimeStack)
+		public static void Explode(OpCodeData data)
 		{
-			var item2 = Shared.PopStr(runtimeStack);
-			var item1 = Shared.PopStr(runtimeStack);
+			var item2 = Shared.PopStr(data.RuntimeStack);
+			var item1 = Shared.PopStr(data.RuntimeStack);
 			var exploded = item1.Split(new[] { item2 }, StringSplitOptions.None);
 
-			runtimeStack.Push(new MuftecStackItem(exploded.Length));
+			data.RuntimeStack.Push(new MuftecStackItem(exploded.Length));
 
 			foreach (var s in exploded)
 			{
-				runtimeStack.Push(new MuftecStackItem(s));
+				data.RuntimeStack.Push(new MuftecStackItem(s));
 			}
 		}
 
@@ -157,14 +157,14 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "Concave" "v" instr ( returns ) 6
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("instr")]
-		public static void InStr(Stack<MuftecStackItem> runtimeStack)
+		public static void InStr(OpCodeData data)
 		{
-			var item2 = Shared.PopStr(runtimeStack);
-			var item1 = Shared.PopStr(runtimeStack);
+			var item2 = Shared.PopStr(data.RuntimeStack);
+			var item1 = Shared.PopStr(data.RuntimeStack);
 
-			runtimeStack.Push(new MuftecStackItem(item1.IndexOf(item2)));
+			data.RuntimeStack.Push(new MuftecStackItem(item1.IndexOf(item2)));
 		}
 
 		/// <summary>
@@ -174,14 +174,14 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "Concave" "v" rinstr ( returns ) 2
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("rinstr")]
-		public static void InStrReverse(Stack<MuftecStackItem> runtimeStack)
+		public static void InStrReverse(OpCodeData data)
 		{
-			var item2 = Shared.PopStr(runtimeStack);
-			var item1 = Shared.PopStr(runtimeStack);
+			var item2 = Shared.PopStr(data.RuntimeStack);
+			var item1 = Shared.PopStr(data.RuntimeStack);
 
-			runtimeStack.Push(new MuftecStackItem(item1.LastIndexOf(item2)));
+			data.RuntimeStack.Push(new MuftecStackItem(item1.LastIndexOf(item2)));
 		}
 
 		/// <summary>
@@ -191,17 +191,17 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "Concave" "a" split ( returns ) "Conc" "ve"
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("split")]
-		public static void Split(Stack<MuftecStackItem> runtimeStack)
+		public static void Split(OpCodeData data)
 		{
-			var item2 = Shared.PopStr(runtimeStack);
-			var item1 = Shared.PopStr(runtimeStack);
+			var item2 = Shared.PopStr(data.RuntimeStack);
+			var item1 = Shared.PopStr(data.RuntimeStack);
 
 			var splitPos = item1.IndexOf(item2);
 
-            runtimeStack.Push(new MuftecStackItem(item1.Substring(0, splitPos)));
-            runtimeStack.Push(new MuftecStackItem(item1.Substring(splitPos)));
+            data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(0, splitPos)));
+            data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(splitPos)));
 		}
 
 		/// <summary>
@@ -211,17 +211,17 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "Concave" "c" rsplit ( returns ) "Con" "ave"
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("rsplit")]
-		public static void SplitReverse(Stack<MuftecStackItem> runtimeStack)
+		public static void SplitReverse(OpCodeData data)
 		{
-			var item2 = Shared.PopStr(runtimeStack);
-			var item1 = Shared.PopStr(runtimeStack);
+			var item2 = Shared.PopStr(data.RuntimeStack);
+			var item1 = Shared.PopStr(data.RuntimeStack);
 
             int splitPos = item1.LastIndexOf(item2);
 
-            runtimeStack.Push(new MuftecStackItem(item1.Substring(0, splitPos)));
-            runtimeStack.Push(new MuftecStackItem(item1.Substring(splitPos)));
+            data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(0, splitPos)));
+            data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(splitPos)));
 		}
 
 		/// <summary>
@@ -231,15 +231,15 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "Concave" 4 strcut ( returns ) "Conc" "ave"
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("strcut")]
-		public static void StrCut(Stack<MuftecStackItem> runtimeStack)
+		public static void StrCut(OpCodeData data)
 		{
-			var item2 = Shared.PopInt(runtimeStack);
-			var item1 = Shared.PopStr(runtimeStack);
+			var item2 = Shared.PopInt(data.RuntimeStack);
+			var item1 = Shared.PopStr(data.RuntimeStack);
 
-            runtimeStack.Push(new MuftecStackItem(item1.Substring(0, item2)));
-            runtimeStack.Push(new MuftecStackItem(item1.Substring(item2)));
+            data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(0, item2)));
+            data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(item2)));
 		}
 
 		/// <summary>
@@ -249,12 +249,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// " Concave  " strcut ( returns ) "Concave"
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("strip")]
-		public static void Strip(Stack<MuftecStackItem> runtimeStack)
+		public static void Strip(OpCodeData data)
 		{
-			var item1 = Shared.PopStr(runtimeStack);
-			runtimeStack.Push(new MuftecStackItem(item1.Trim()));
+			var item1 = Shared.PopStr(data.RuntimeStack);
+			data.RuntimeStack.Push(new MuftecStackItem(item1.Trim()));
 		}
 
 		/// <summary>
@@ -264,12 +264,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// " Concave  " striplead ( returns ) "Concave  "
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("striplead")]
-		public static void StripLeading(Stack<MuftecStackItem> runtimeStack)
+		public static void StripLeading(OpCodeData data)
 		{
-			var item1 = Shared.PopStr(runtimeStack);
-			runtimeStack.Push(new MuftecStackItem(item1.TrimStart()));
+			var item1 = Shared.PopStr(data.RuntimeStack);
+			data.RuntimeStack.Push(new MuftecStackItem(item1.TrimStart()));
 		}
 
 		/// <summary>
@@ -279,12 +279,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// " Concave  " striptail ( returns ) " Concave"
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("striptail")]
-		public static void StripTailing(Stack<MuftecStackItem> runtimeStack)
+		public static void StripTailing(OpCodeData data)
 		{
-			var item1 = Shared.PopStr(runtimeStack);
-			runtimeStack.Push(new MuftecStackItem(item1.TrimEnd()));
+			var item1 = Shared.PopStr(data.RuntimeStack);
+			data.RuntimeStack.Push(new MuftecStackItem(item1.TrimEnd()));
 		}
 
 		/// <summary>
@@ -294,12 +294,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "Concave" strlen ( returns ) 7
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("strlen")]
-		public static void StrLen(Stack<MuftecStackItem> runtimeStack)
+		public static void StrLen(OpCodeData data)
 		{
-			var item1 = Shared.PopStr(runtimeStack);
-			runtimeStack.Push(new MuftecStackItem(item1.Length));
+			var item1 = Shared.PopStr(data.RuntimeStack);
+			data.RuntimeStack.Push(new MuftecStackItem(item1.Length));
 		}
 
 		/// <summary>
@@ -309,12 +309,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "Concave" toupper ( returns ) "CONCAVE"
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("toupper")]
-		public static void StrToUpper(Stack<MuftecStackItem> runtimeStack)
+		public static void StrToUpper(OpCodeData data)
 		{
-			var item1 = Shared.PopStr(runtimeStack);
-			runtimeStack.Push(new MuftecStackItem(item1.ToUpper()));
+			var item1 = Shared.PopStr(data.RuntimeStack);
+			data.RuntimeStack.Push(new MuftecStackItem(item1.ToUpper()));
 		}
 
 		/// <summary>
@@ -324,12 +324,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "ConCaVE" tolower ( returns ) "concave"
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("tolower")]
-		public static void StrToLower(Stack<MuftecStackItem> runtimeStack)
+		public static void StrToLower(OpCodeData data)
 		{
-			var item1 = Shared.PopStr(runtimeStack);
-			runtimeStack.Push(new MuftecStackItem(item1.ToLower()));
+			var item1 = Shared.PopStr(data.RuntimeStack);
+			data.RuntimeStack.Push(new MuftecStackItem(item1.ToLower()));
 		}
 	}
 }

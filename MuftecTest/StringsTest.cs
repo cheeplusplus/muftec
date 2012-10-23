@@ -67,11 +67,12 @@ namespace Muftec.Test
 		[TestMethod]
 		public void StrToUpperTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
 			runtimeStack.Push(new MuftecStackItem("lowercase"));
-			Strings.StrToUpper(runtimeStack);
+			Strings.StrToUpper(data);
 			runtimeStack.Push(new MuftecStackItem("UPPERCASE"));
-			Strings.StrToUpper(runtimeStack);
+			Strings.StrToUpper(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem("LOWERCASE"));
@@ -86,11 +87,12 @@ namespace Muftec.Test
 		[TestMethod]
 		public void StrToLowerTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
 			runtimeStack.Push(new MuftecStackItem("lowercase"));
-			Strings.StrToLower(runtimeStack);
+			Strings.StrToLower(data);
 			runtimeStack.Push(new MuftecStackItem("UPPERCASE"));
-			Strings.StrToLower(runtimeStack);
+			Strings.StrToLower(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem("lowercase"));
@@ -105,10 +107,11 @@ namespace Muftec.Test
 		[TestMethod]
 		public void StrRightTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
 			runtimeStack.Push(new MuftecStackItem("teststring"));
 			runtimeStack.Push(new MuftecStackItem(5));
-			Strings.StrRight(runtimeStack);
+			Strings.StrRight(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem("tring"));
@@ -122,11 +125,12 @@ namespace Muftec.Test
 		[TestMethod]
 		public void StrMidTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
 			runtimeStack.Push(new MuftecStackItem("teststring"));
 			runtimeStack.Push(new MuftecStackItem(4));
 			runtimeStack.Push(new MuftecStackItem(5));
-			Strings.StrMid(runtimeStack);
+			Strings.StrMid(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem("tring"));
@@ -140,9 +144,10 @@ namespace Muftec.Test
 		[TestMethod]
 		public void StrLenTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("teststring"));
-			Strings.StrLen(runtimeStack);
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("teststring"));
+			Strings.StrLen(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(10));
@@ -156,10 +161,11 @@ namespace Muftec.Test
 		[TestMethod]
 		public void StrLeftTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("teststring"));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("teststring"));
 			runtimeStack.Push(new MuftecStackItem(5));
-			Strings.StrLeft(runtimeStack);
+			Strings.StrLeft(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem("tests"));
@@ -173,13 +179,14 @@ namespace Muftec.Test
 		[TestMethod]
 		public void StripTailingTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("  teststring  "));
-			Strings.StripTailing(runtimeStack);
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("  teststring  "));
+			Strings.StripTailing(data);
 			runtimeStack.Push(new MuftecStackItem("  teststring"));
-			Strings.StripTailing(runtimeStack);
+			Strings.StripTailing(data);
 			runtimeStack.Push(new MuftecStackItem("teststring  "));
-			Strings.StripTailing(runtimeStack);
+			Strings.StripTailing(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem("  teststring"));
@@ -195,13 +202,14 @@ namespace Muftec.Test
 		[TestMethod]
 		public void StripLeadingTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("  teststring  "));
-			Strings.StripLeading(runtimeStack);
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("  teststring  "));
+			Strings.StripLeading(data);
 			runtimeStack.Push(new MuftecStackItem("  teststring"));
-			Strings.StripLeading(runtimeStack);
+			Strings.StripLeading(data);
 			runtimeStack.Push(new MuftecStackItem("teststring  "));
-			Strings.StripLeading(runtimeStack);
+			Strings.StripLeading(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem("teststring  "));
@@ -217,13 +225,14 @@ namespace Muftec.Test
 		[TestMethod]
 		public void StripTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("  teststring  "));
-			Strings.Strip(runtimeStack);
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("  teststring  "));
+			Strings.Strip(data);
 			runtimeStack.Push(new MuftecStackItem("  teststring"));
-			Strings.Strip(runtimeStack);
+			Strings.Strip(data);
 			runtimeStack.Push(new MuftecStackItem("teststring  "));
-			Strings.Strip(runtimeStack);
+			Strings.Strip(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem("teststring"));
@@ -239,16 +248,17 @@ namespace Muftec.Test
 		[TestMethod]
 		public void StringCompareTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("teststring"));
 			runtimeStack.Push(new MuftecStackItem("teststring"));
-			runtimeStack.Push(new MuftecStackItem("teststring"));
-			Strings.StringCompare(runtimeStack);
+			Strings.StringCompare(data);
 			runtimeStack.Push(new MuftecStackItem("teststring"));
 			runtimeStack.Push(new MuftecStackItem("TESTSTRiNG"));
-			Strings.StringCompare(runtimeStack);
+			Strings.StringCompare(data);
 			runtimeStack.Push(new MuftecStackItem("teststring"));
 			runtimeStack.Push(new MuftecStackItem("sototallywrong"));
-			Strings.StringCompare(runtimeStack);
+			Strings.StringCompare(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(1));
@@ -264,16 +274,17 @@ namespace Muftec.Test
 		[TestMethod]
 		public void StringCompareITest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("teststring"));
 			runtimeStack.Push(new MuftecStackItem("teststring"));
-			runtimeStack.Push(new MuftecStackItem("teststring"));
-			Strings.StringCompareI(runtimeStack);
+			Strings.StringCompareI(data);
 			runtimeStack.Push(new MuftecStackItem("teststring"));
 			runtimeStack.Push(new MuftecStackItem("TESTSTRiNG"));
-			Strings.StringCompareI(runtimeStack);
+			Strings.StringCompareI(data);
 			runtimeStack.Push(new MuftecStackItem("teststring"));
 			runtimeStack.Push(new MuftecStackItem("sototallywrong"));
-			Strings.StringCompareI(runtimeStack);
+			Strings.StringCompareI(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(1));
@@ -289,10 +300,11 @@ namespace Muftec.Test
 		[TestMethod]
 		public void StrCutTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("teststring"));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("teststring"));
 			runtimeStack.Push(new MuftecStackItem(3));
-			Strings.StrCut(runtimeStack);
+			Strings.StrCut(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem("tes"));
@@ -307,10 +319,11 @@ namespace Muftec.Test
 		[TestMethod]
 		public void SplitReverseTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("teststring"));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("teststring"));
 			runtimeStack.Push(new MuftecStackItem("s"));
-			Strings.SplitReverse(runtimeStack);
+			Strings.SplitReverse(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem("test"));
@@ -325,10 +338,11 @@ namespace Muftec.Test
 		[TestMethod]
 		public void SplitTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("teststring"));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("teststring"));
 			runtimeStack.Push(new MuftecStackItem("s"));
-			Strings.Split(runtimeStack);
+			Strings.Split(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem("te"));
@@ -343,13 +357,14 @@ namespace Muftec.Test
 		[TestMethod]
 		public void InStrReverseTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("teststring"));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("teststring"));
 			runtimeStack.Push(new MuftecStackItem("s"));
-			Strings.InStrReverse(runtimeStack);
+			Strings.InStrReverse(data);
 			runtimeStack.Push(new MuftecStackItem("teststring"));
 			runtimeStack.Push(new MuftecStackItem("z"));
-			Strings.InStrReverse(runtimeStack);
+			Strings.InStrReverse(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(4));
@@ -364,13 +379,14 @@ namespace Muftec.Test
 		[TestMethod]
 		public void InStrTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("teststring"));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("teststring"));
 			runtimeStack.Push(new MuftecStackItem("s"));
-			Strings.InStr(runtimeStack);
+			Strings.InStr(data);
 			runtimeStack.Push(new MuftecStackItem("teststring"));
 			runtimeStack.Push(new MuftecStackItem("z"));
-			Strings.InStr(runtimeStack);
+			Strings.InStr(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(2));
@@ -385,13 +401,14 @@ namespace Muftec.Test
 		[TestMethod]
 		public void ExplodeTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("test:string"));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("test:string"));
 			runtimeStack.Push(new MuftecStackItem(":"));
-			Strings.Explode(runtimeStack);
+			Strings.Explode(data);
 			runtimeStack.Push(new MuftecStackItem("teststring"));
 			runtimeStack.Push(new MuftecStackItem(":"));
-			Strings.Explode(runtimeStack);
+			Strings.Explode(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(2));
@@ -409,11 +426,12 @@ namespace Muftec.Test
 		[TestMethod]
 		public void SubstituteTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("test_string"));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("test_string"));
 			runtimeStack.Push(new MuftecStackItem(" "));
 			runtimeStack.Push(new MuftecStackItem("_"));
-			Strings.Substitute(runtimeStack);
+			Strings.Substitute(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem("test string"));
@@ -427,10 +445,11 @@ namespace Muftec.Test
 		[TestMethod]
 		public void ConcatenateTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("test"));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("test"));
 			runtimeStack.Push(new MuftecStackItem("string"));
-			Strings.Concatenate(runtimeStack);
+			Strings.Concatenate(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem("teststring"));

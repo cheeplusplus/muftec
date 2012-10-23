@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Muftec.Lib
 {
-	public delegate void OpCodePointer(Stack<MuftecStackItem> stack);
+	public delegate void OpCodePointer(OpCodeData stack);
 
 	public class MuftecLibSystem
 	{
@@ -25,7 +25,7 @@ namespace Muftec.Lib
 		/// </summary>
 		public MuftecLibSystem()
 		{
-		    var internalOps = new OpCodePointer[] {ReadVariable, SetVariable, LoadLibraryDLL};
+		    var internalOps = new OpCodePointer[] {ReadVariable, SetVariable, LoadLibraryDLL, Abort};
             AddOpToCache(internalOps);
 		}
 
@@ -69,32 +69,32 @@ namespace Muftec.Lib
 
         #region Internal opcodes
         [OpCode("!")]
-		private void ReadVariable(Stack<MuftecStackItem> runtimeStack)
+		private void ReadVariable(OpCodeData data)
 		{
-			var item1 = Shared.Pop(runtimeStack);
+            var item1 = Shared.Pop(data.RuntimeStack);
 			
             if (item1.Type == MuftecType.Variable)
 			{
 				if (_globalVariableList.ContainsKey(item1.Item.ToString()))
 				{
-					runtimeStack.Push(_globalVariableList[item1.Item.ToString()]);
+                    data.RuntimeStack.Push(_globalVariableList[item1.Item.ToString()]);
 				}
 				else
 				{
-					throw new MuftecInvalidStackItemTypeException(runtimeStack);
+                    throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 				}
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+                throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 		}
 
 		[OpCode("@")]
-		private void SetVariable(Stack<MuftecStackItem> runtimeStack)
+        private void SetVariable(OpCodeData data)
 		{
-			var item1 = Shared.Pop(runtimeStack);
-			var item2 = Shared.Pop(runtimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
+            var item2 = Shared.Pop(data.RuntimeStack);
 			
             if (item1.Type == MuftecType.Variable)
 			{
@@ -102,24 +102,23 @@ namespace Muftec.Lib
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+                throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 		}
 
 		[OpCode("loadlibdll")]
-		private void LoadLibraryDLL(Stack<MuftecStackItem> runtimeStack)
+        private void LoadLibraryDLL(OpCodeData data)
 		{
-			var item1 = Shared.Pop(runtimeStack);
-
-			if (item1.Type == MuftecType.String)
-			{
-				AddLibrary((string)item1.Item);
-			}
-			else
-			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
-			}
+            var library = Shared.PopStr(data.RuntimeStack);
+			AddLibrary(library);
 		}
+
+        [OpCode("abort", Magic = MagicOpcodes.Abort)]
+        private void Abort(OpCodeData data)
+        {
+            var message = Shared.PopStr(data.RuntimeStack);
+            Console.WriteLine("ABORT (line {0}): {1}", data.LineNumber, message);
+        }
         #endregion
 
         #region Library functions
@@ -187,12 +186,13 @@ namespace Muftec.Lib
         /// Execute an opcode.
         /// </summary>
         /// <param name="opCode">Opcode name to execute.</param>
-        /// <param name="runtimeStack">Runtime stack to execute.</param>
-        public void ExecOpCode(string opCode, Stack<MuftecStackItem> runtimeStack)
+        /// <param name="data">Opcode data to pass.</param>
+        /// <returns>The magic opcode used, if any.</returns>
+        public MagicOpcodes ExecOpCode(string opCode, OpCodeData data)
 		{
 			if (!_opcodeCache.ContainsKey(opCode))
 			{
-				throw new MuftecGeneralException(runtimeStack);
+				throw new MuftecGeneralException(data.RuntimeStack);
 			}
 
             if (Shared.IsDebug())
@@ -204,7 +204,9 @@ namespace Muftec.Lib
             var opCodeItem = _opcodeCache[opCode];
 
 		    // Handle exception catching inside the language here
-		    opCodeItem.Pointer(runtimeStack);
+		    opCodeItem.Pointer(data);
+
+            return opCodeItem.Attribute.Magic;
 		}
 
         /// <summary>
@@ -214,7 +216,8 @@ namespace Muftec.Lib
         /// <param name="runtimeStack">Runtime stack to use.</param>
         /// <param name="variableList">List of variables.</param>
         /// <param name="functionList">List of defined functions.</param>
-		public void Run(Queue<MuftecStackItem> execStack, Stack<MuftecStackItem> runtimeStack, IEnumerable<string> variableList = null, IEnumerable<KeyValuePair<string, Queue<MuftecStackItem>>> functionList = null)
+        /// <returns>Stop execution if true.</returns>
+		public bool Run(Queue<MuftecStackItem> execStack, Stack<MuftecStackItem> runtimeStack, IEnumerable<string> variableList = null, IEnumerable<KeyValuePair<string, Queue<MuftecStackItem>>> functionList = null)
 		{
             // Add variables to global variable list
             if (variableList != null)
@@ -259,7 +262,7 @@ namespace Muftec.Lib
 		                    var queue = new Queue<MuftecStackItem>(_globalFunctionList[funcName]);
 
 		                    // TODO: Support local variables
-		                    Run(queue, runtimeStack);
+		                    return Run(queue, runtimeStack);
 		                }
 		                else
 		                {
@@ -269,7 +272,19 @@ namespace Muftec.Lib
 
                     // Execute a library opcode
 		            case MuftecType.OpCode:
-		                ExecOpCode(currStackItem.Item.ToString(), runtimeStack);
+                        // Collect opcode data
+		                var data = new OpCodeData(runtimeStack, currStackItem.LineNumber);
+
+                        // Execute the opcode
+		                var magic = ExecOpCode(currStackItem.Item.ToString(), data);
+
+                        // Handle post-execution magic
+                        switch (magic)
+                        {
+                            case MagicOpcodes.Abort:
+                                // Abort by exiting loop
+                                return true;
+                        }
 		                break;
 
                     // Handle a conditional container
@@ -289,6 +304,8 @@ namespace Muftec.Lib
 		                break;
 		        }
 		    }
+
+            return false;
 		}
         #endregion
     }

@@ -67,15 +67,16 @@ namespace Muftec.Test
 		[TestMethod]
 		public void AbsoluteValTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(-2));
-			Math.AbsoluteVal(runtimeStack);
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(-2));
+			Math.AbsoluteVal(data);
 			runtimeStack.Push(new MuftecStackItem(5));
-			Math.AbsoluteVal(runtimeStack);
+			Math.AbsoluteVal(data);
 			runtimeStack.Push(new MuftecStackItem(5f));
-			Math.AbsoluteVal(runtimeStack);
+			Math.AbsoluteVal(data);
 			runtimeStack.Push(new MuftecStackItem(-5.8));
-			Math.AbsoluteVal(runtimeStack);
+			Math.AbsoluteVal(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(2));
@@ -92,16 +93,17 @@ namespace Muftec.Test
 		[TestMethod]
 		public void AddTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(3));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(3));
 			runtimeStack.Push(new MuftecStackItem(9));
-			Math.Add(runtimeStack);
+			Math.Add(data);
 			runtimeStack.Push(new MuftecStackItem(3.1));
 			runtimeStack.Push(new MuftecStackItem(9));
-			Math.Add(runtimeStack);
+			Math.Add(data);
 			runtimeStack.Push(new MuftecStackItem(3.25));
 			runtimeStack.Push(new MuftecStackItem(9.25));
-			Math.Add(runtimeStack);
+			Math.Add(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(12));
@@ -117,9 +119,10 @@ namespace Muftec.Test
 		[TestMethod]
 		public void CeilingTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(3.2));
-			Math.Ceiling(runtimeStack);
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(3.2));
+			Math.Ceiling(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(4f));
@@ -133,13 +136,14 @@ namespace Muftec.Test
 		[TestMethod]
 		public void DivideTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(8));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(8));
 			runtimeStack.Push(new MuftecStackItem(2));
-			Math.Divide(runtimeStack);
+			Math.Divide(data);
 			runtimeStack.Push(new MuftecStackItem(10));
 			runtimeStack.Push(new MuftecStackItem(2.5));
-			Math.Divide(runtimeStack);
+			Math.Divide(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(4));
@@ -154,10 +158,11 @@ namespace Muftec.Test
 		[TestMethod]
 		public void ExponentTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(3));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(3));
 			runtimeStack.Push(new MuftecStackItem(2));
-			Math.Exponent(runtimeStack);
+			Math.Exponent(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(9f));
@@ -171,9 +176,10 @@ namespace Muftec.Test
 		[TestMethod]
 		public void FloorTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(3.8));
-			Math.Floor(runtimeStack);
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(3.8));
+			Math.Floor(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(3f));
@@ -187,11 +193,12 @@ namespace Muftec.Test
 		[TestMethod]
 		public void MinusMinusTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(5));
-			Math.MinusMinus(runtimeStack);
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(5));
+			Math.MinusMinus(data);
 			runtimeStack.Push(new MuftecStackItem(10.5));
-			Math.MinusMinus(runtimeStack);
+			Math.MinusMinus(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(4));
@@ -206,16 +213,17 @@ namespace Muftec.Test
 		[TestMethod]
 		public void ModulusTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(3));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(3));
 			runtimeStack.Push(new MuftecStackItem(2));
-			Math.Modulus(runtimeStack);
+			Math.Modulus(data);
 			runtimeStack.Push(new MuftecStackItem(10.5));
 			runtimeStack.Push(new MuftecStackItem(2.5));
-			Math.Modulus(runtimeStack);
+			Math.Modulus(data);
 			runtimeStack.Push(new MuftecStackItem(3));
 			runtimeStack.Push(new MuftecStackItem(2.5));
-			Math.Modulus(runtimeStack);
+			Math.Modulus(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(1));
@@ -231,16 +239,17 @@ namespace Muftec.Test
 		[TestMethod]
 		public void MultiplyTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(3));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(3));
 			runtimeStack.Push(new MuftecStackItem(4));
-			Math.Multiply(runtimeStack);
+			Math.Multiply(data);
 			runtimeStack.Push(new MuftecStackItem(3.5));
 			runtimeStack.Push(new MuftecStackItem(4));
-			Math.Multiply(runtimeStack);
+			Math.Multiply(data);
 			runtimeStack.Push(new MuftecStackItem(10.5));
 			runtimeStack.Push(new MuftecStackItem(4.5));
-			Math.Multiply(runtimeStack);
+			Math.Multiply(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(12));
@@ -256,11 +265,12 @@ namespace Muftec.Test
 		[TestMethod]
 		public void PlusPlusTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(3));
-			Math.PlusPlus(runtimeStack);
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(3));
+			Math.PlusPlus(data);
 			runtimeStack.Push(new MuftecStackItem(9.5));
-			Math.PlusPlus(runtimeStack);
+			Math.PlusPlus(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(4));
@@ -275,16 +285,17 @@ namespace Muftec.Test
 		[TestMethod]
 		public void RoundTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(3.239));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(3.239));
 			runtimeStack.Push(new MuftecStackItem(2));
-			Math.Round(runtimeStack);
+			Math.Round(data);
 			runtimeStack.Push(new MuftecStackItem(3.9));
 			runtimeStack.Push(new MuftecStackItem(0));
-			Math.Round(runtimeStack);
+			Math.Round(data);
 			runtimeStack.Push(new MuftecStackItem(3f));
 			runtimeStack.Push(new MuftecStackItem(0));
-			Math.Round(runtimeStack);
+			Math.Round(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(3.24));
@@ -300,19 +311,20 @@ namespace Muftec.Test
 		[TestMethod]
 		public void SignTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(-10));
-			Math.Sign(runtimeStack);
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(-10));
+			Math.Sign(data);
 			runtimeStack.Push(new MuftecStackItem(-10.5));
-			Math.Sign(runtimeStack);
+			Math.Sign(data);
 			runtimeStack.Push(new MuftecStackItem(0));
-			Math.Sign(runtimeStack);
+			Math.Sign(data);
 			runtimeStack.Push(new MuftecStackItem(0.0f));
-			Math.Sign(runtimeStack);
+			Math.Sign(data);
 			runtimeStack.Push(new MuftecStackItem(7));
-			Math.Sign(runtimeStack);
+			Math.Sign(data);
 			runtimeStack.Push(new MuftecStackItem(7.5));
-			Math.Sign(runtimeStack);
+			Math.Sign(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(-1));
@@ -331,11 +343,12 @@ namespace Muftec.Test
 		[TestMethod]
 		public void SquareRootTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(9));
-			Math.SquareRoot(runtimeStack);
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(9));
+			Math.SquareRoot(data);
 			runtimeStack.Push(new MuftecStackItem(9f));
-			Math.SquareRoot(runtimeStack);
+			Math.SquareRoot(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(3f));
@@ -350,16 +363,17 @@ namespace Muftec.Test
 		[TestMethod]
 		public void SubtractTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(9));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(9));
 			runtimeStack.Push(new MuftecStackItem(2));
-			Math.Subtract(runtimeStack);
+			Math.Subtract(data);
 			runtimeStack.Push(new MuftecStackItem(9.5));
 			runtimeStack.Push(new MuftecStackItem(2));
-			Math.Subtract(runtimeStack);
+			Math.Subtract(data);
 			runtimeStack.Push(new MuftecStackItem(9.5));
 			runtimeStack.Push(new MuftecStackItem(2.4));
-			Math.Subtract(runtimeStack);
+			Math.Subtract(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(7));

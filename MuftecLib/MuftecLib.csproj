@@ -73,6 +73,7 @@
     <Compile Include="MuftecLibSystem.cs" />
     <Compile Include="MuftecStackItem.cs" />
     <Compile Include="MuftecType.cs" />
+    <Compile Include="OpCodeData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared.cs" />
   </ItemGroup>

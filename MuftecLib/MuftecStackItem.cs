@@ -9,32 +9,26 @@ namespace Muftec.Lib
     {
         public MuftecType Type { get; private set; }
         public object Item { get; private set; }
+        public int LineNumber { get; private set; }
 
-        public MuftecStackItem(int value)
+        private MuftecStackItem(object value, MuftecType type, int lineNumber = 0)
         {
-            Type = MuftecType.Integer;
+            Type = type;
             Item = value;
+            LineNumber = lineNumber;
         }
 
-        public MuftecStackItem(bool value)
-        {
-            Type = MuftecType.Integer;
-            Item = value ? 1 : 0;
-        }
+        public MuftecStackItem(int value, int lineNumber = 0) : this(value, MuftecType.Integer, lineNumber) { }
 
-        public MuftecStackItem(double value)
-        {
-            Type = MuftecType.Float;
-            Item = value;
-        }
+        public MuftecStackItem(bool value, int lineNumber = 0) : this(value ? 1 : 0, MuftecType.Integer, lineNumber) { }
 
-        public MuftecStackItem(string value)
-        {
-            Type = MuftecType.String;
-            Item = value;
-        }
+        public MuftecStackItem(double value, int lineNumber = 0) : this(value, MuftecType.Float, lineNumber) { }
 
-        public MuftecStackItem(string value, MuftecAdvType type)
+        public MuftecStackItem(string value, int lineNumber = 0) : this(value, MuftecType.String, lineNumber) { }
+
+        internal MuftecStackItem(ConditionalContainer container, int lineNumber = 0) : this(container, MuftecType.Conditional, lineNumber) { }
+
+        public MuftecStackItem(string value, MuftecAdvType type, int lineNumber = 0)
         {
             if (type == MuftecAdvType.OpCode)
             {
@@ -50,12 +44,7 @@ namespace Muftec.Lib
             }
 
             Item = value;
-        }
-
-        internal MuftecStackItem(ConditionalContainer container)
-        {
-            Type = MuftecType.Conditional;
-            Item = container;
+            LineNumber = lineNumber;
         }
 
         public override bool Equals(object obj)

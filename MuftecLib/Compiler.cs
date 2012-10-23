@@ -45,20 +45,23 @@ namespace Muftec.Lib
             var appState = new ApplicationCore(variables, functions);
             var evaluator = new EvaluatorState(appState);
 
-            // Parse sections
             var lineNum = 1;
-
-            foreach (var tokens in text.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries).Select(line => line.Split(' ')))
+            
+            // Get each line to count
+            foreach (var lines in text.Replace("\r", "").Split('\n'))
             {
-                foreach (var token in tokens.Select(s => s.Trim()))
+                evaluator.Core.LineNumber = lineNum;
+
+                // Split tokens in line
+                foreach (var token in lines.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()))
                 {
-                    evaluator.Core.LineNumber = lineNum;
                     evaluator.EvaluateToken(token);
                 }
 
                 lineNum++;
             }
 
+            // Return compiler output
             return new CompilerOutput { Variables = variables, Functions = functions, MainFunction = evaluator.LastFunction };
         }
 

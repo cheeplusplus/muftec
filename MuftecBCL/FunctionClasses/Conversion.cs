@@ -13,12 +13,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 2 itof ( returns ) 2.0
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("itof")]
-		public static void IntToFloat(Stack<MuftecStackItem> runtimeStack)
+		public static void IntToFloat(OpCodeData data)
 		{
-			var item1 = Shared.PopInt(runtimeStack);
-			runtimeStack.Push(new MuftecStackItem(Convert.ToDouble(item1)));
+			var item1 = Shared.PopInt(data.RuntimeStack);
+			data.RuntimeStack.Push(new MuftecStackItem(Convert.ToDouble(item1)));
 		}
 
 		/// <summary>
@@ -28,12 +28,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 2 itos ( returns ) "2"
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("itos")]
-		public static void IntToString(Stack<MuftecStackItem> runtimeStack)
+		public static void IntToString(OpCodeData data)
 		{
-			var item1 = Shared.PopStringify(runtimeStack);
-			runtimeStack.Push(new MuftecStackItem(item1));
+			var item1 = Shared.PopStringify(data.RuntimeStack);
+			data.RuntimeStack.Push(new MuftecStackItem(item1));
 		}
 
 		/// <summary>
@@ -43,12 +43,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 2.7 ftoi ( returns ) 2
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("ftoi")]
-		public static void FloatToIntTruncate(Stack<MuftecStackItem> runtimeStack)
+		public static void FloatToIntTruncate(OpCodeData data)
 		{
-			var item1 = Shared.PopFloat(runtimeStack);
-			runtimeStack.Push(new MuftecStackItem(Convert.ToInt32(item1)));
+			var item1 = Shared.PopFloat(data.RuntimeStack);
+			data.RuntimeStack.Push(new MuftecStackItem(Convert.ToInt32(item1)));
 		}
 
 		/// <summary>
@@ -58,12 +58,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 2.7 ftoir ( returns ) 3
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("ftior")]
-		public static void FloatToIntRound(Stack<MuftecStackItem> runtimeStack)
+		public static void FloatToIntRound(OpCodeData data)
 		{
-			var item1 = Shared.PopFloat(runtimeStack);
-			runtimeStack.Push(new MuftecStackItem((int)System.Math.Round(item1, 0)));
+			var item1 = Shared.PopFloat(data.RuntimeStack);
+			data.RuntimeStack.Push(new MuftecStackItem((int)System.Math.Round(item1, 0)));
 		}
 
 		/// <summary>
@@ -73,12 +73,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 2.7 ftos ( returns ) "2.7"
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("ftos")]
-		public static void FloatToString(Stack<MuftecStackItem> runtimeStack)
+		public static void FloatToString(OpCodeData data)
 		{
-			var item1 = Shared.PopStringify(runtimeStack);
-			runtimeStack.Push(new MuftecStackItem(item1));
+			var item1 = Shared.PopStringify(data.RuntimeStack);
+			data.RuntimeStack.Push(new MuftecStackItem(item1));
 		}
 
 		/// <summary>
@@ -88,11 +88,11 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "2" stoi ( returns ) 2
 		/// </example>
-        /// <param name="runtimeStack">Reference to the current execution stack</param>
+        /// <param name="data">Opcode reference data.</param>
 		[OpCode("stoi")]
-		public static void StringToInt(Stack<MuftecStackItem> runtimeStack)
+		public static void StringToInt(OpCodeData data)
 		{
-			var item1 = Shared.PopStr(runtimeStack);
+			var item1 = Shared.PopStr(data.RuntimeStack);
 			MuftecStackItem result;
 		    int outVal;
 
@@ -102,10 +102,10 @@ namespace Muftec.BCL.FunctionClasses
             }
             else
             {
-                throw new MuftecInvalidConversionException(runtimeStack, "Could not convert from type String to Integer.");
+                throw new MuftecInvalidConversionException(data.RuntimeStack, "Could not convert from type String to Integer.");
             }
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -115,11 +115,11 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "2.2" stof ( returns ) 2.2
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("stof")]
-		public static void StringToFloat(Stack<MuftecStackItem> runtimeStack)
+		public static void StringToFloat(OpCodeData data)
 		{
-			var item1 = Shared.PopStr(runtimeStack);
+			var item1 = Shared.PopStr(data.RuntimeStack);
 			MuftecStackItem result;
             float outVal;
 
@@ -129,10 +129,10 @@ namespace Muftec.BCL.FunctionClasses
             }
             else
             {
-                throw new MuftecInvalidConversionException(runtimeStack, "Could not convert from type String to Float");
+                throw new MuftecInvalidConversionException(data.RuntimeStack, "Could not convert from type String to Float");
             }
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 	}
 }

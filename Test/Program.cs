@@ -60,21 +60,24 @@ namespace Test
             {
                 Console.WriteLine("Exception: " + ex.Message);
             }
-
-            Console.WriteLine("Executing compiled code.");
-		    runStack = new Stack<MuftecStackItem>();
-
-            try
+            finally
             {
-                system.Run(execQueue, runStack, variables, functions);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception: " + ex.Message);
+                Console.WriteLine("Executing compiled code.");
+                runStack = new Stack<MuftecStackItem>();
+
+                try
+                {
+                    system.Run(execQueue, runStack, variables, functions);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Exception: " + ex.Message);
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("Complete.");
             }
 
-		    Console.WriteLine();
-            Console.WriteLine("Complete.");
 		    Console.WriteLine();
             Console.WriteLine("Press any key.");
 		    Console.ReadKey(true);

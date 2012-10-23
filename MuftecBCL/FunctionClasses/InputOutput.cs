@@ -13,11 +13,11 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "Hello, world!" print ( -- )
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("print")]
-		public static void Print(Stack<MuftecStackItem> runtimeStack)
+		public static void Print(OpCodeData data)
 		{
-			Console.WriteLine(Shared.PopStringify(runtimeStack));
+			Console.WriteLine(Shared.PopStringify(data.RuntimeStack));
 		}
 
 		/// <summary>
@@ -27,11 +27,11 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// read ( returns ) "Hello!"
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("read")]
-		public static void ReadLine(Stack<MuftecStackItem> runtimeStack)
+		public static void ReadLine(OpCodeData data)
 		{
-			runtimeStack.Push(new MuftecStackItem(Console.ReadLine()));
+			data.RuntimeStack.Push(new MuftecStackItem(Console.ReadLine()));
 		}
 	}
 }

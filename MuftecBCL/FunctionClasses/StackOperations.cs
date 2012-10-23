@@ -12,11 +12,11 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 1 2 "c" depth ( returns ) 3
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("depth")]
-		public static void StackDepth(Stack<MuftecStackItem> runtimeStack)
+		public static void StackDepth(OpCodeData data)
 		{
-			runtimeStack.Push(new MuftecStackItem(runtimeStack.Count));
+			data.RuntimeStack.Push(new MuftecStackItem(data.RuntimeStack.Count));
 		}
 
 		/// <summary>
@@ -26,11 +26,11 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 2 dup ( leaves ) 2 2
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("dup")]
-		public static void StackItemDup(Stack<MuftecStackItem> runtimeStack)
+		public static void StackItemDup(OpCodeData data)
 		{
-			runtimeStack.Push(runtimeStack.Peek());
+			data.RuntimeStack.Push(data.RuntimeStack.Peek());
 		}
 
 		/// <summary>
@@ -40,11 +40,11 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 1 2 3 pop ( leaves ) 1 2
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("pop")]
-		public static void StackItemPop(Stack<MuftecStackItem> runtimeStack)
+		public static void StackItemPop(OpCodeData data)
 		{
-			Shared.Pop(runtimeStack);
+			Shared.Pop(data.RuntimeStack);
 		}
 
 		/// <summary>
@@ -54,18 +54,18 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 1 2 3 2 popn ( leaves ) 1
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("popn")]
-		public static void StackItemPopN(Stack<MuftecStackItem> runtimeStack)
+		public static void StackItemPopN(OpCodeData data)
 		{
-			var item1 = Shared.Pop(runtimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			for (var i = 0; i < (int)item1.Item; i++)
 			{
-				Shared.Pop(runtimeStack);
+				Shared.Pop(data.RuntimeStack);
 			}
 
 			// Call TrimExcess in case we got rid of a lot of elements
-			runtimeStack.TrimExcess();
+			data.RuntimeStack.TrimExcess();
 		}
 
 		/// <summary>
@@ -75,14 +75,14 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 1 2 3 swap ( returns ) 1 3 2
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("swap")]
-		public static void StackItemSwap(Stack<MuftecStackItem> runtimeStack)
+		public static void StackItemSwap(OpCodeData data)
 		{
-			var item2 = Shared.Pop(runtimeStack);
-			var item1 = Shared.Pop(runtimeStack);
-			runtimeStack.Push(item2);
-			runtimeStack.Push(item1);
+			var item2 = Shared.Pop(data.RuntimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
+			data.RuntimeStack.Push(item2);
+			data.RuntimeStack.Push(item1);
 		}
 	}
 }

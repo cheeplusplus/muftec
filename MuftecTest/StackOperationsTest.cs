@@ -67,10 +67,11 @@ namespace Muftec.Test
 		[TestMethod]
 		public void StackItemSwapTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("Alfredo"));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("Alfredo"));
 			runtimeStack.Push(new MuftecStackItem(1.99));
-			StackOperations.StackItemSwap(runtimeStack);
+			StackOperations.StackItemSwap(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(1.99));
@@ -85,12 +86,13 @@ namespace Muftec.Test
 		[TestMethod]
 		public void StackItemPopNTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("Alfredo"));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("Alfredo"));
 			runtimeStack.Push(new MuftecStackItem(1.99));
 			runtimeStack.Push(new MuftecStackItem("Class action"));
 			runtimeStack.Push(new MuftecStackItem(2));
-			StackOperations.StackItemPopN(runtimeStack);
+			StackOperations.StackItemPopN(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem("Alfredo"));
@@ -104,10 +106,11 @@ namespace Muftec.Test
 		[TestMethod]
 		public void StackItemPopTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("Alfredo"));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("Alfredo"));
 			runtimeStack.Push(new MuftecStackItem(1.99));
-			StackOperations.StackItemPop(runtimeStack);
+			StackOperations.StackItemPop(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem("Alfredo"));
@@ -121,10 +124,11 @@ namespace Muftec.Test
 		[TestMethod]
 		public void StackItemDupTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("Alfredo"));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("Alfredo"));
 			runtimeStack.Push(new MuftecStackItem(1.99));
-			StackOperations.StackItemDup(runtimeStack);
+			StackOperations.StackItemDup(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem("Alfredo"));
@@ -140,10 +144,11 @@ namespace Muftec.Test
 		[TestMethod]
 		public void StackDepthTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("Alfredo"));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("Alfredo"));
 			runtimeStack.Push(new MuftecStackItem(1.99));
-			StackOperations.StackDepth(runtimeStack);
+			StackOperations.StackDepth(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
             runtimeStackExpected.Push(new MuftecStackItem("Alfredo"));

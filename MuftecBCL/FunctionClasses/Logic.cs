@@ -12,12 +12,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 2 3 = ( returns ) 0
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("=")]
-		public static void EqualTo(Stack<MuftecStackItem> runtimeStack)
+		public static void EqualTo(OpCodeData data)
 		{
-			var item2 = Shared.Pop(runtimeStack);
-			var item1 = Shared.Pop(runtimeStack);
+			var item2 = Shared.Pop(data.RuntimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
@@ -30,10 +30,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -43,12 +43,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 2 3 &lt; ( returns ) 1
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("<")]
-		public static void LessThan(Stack<MuftecStackItem> runtimeStack)
+		public static void LessThan(OpCodeData data)
 		{
-			var item2 = Shared.Pop(runtimeStack);
-			var item1 = Shared.Pop(runtimeStack);
+			var item2 = Shared.Pop(data.RuntimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
@@ -61,10 +61,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -74,12 +74,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 2 3 &lt;= ( returns ) 1
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("<=")]
-		public static void LessThanOrEqualTo(Stack<MuftecStackItem> runtimeStack)
+		public static void LessThanOrEqualTo(OpCodeData data)
 		{
-			var item2 = Shared.Pop(runtimeStack);
-			var item1 = Shared.Pop(runtimeStack);
+			var item2 = Shared.Pop(data.RuntimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
@@ -92,10 +92,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -105,12 +105,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 2 3 &gt; ( returns ) 0
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode(">")]
-		public static void GreaterThan(Stack<MuftecStackItem> runtimeStack)
+		public static void GreaterThan(OpCodeData data)
 		{
-			var item2 = Shared.Pop(runtimeStack);
-			var item1 = Shared.Pop(runtimeStack);
+			var item2 = Shared.Pop(data.RuntimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
@@ -123,10 +123,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -136,12 +136,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 2 3 &gt;= ( returns ) 1
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode(">=")]
-		public static void GreaterThanOrEqualTo(Stack<MuftecStackItem> runtimeStack)
+		public static void GreaterThanOrEqualTo(OpCodeData data)
 		{
-			var item2 = Shared.Pop(runtimeStack);
-			var item1 = Shared.Pop(runtimeStack);
+			var item2 = Shared.Pop(data.RuntimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
@@ -154,10 +154,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -167,12 +167,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 1 1 and ( returns ) 1
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("and")]
-		public static void LogicalAnd(Stack<MuftecStackItem> runtimeStack)
+		public static void LogicalAnd(OpCodeData data)
 		{
-			var item2 = Shared.Pop(runtimeStack);
-			var item1 = Shared.Pop(runtimeStack);
+			var item2 = Shared.Pop(data.RuntimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if (((item1.Type == MuftecType.Integer) || (item1.Type == MuftecType.Float)) && 
@@ -182,10 +182,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -195,12 +195,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 1 0 or ( returns ) 1
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("or")]
-		public static void LogicalOr(Stack<MuftecStackItem> runtimeStack)
+		public static void LogicalOr(OpCodeData data)
 		{
-			var item2 = Shared.Pop(runtimeStack);
-			var item1 = Shared.Pop(runtimeStack);
+			var item2 = Shared.Pop(data.RuntimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if (((item1.Type == MuftecType.Integer) || (item1.Type == MuftecType.Float)) &&
@@ -210,10 +210,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -223,12 +223,12 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 1 1 xor ( returns ) 0
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("xor")]
-		public static void LogicalXor(Stack<MuftecStackItem> runtimeStack)
+		public static void LogicalXor(OpCodeData data)
 		{
-			var item2 = Shared.Pop(runtimeStack);
-			var item1 = Shared.Pop(runtimeStack);
+			var item2 = Shared.Pop(data.RuntimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if (((item1.Type == MuftecType.Integer) || (item1.Type == MuftecType.Float)) &&
@@ -238,10 +238,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -251,11 +251,11 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 1 not ( returns ) 0
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("not")]
-		public static void LogicalNot(Stack<MuftecStackItem> runtimeStack)
+		public static void LogicalNot(OpCodeData data)
 		{
-			var item1 = Shared.Pop(runtimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if ((item1.Type == MuftecType.Integer) || (item1.Type == MuftecType.Float))
@@ -264,10 +264,10 @@ namespace Muftec.BCL.FunctionClasses
 			}
 			else
 			{
-				throw new MuftecInvalidStackItemTypeException(runtimeStack);
+				throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -277,11 +277,11 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "Blah" int? ( returns ) 0
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("int?")]
-		public static void IsInt(Stack<MuftecStackItem> runtimeStack)
+		public static void IsInt(OpCodeData data)
 		{
-			var item1 = Shared.Pop(runtimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if (item1.Type == MuftecType.Integer)
@@ -293,7 +293,7 @@ namespace Muftec.BCL.FunctionClasses
 				result = new MuftecStackItem(0);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -303,11 +303,11 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// "Blah" bool? ( returns ) 0
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("bool?")]
-		public static void IsBool(Stack<MuftecStackItem> runtimeStack)
+		public static void IsBool(OpCodeData data)
 		{
-			var item1 = Shared.Pop(runtimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 			MuftecStackItem result;
 
 			if (item1.Type == MuftecType.Integer)
@@ -328,7 +328,7 @@ namespace Muftec.BCL.FunctionClasses
 				result = new MuftecStackItem(0);
 			}
 
-			runtimeStack.Push(result);
+			data.RuntimeStack.Push(result);
 		}
 
 		/// <summary>
@@ -338,13 +338,13 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 1.23 float? ( returns ) 1
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("float?")]
-		public static void IsFloat(Stack<MuftecStackItem> runtimeStack)
+		public static void IsFloat(OpCodeData data)
 		{
-			var item1 = Shared.Pop(runtimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 
-			runtimeStack.Push((item1.Type == MuftecType.Float) ? new MuftecStackItem(1) : new MuftecStackItem(0));
+			data.RuntimeStack.Push((item1.Type == MuftecType.Float) ? new MuftecStackItem(1) : new MuftecStackItem(0));
 		}
 
 		/// <summary>
@@ -354,13 +354,13 @@ namespace Muftec.BCL.FunctionClasses
 		/// <example>
 		/// 1.23 string? ( returns ) 0
 		/// </example>
-		/// <param name="runtimeStack">Reference to the current execution stack</param>
+		/// <param name="data">Opcode reference data.</param>
 		[OpCode("string?")]
-		public static void IsString(Stack<MuftecStackItem> runtimeStack)
+		public static void IsString(OpCodeData data)
 		{
-			var item1 = Shared.Pop(runtimeStack);
+			var item1 = Shared.Pop(data.RuntimeStack);
 
-			runtimeStack.Push((item1.Type == MuftecType.String) ? new MuftecStackItem(1) : new MuftecStackItem(0));
+			data.RuntimeStack.Push((item1.Type == MuftecType.String) ? new MuftecStackItem(1) : new MuftecStackItem(0));
 		}
 	}
 }

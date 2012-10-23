@@ -67,13 +67,14 @@ namespace Muftec.Test
 		[TestMethod]
 		public void LogicalXorTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(1));
 			runtimeStack.Push(new MuftecStackItem(1));
-			runtimeStack.Push(new MuftecStackItem(1));
-			Logic.LogicalXor(runtimeStack);
+			Logic.LogicalXor(data);
 			runtimeStack.Push(new MuftecStackItem(0));
 			runtimeStack.Push(new MuftecStackItem(1));
-			Logic.LogicalXor(runtimeStack);
+			Logic.LogicalXor(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(0));
@@ -88,16 +89,17 @@ namespace Muftec.Test
 		[TestMethod]
 		public void LogicalOrTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(1));
 			runtimeStack.Push(new MuftecStackItem(1));
-			runtimeStack.Push(new MuftecStackItem(1));
-			Logic.LogicalOr(runtimeStack);
+			Logic.LogicalOr(data);
 			runtimeStack.Push(new MuftecStackItem(0));
 			runtimeStack.Push(new MuftecStackItem(1));
-			Logic.LogicalOr(runtimeStack);
+			Logic.LogicalOr(data);
 			runtimeStack.Push(new MuftecStackItem(0));
 			runtimeStack.Push(new MuftecStackItem(0));
-			Logic.LogicalOr(runtimeStack);
+			Logic.LogicalOr(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(1));
@@ -113,11 +115,12 @@ namespace Muftec.Test
 		[TestMethod]
 		public void LogicalNotTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(1));
-			Logic.LogicalNot(runtimeStack);
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(1));
+			Logic.LogicalNot(data);
 			runtimeStack.Push(new MuftecStackItem(0));
-			Logic.LogicalNot(runtimeStack);
+			Logic.LogicalNot(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(0));
@@ -132,16 +135,17 @@ namespace Muftec.Test
 		[TestMethod]
 		public void LogicalAndTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(1));
 			runtimeStack.Push(new MuftecStackItem(1));
-			runtimeStack.Push(new MuftecStackItem(1));
-			Logic.LogicalAnd(runtimeStack);
+			Logic.LogicalAnd(data);
 			runtimeStack.Push(new MuftecStackItem(0));
 			runtimeStack.Push(new MuftecStackItem(1));
-			Logic.LogicalAnd(runtimeStack);
+			Logic.LogicalAnd(data);
 			runtimeStack.Push(new MuftecStackItem(0));
 			runtimeStack.Push(new MuftecStackItem(0));
-			Logic.LogicalAnd(runtimeStack);
+			Logic.LogicalAnd(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(1));
@@ -157,16 +161,17 @@ namespace Muftec.Test
 		[TestMethod]
 		public void LessThanOrEqualToTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(5));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(5));
 			runtimeStack.Push(new MuftecStackItem(10));
-			Logic.LessThanOrEqualTo(runtimeStack);
+			Logic.LessThanOrEqualTo(data);
 			runtimeStack.Push(new MuftecStackItem(5));
 			runtimeStack.Push(new MuftecStackItem(5));
-			Logic.LessThanOrEqualTo(runtimeStack);
+			Logic.LessThanOrEqualTo(data);
 			runtimeStack.Push(new MuftecStackItem(10));
 			runtimeStack.Push(new MuftecStackItem(5));
-			Logic.LessThanOrEqualTo(runtimeStack);
+			Logic.LessThanOrEqualTo(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(1));
@@ -182,16 +187,17 @@ namespace Muftec.Test
 		[TestMethod]
 		public void LessThanTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(5));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(5));
 			runtimeStack.Push(new MuftecStackItem(10));
-			Logic.LessThan(runtimeStack);
+			Logic.LessThan(data);
 			runtimeStack.Push(new MuftecStackItem(5));
 			runtimeStack.Push(new MuftecStackItem(5));
-			Logic.LessThan(runtimeStack);
+			Logic.LessThan(data);
 			runtimeStack.Push(new MuftecStackItem(10));
 			runtimeStack.Push(new MuftecStackItem(5));
-			Logic.LessThan(runtimeStack);
+			Logic.LessThan(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(1));
@@ -207,19 +213,20 @@ namespace Muftec.Test
 		[TestMethod]
 		public void IsBoolTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("Test"));
-			Logic.IsBool(runtimeStack);
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("Test"));
+			Logic.IsBool(data);
 			runtimeStack.Push(new MuftecStackItem(1));
-			Logic.IsBool(runtimeStack);
+			Logic.IsBool(data);
 			runtimeStack.Push(new MuftecStackItem(5));
-			Logic.IsBool(runtimeStack);
+			Logic.IsBool(data);
 			runtimeStack.Push(new MuftecStackItem(10f));
-			Logic.IsBool(runtimeStack);
+			Logic.IsBool(data);
 			runtimeStack.Push(new MuftecStackItem("fake", MuftecAdvType.OpCode));
-			Logic.IsBool(runtimeStack);
+			Logic.IsBool(data);
 			runtimeStack.Push(new MuftecStackItem("fake", MuftecAdvType.OpCode));
-			Logic.IsBool(runtimeStack);
+			Logic.IsBool(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(0));
@@ -239,16 +246,17 @@ namespace Muftec.Test
 		public void IsStringTest()
 		{
 			var runtimeStack = new Stack<MuftecStackItem>();
+            var data = new OpCodeData(runtimeStack);
 			runtimeStack.Push(new MuftecStackItem("Test"));
-			Logic.IsString(runtimeStack);
+			Logic.IsString(data);
 			runtimeStack.Push(new MuftecStackItem(5));
-			Logic.IsString(runtimeStack);
+			Logic.IsString(data);
 			runtimeStack.Push(new MuftecStackItem(10f));
-			Logic.IsString(runtimeStack);
+			Logic.IsString(data);
 			runtimeStack.Push(new MuftecStackItem("fake", MuftecAdvType.OpCode));
-			Logic.IsString(runtimeStack);
+			Logic.IsString(data);
 			runtimeStack.Push(new MuftecStackItem("fake", MuftecAdvType.OpCode));
-			Logic.IsString(runtimeStack);
+			Logic.IsString(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(1));
@@ -267,16 +275,17 @@ namespace Muftec.Test
 		public void IsIntTest()
 		{
 			var runtimeStack = new Stack<MuftecStackItem>();
+            var data = new OpCodeData(runtimeStack);
 			runtimeStack.Push(new MuftecStackItem("Test"));
-			Logic.IsInt(runtimeStack);
+			Logic.IsInt(data);
 			runtimeStack.Push(new MuftecStackItem(5));
-			Logic.IsInt(runtimeStack);
+			Logic.IsInt(data);
 			runtimeStack.Push(new MuftecStackItem(10f));
-			Logic.IsInt(runtimeStack);
+			Logic.IsInt(data);
 			runtimeStack.Push(new MuftecStackItem("fake", MuftecAdvType.OpCode));
-			Logic.IsInt(runtimeStack);
+			Logic.IsInt(data);
 			runtimeStack.Push(new MuftecStackItem("fake", MuftecAdvType.OpCode));
-			Logic.IsInt(runtimeStack);
+			Logic.IsInt(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(0));
@@ -294,17 +303,18 @@ namespace Muftec.Test
 		[TestMethod]
 		public void IsFloatTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem("Test"));
-			Logic.IsFloat(runtimeStack);
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem("Test"));
+			Logic.IsFloat(data);
 			runtimeStack.Push(new MuftecStackItem(5));
-			Logic.IsFloat(runtimeStack);
+			Logic.IsFloat(data);
 			runtimeStack.Push(new MuftecStackItem(10f));
-			Logic.IsFloat(runtimeStack);
+			Logic.IsFloat(data);
 			runtimeStack.Push(new MuftecStackItem("fake", MuftecAdvType.OpCode));
-			Logic.IsFloat(runtimeStack);
+			Logic.IsFloat(data);
 			runtimeStack.Push(new MuftecStackItem("fake", MuftecAdvType.OpCode));
-			Logic.IsFloat(runtimeStack);
+			Logic.IsFloat(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(0));
@@ -322,16 +332,17 @@ namespace Muftec.Test
 		[TestMethod]
 		public void GreaterThanOrEqualToTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(5));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(5));
 			runtimeStack.Push(new MuftecStackItem(10));
-			Logic.GreaterThanOrEqualTo(runtimeStack);
+			Logic.GreaterThanOrEqualTo(data);
 			runtimeStack.Push(new MuftecStackItem(5));
 			runtimeStack.Push(new MuftecStackItem(5));
-			Logic.GreaterThanOrEqualTo(runtimeStack);
+			Logic.GreaterThanOrEqualTo(data);
 			runtimeStack.Push(new MuftecStackItem(10));
 			runtimeStack.Push(new MuftecStackItem(5));
-			Logic.GreaterThanOrEqualTo(runtimeStack);
+			Logic.GreaterThanOrEqualTo(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(0));
@@ -347,16 +358,17 @@ namespace Muftec.Test
 		[TestMethod]
 		public void GreaterThanTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(5));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(5));
 			runtimeStack.Push(new MuftecStackItem(10));
-			Logic.GreaterThan(runtimeStack);
+			Logic.GreaterThan(data);
 			runtimeStack.Push(new MuftecStackItem(5));
 			runtimeStack.Push(new MuftecStackItem(5));
-			Logic.GreaterThan(runtimeStack);
+			Logic.GreaterThan(data);
 			runtimeStack.Push(new MuftecStackItem(10));
 			runtimeStack.Push(new MuftecStackItem(5));
-			Logic.GreaterThan(runtimeStack);
+			Logic.GreaterThan(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(0));
@@ -372,13 +384,14 @@ namespace Muftec.Test
 		[TestMethod]
 		public void EqualToTest()
 		{
-			var runtimeStack = new Stack<MuftecStackItem>();
-			runtimeStack.Push(new MuftecStackItem(5));
+		    var runtimeStack = new Stack<MuftecStackItem>();
+		    var data = new OpCodeData(runtimeStack);
+		    runtimeStack.Push(new MuftecStackItem(5));
 			runtimeStack.Push(new MuftecStackItem(10));
-			Logic.EqualTo(runtimeStack);
+			Logic.EqualTo(data);
 			runtimeStack.Push(new MuftecStackItem(5));
 			runtimeStack.Push(new MuftecStackItem(5));
-			Logic.EqualTo(runtimeStack);
+			Logic.EqualTo(data);
 
 			var runtimeStackExpected = new Stack<MuftecStackItem>();
 			runtimeStackExpected.Push(new MuftecStackItem(0));

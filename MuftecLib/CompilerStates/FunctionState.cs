@@ -19,7 +19,7 @@ namespace Muftec.Lib.CompilerStates
         private ApplicationCore CreateFunctionCore(ApplicationCore existingCore)
         {
             var queue = new Queue<MuftecStackItem>();
-            return new ApplicationCore(existingCore.Variables, existingCore.Functions, queue);
+            return new ApplicationCore(existingCore.Variables, existingCore.Functions, queue, existingCore.LineNumber);
         }
 
         public bool EvaluateToken(string token)
@@ -42,6 +42,7 @@ namespace Muftec.Lib.CompilerStates
             }
 
             // Send all other tokens to the evaluator
+            Evaluator.Core.LineNumber = Core.LineNumber;
             return Evaluator.EvaluateToken(token);
         }
     }
