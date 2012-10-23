@@ -9,7 +9,13 @@ namespace Muftec.Lib
 
 	public class MuftecLibSystem
 	{
-	    private readonly Dictionary<string, OpCodePointer> _opcodeCache = new Dictionary<string, OpCodePointer>();
+        class OpCodeItem
+        {
+            public OpCodeAttribute Attribute { get; set; }
+            public OpCodePointer Pointer { get; set; }
+        }
+
+        private readonly Dictionary<string, OpCodeItem> _opcodeCache = new Dictionary<string, OpCodeItem>();
 	    private readonly Dictionary<string, MuftecStackItem> _globalVariableList = new Dictionary<string, MuftecStackItem>();
         private readonly Dictionary<string, Queue<MuftecStackItem>> _globalFunctionList = new Dictionary<string, Queue<MuftecStackItem>>();
 		private readonly List<Assembly> _libraryList = new List<Assembly>();
@@ -19,12 +25,50 @@ namespace Muftec.Lib
 		/// </summary>
 		public MuftecLibSystem()
 		{
-			_opcodeCache.Add("@", ReadVariable);
-			_opcodeCache.Add("!", SetVariable);
-			_opcodeCache.Add("loadlibdll", LoadLibraryDLL);
+		    var internalOps = new OpCodePointer[] {ReadVariable, SetVariable, LoadLibraryDLL};
+            AddOpToCache(internalOps);
 		}
 
-		[OpCode("!")]
+        #region Opcode cache functions
+        /// <summary>
+	    /// Add an opcode to the cache.
+	    /// </summary>
+	    /// <param name="item">Opcode item to add.</param>
+	    private void AddOpToCache(OpCodeItem item)
+	    {
+	        _opcodeCache.Add(item.Attribute.OpCodeName, item);
+	    }
+
+	    /// <summary>
+        /// Add an opcode to the cache.
+        /// </summary>
+        /// <param name="pointer">Opcode pointer to add.</param>
+        private void AddOpToCache(OpCodePointer pointer)
+        {
+            var newItem = new OpCodeItem
+            {
+                Pointer = pointer,
+                Attribute = pointer.Method.GetCustomAttributes(typeof(OpCodeAttribute), false).FirstOrDefault() as OpCodeAttribute
+            };
+
+            AddOpToCache(newItem);
+        }
+
+	    /// <summary>
+	    /// Add multiple opcodes to the cache.
+	    /// </summary>
+	    /// <param name="pointers">Opcode pointers to add.</param>
+	    private void AddOpToCache(IEnumerable<OpCodePointer> pointers)
+	    {
+	        foreach (var pointer in pointers)
+	        {
+	            AddOpToCache(pointer);
+	        }
+	    }
+        #endregion
+
+        #region Internal opcodes
+        [OpCode("!")]
 		private void ReadVariable(Stack<MuftecStackItem> runtimeStack)
 		{
 			var item1 = Shared.Pop(runtimeStack);
@@ -76,8 +120,10 @@ namespace Muftec.Lib
 				throw new MuftecInvalidStackItemTypeException(runtimeStack);
 			}
 		}
+        #endregion
 
-		/// <summary>
+        #region Library functions
+        /// <summary>
 		/// Add an external library DLL that inherits <see>IMuftecClassLibrary</see>
 		/// </summary>
 		/// <param name="path"></param>
@@ -115,10 +161,11 @@ namespace Muftec.Lib
                 if (code != null)
                 {
                     var opc = (OpCodePointer)Delegate.CreateDelegate(typeof(OpCodePointer), info);
+                    var opi = new OpCodeItem {Attribute = code, Pointer = opc};
 
                     try
                     {
-                        _opcodeCache.Add(code.OpCodeName, opc);
+                        AddOpToCache(opi);
                     }
                     catch (ArgumentException)
                     {
@@ -133,8 +180,14 @@ namespace Muftec.Lib
             // Add to library list
             _libraryList.Add(classAssembly);
 		}
+        #endregion
 
-		public void ExecOpCode(string opCode, Stack<MuftecStackItem> runtimeStack)
+        /// <summary>
+        /// Execute an opcode.
+        /// </summary>
+        /// <param name="opCode">Opcode name to execute.</param>
+        /// <param name="runtimeStack">Runtime stack to execute.</param>
+        public void ExecOpCode(string opCode, Stack<MuftecStackItem> runtimeStack)
 		{
 			if (!_opcodeCache.ContainsKey(opCode))
 			{
@@ -146,10 +199,20 @@ namespace Muftec.Lib
                 //MuftecGeneralException.MuftecStackTrace(runtimeStack);
             }
 
+            // Get the opcode pointer
+            var opCodeItem = _opcodeCache[opCode];
+
 		    // Handle exception catching inside the language here
-		    _opcodeCache[opCode].Invoke(runtimeStack);
+		    opCodeItem.Pointer(runtimeStack);
 		}
 
+        /// <summary>
+        /// Run an execution stack.
+        /// </summary>
+        /// <param name="execStack">Execution stack to run.</param>
+        /// <param name="runtimeStack">Runtime stack to use.</param>
+        /// <param name="variableList">List of variables.</param>
+        /// <param name="functionList">List of defined functions.</param>
 		public void Run(Queue<MuftecStackItem> execStack, Stack<MuftecStackItem> runtimeStack, IEnumerable<string> variableList = null, IEnumerable<KeyValuePair<string, Queue<MuftecStackItem>>> functionList = null)
 		{
             if (variableList != null)
