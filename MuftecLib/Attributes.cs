@@ -25,6 +25,7 @@ namespace Muftec.Lib
     public enum MagicOpcodes
     {
         None,
-        Abort
+        Abort,
+        Exit
     }
 }

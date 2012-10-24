@@ -2,11 +2,11 @@
 
 : btos ( i -- s )
 	(Converts a 'boolean' to a string)
-	if "true" else "false" then
+	if "true" exit "this won't run" else "false" then
 ;
 
 : add
-	1 1 + "test!" abort
+	1 1 +
 ;
 
 : main

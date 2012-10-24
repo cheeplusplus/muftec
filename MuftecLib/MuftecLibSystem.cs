@@ -25,7 +25,7 @@ namespace Muftec.Lib
 		/// </summary>
 		public MuftecLibSystem()
 		{
-		    var internalOps = new OpCodePointer[] {ReadVariable, SetVariable, LoadLibraryDLL, Abort};
+		    var internalOps = new OpCodePointer[] {ReadVariable, SetVariable, LoadLibraryDLL, Abort, Exit};
             AddOpToCache(internalOps);
 		}
 
@@ -119,6 +119,12 @@ namespace Muftec.Lib
             var message = Shared.PopStr(data.RuntimeStack);
             Console.WriteLine("ABORT (line {0}): {1}", data.LineNumber, message);
         }
+
+        [OpCode("exit", Magic = MagicOpcodes.Exit)]
+        private void Exit(OpCodeData data)
+        {
+            // Let magic do its magic
+        }
         #endregion
 
         #region Library functions
@@ -192,7 +198,7 @@ namespace Muftec.Lib
 		{
 			if (!_opcodeCache.ContainsKey(opCode))
 			{
-				throw new MuftecGeneralException(data.RuntimeStack);
+				throw new MuftecGeneralException(data.RuntimeStack, "Unknown symbol '" + opCode + "' on line " + data.LineNumber);
 			}
 
             if (Shared.IsDebug())
@@ -256,21 +262,23 @@ namespace Muftec.Lib
 		            case MuftecType.Function:
 		                var funcName = currStackItem.Item.ToString();
 
-		                if (_globalFunctionList.ContainsKey(funcName))
-		                {
-		                    // Make a copy of the function as it will be popped to execute
-		                    var queue = new Queue<MuftecStackItem>(_globalFunctionList[funcName]);
+                        if (_globalFunctionList.ContainsKey(funcName))
+                        {
+                            // Make a copy of the function as it will be popped to execute
+                            var queue = new Queue<MuftecStackItem>(_globalFunctionList[funcName]);
 
-		                    // TODO: Support local variables
-		                    return Run(queue, runtimeStack);
-		                }
-		                else
-		                {
-		                    throw new MuftecInvalidStackItemTypeException(runtimeStack);
-		                }
+                            // TODO: Support local variables
+                            if (Run(queue, runtimeStack))
+                                return true;
+                        }
+                        else
+                        {
+                            throw new MuftecInvalidStackItemTypeException(runtimeStack);
+                        }
+
 		                break;
 
-                    // Execute a library opcode
+		                // Execute a library opcode
 		            case MuftecType.OpCode:
                         // Collect opcode data
 		                var data = new OpCodeData(runtimeStack, currStackItem.LineNumber);
@@ -282,8 +290,11 @@ namespace Muftec.Lib
                         switch (magic)
                         {
                             case MagicOpcodes.Abort:
-                                // Abort by exiting loop
+                                // Abort by exiting loop with true
                                 return true;
+                            case MagicOpcodes.Exit:
+                                // Exit by returning from this run depth
+                                return false;
                         }
 		                break;
 
@@ -295,7 +306,10 @@ namespace Muftec.Lib
 
 		                var check = Shared.PopInt(runtimeStack);
 		                var queueToExecute = (check > 0) ? container.TrueQueue : container.FalseQueue;
-		                Run(queueToExecute, runtimeStack);
+                        
+                        if (Run(queueToExecute, runtimeStack))
+                            return true;
+
 		                break;
 
                     // Add item to runtime stack

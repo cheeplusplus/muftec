@@ -69,6 +69,10 @@ namespace Test
                 {
                     system.Run(execQueue, runStack, variables, functions);
                 }
+                catch (MuftecGeneralException ex)
+                {
+                    Console.WriteLine("Muftec exception: " + ex.Message);
+                }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Exception: " + ex.Message);
