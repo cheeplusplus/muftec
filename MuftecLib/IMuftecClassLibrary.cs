@@ -1,7 +1,7 @@
 ﻿namespace Muftec.Lib
 {
-	public interface IMuftecClassLibrary
-	{
+    public interface IMuftecClassLibrary
+    {
         string ClassLibraryName { get; }
-	}
+    }
 }

@@ -10,8 +10,8 @@ namespace Muftec.Lib
     /// <summary>
     /// Class that describes a Muftec compiler.
     /// </summary>
-	public static class Compiler
-	{
+    public static class Compiler
+    {
         /// <summary>
         /// Class that describes compiler output.
         /// </summary>
@@ -104,5 +104,5 @@ namespace Muftec.Lib
         {
             throw new NotImplementedException();
         }
-	}
+    }
 }
