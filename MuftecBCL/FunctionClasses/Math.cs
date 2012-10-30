@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Muftec.Lib;
 
@@ -373,9 +374,75 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("round")]
         public static void Round(OpCodeData data)
         {
-            var item2 = Shared.Pop(data.RuntimeStack, MuftecType.Integer);
-            var item1 = Shared.Pop(data.RuntimeStack, MuftecType.Float);
-            data.RuntimeStack.Push(new MuftecStackItem(System.Math.Round(item1.AsDouble(), (int)item2.Item)));
+            var precision = Shared.PopInt(data.RuntimeStack);
+            var value = Shared.PopFloat(data.RuntimeStack);
+            data.RuntimeStack.Push(new MuftecStackItem(System.Math.Round(value, precision)));
+        }
+
+        /// <summary>
+        /// getseed ( -- s )
+        /// Returns the current SRAND seed setting.
+        /// </summary>
+        /// <example>
+        /// getseed ( returns ) "abcd"
+        /// </example>
+        /// <param name="data">Opcode reference data.</param>
+        [OpCode("getseed")]
+        public static void GetRandomSeed(OpCodeData data)
+        {
+            var seed = new MuftecStackItem(String.IsNullOrEmpty(data.RandomSeed) ? "" : data.RandomSeed);
+            data.RuntimeStack.Push(seed);
+        }
+
+        /// <summary>
+        /// setseed ( s -- )
+        /// Sets the seed for SRAND. If SRAND is called before SETSEED is called, then
+        /// SRAND is seeded with a semi-random value.
+        /// </summary>
+        /// <example>
+        /// "test" setseed ( returns )
+        /// </example>
+        /// <param name="data">Opcode reference data.</param>
+        [OpCode("setseed")]
+        public static void SetRandomSeed(OpCodeData data)
+        {
+            var seed = Shared.PopStr(data.RuntimeStack);
+            data.RandomSeed = seed;
+            data.RandomSeeded = new Random(seed.GetHashCode());
+        }
+
+        /// <summary>
+        /// srand ( -- i )
+        /// Generates a random seeded number.
+        /// </summary>
+        /// <example>
+        /// srand ( returns ) 43624096
+        /// </example>
+        /// <param name="data">Opcode reference data.</param>
+        [OpCode("srand")]
+        public static void SeededRandom(OpCodeData data)
+        {
+            if (data.RandomSeeded == null)
+                data.RandomSeeded = new Random();
+
+            data.RuntimeStack.Push(new MuftecStackItem(data.RandomSeeded.Next(0, int.MaxValue)));
+        }
+
+        /// <summary>
+        /// random ( -- i )
+        /// Returns a random integer from 0 to MAXINT.
+        /// </summary>
+        /// <example>
+        /// "test" setseed ( returns )
+        /// </example>
+        /// <param name="data">Opcode reference data.</param>
+        [OpCode("random")]
+        public static void Random(OpCodeData data)
+        {
+            if (data.RandomUnseeded == null)
+                data.RandomUnseeded = new Random();
+
+            data.RuntimeStack.Push(new MuftecStackItem(data.RandomUnseeded.Next(0, int.MaxValue)));
         }
     }
 }

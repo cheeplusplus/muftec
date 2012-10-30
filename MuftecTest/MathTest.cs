@@ -382,5 +382,89 @@ namespace Muftec.Test
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
+
+        /// <summary>
+        /// A test for GetRandomSeed
+        ///</summary>
+        [TestMethod]
+        public void GetRandomSeedTest()
+        {
+            var runtimeStack = new Stack<MuftecStackItem>();
+            var data = new OpCodeData(runtimeStack);
+            Math.GetRandomSeed(data);
+            runtimeStack.Push(new MuftecStackItem("abracadabra"));
+            Math.SetRandomSeed(data);
+            Math.GetRandomSeed(data);
+
+            var runtimeStackExpected = new Stack<MuftecStackItem>();
+            runtimeStackExpected.Push(new MuftecStackItem(""));
+            runtimeStackExpected.Push(new MuftecStackItem("abracadabra"));
+
+            TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
+        }
+
+        /// <summary>
+        /// A test for SetRandomSeed
+        ///</summary>
+        [TestMethod]
+        public void SetRandomSeedTest()
+        {
+            var runtimeStack = new Stack<MuftecStackItem>();
+            var data = new OpCodeData(runtimeStack);
+            runtimeStack.Push(new MuftecStackItem("abracadabra"));
+            Math.SetRandomSeed(data);
+            Math.GetRandomSeed(data);
+
+            var runtimeStackExpected = new Stack<MuftecStackItem>();
+            runtimeStackExpected.Push(new MuftecStackItem("abracadabra"));
+
+            TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
+        }
+
+        /// <summary>
+        /// A test for SeededRandom
+        /// </summary>
+        [TestMethod]
+        public void SeededRandomTest()
+        {
+            var runtimeStack = new Stack<MuftecStackItem>();
+            var data = new OpCodeData(runtimeStack);
+            runtimeStack.Push(new MuftecStackItem("abracadabra"));
+            Math.SetRandomSeed(data);
+            Math.SeededRandom(data);
+            Math.SeededRandom(data);
+
+            Assert.AreEqual(runtimeStack.Count, 2);
+
+            // For now just make sure it returned two integers and they're not the same
+            var firstVal = runtimeStack.Pop();
+            Assert.AreEqual(firstVal.Type, MuftecType.Integer);
+            var secondVal = runtimeStack.Pop();
+            Assert.AreEqual(secondVal.Type, MuftecType.Integer);
+
+            Assert.AreNotEqual((int)firstVal.Item, (int)secondVal.Item);
+        }
+
+        /// <summary>
+        /// A test for Random
+        /// </summary>
+        [TestMethod]
+        public void RandomTest()
+        {
+            var runtimeStack = new Stack<MuftecStackItem>();
+            var data = new OpCodeData(runtimeStack);
+            Math.Random(data);
+            Math.Random(data);
+
+            Assert.AreEqual(runtimeStack.Count, 2);
+
+            // For now just make sure it returned two integers and they're not the same
+            var firstVal = runtimeStack.Pop();
+            Assert.AreEqual(firstVal.Type, MuftecType.Integer);
+            var secondVal = runtimeStack.Pop();
+            Assert.AreEqual(secondVal.Type, MuftecType.Integer);
+
+            Assert.AreNotEqual((int)firstVal.Item, (int)secondVal.Item);
+        }
     }
 }
