@@ -10,6 +10,8 @@ namespace Muftec.Lib
     {
         public string OpCodeName { get; private set; }
 
+        public string[] Aliases { get; private set; }
+
         public MagicOpcodes Magic { get; set; }
 
         /// <summary>
@@ -19,6 +21,12 @@ namespace Muftec.Lib
         public OpCodeAttribute(string opCodeName)
         {
             OpCodeName = opCodeName;
+        }
+
+        public OpCodeAttribute(string opCodeName, params string[] opCodeNames)
+        {
+            OpCodeName = opCodeName;
+            Aliases = opCodeNames;
         }
     }
 

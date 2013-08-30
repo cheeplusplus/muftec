@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FunctionClasses\Conversion.cs" />
+    <Compile Include="FunctionClasses\Float.cs" />
     <Compile Include="FunctionClasses\InputOutput.cs" />
     <Compile Include="FunctionClasses\Logic.cs" />
     <Compile Include="FunctionClasses\Math.cs" />

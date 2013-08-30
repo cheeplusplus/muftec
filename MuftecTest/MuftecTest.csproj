@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConversionTest.cs" />
+    <Compile Include="FloatTest.cs" />
     <Compile Include="InputOutputTest.cs" />
     <Compile Include="LogicTest.cs" />
     <Compile Include="MathTest.cs" />

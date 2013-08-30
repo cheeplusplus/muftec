@@ -6,6 +6,11 @@ namespace Muftec.Lib
     public enum MuftecType
     {
         /// <summary>
+        /// Invalid state!
+        /// </summary>
+        None,
+
+        /// <summary>
         /// Integer (ex. 24)
         /// </summary>
         Integer,

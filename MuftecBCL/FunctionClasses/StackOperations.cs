@@ -268,7 +268,7 @@ namespace Muftec.BCL.FunctionClasses
         }
 
         /// <summary>
-        /// lreverse ( ?n..?1 i -- ?1..?n )
+        /// lreverse ( ?n..?1 i -- ?1..?n i )
         /// Reverses the order of the top i stack items, leaving i.
         /// </summary>
         /// <example>

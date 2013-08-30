@@ -164,13 +164,13 @@ namespace Muftec.BCL.FunctionClasses
 
         /// <summary>
         /// ^ (n1 n2 -- float3)
-        /// Perform the modulus operation on the first two numbers in the stack.
+        /// Returns n1 to the power of n2.
         /// </summary>
         /// <example>
         /// 4 5 ^ ( returns ) 1024.0
         /// </example>
         /// <param name="data">Opcode reference data.</param>
-        [OpCode("^")]
+        [OpCode("^", "pow")]
         public static void Exponent(OpCodeData data)
         {
             var item2 = Shared.Pop(data.RuntimeStack);
@@ -258,7 +258,7 @@ namespace Muftec.BCL.FunctionClasses
         /// -3 abs ( returns ) -3
         /// </example>
         /// <param name="data">Opcode reference data.</param>
-        [OpCode("abs")]
+        [OpCode("abs", "fabs")]
         public static void AbsoluteVal(OpCodeData data)
         {
             var item1 = Shared.Pop(data.RuntimeStack);
@@ -308,75 +308,6 @@ namespace Muftec.BCL.FunctionClasses
             }
 
             data.RuntimeStack.Push(result);
-        }
-
-        /// <summary>
-        /// floor (float1 -- float2)
-        /// Round a float to the lowest integer, returned as a float.
-        /// </summary>
-        /// <example>
-        /// 2.7 floor ( returns ) 2
-        /// </example>
-        /// <param name="data">Opcode reference data.</param>
-        [OpCode("floor")]
-        public static void Floor(OpCodeData data)
-        {
-            var item1 = Shared.Pop(data.RuntimeStack, MuftecType.Float);
-            data.RuntimeStack.Push(new MuftecStackItem(System.Math.Floor(item1.AsDouble())));
-        }
-
-        /// <summary>
-        /// ceil (float1 -- float2)
-        /// Round a float to the highest integer, returned as a float.
-        /// </summary>
-        /// <example>
-        /// 2.2 floor ( returns ) 3
-        /// </example>
-        /// <param name="data">Opcode reference data.</param>
-        [OpCode("ceil")]
-        public static void Ceiling(OpCodeData data)
-        {
-            var item1 = Shared.Pop(data.RuntimeStack, MuftecType.Float);
-            data.RuntimeStack.Push(new MuftecStackItem(System.Math.Ceiling(item1.AsDouble())));
-        }
-
-        /// <summary>
-        /// sqrt (float1 -- float2)
-        /// Calculate the square root of a number, returned as a float.
-        /// </summary>
-        /// <example>
-        /// 9 sqrt ( returns ) 3
-        /// </example>
-        /// <param name="data">Opcode reference data.</param>
-        [OpCode("sqrt")]
-        public static void SquareRoot(OpCodeData data)
-        {
-            var item1 = Shared.Pop(data.RuntimeStack);
-
-            if ((item1.Type == MuftecType.Float) || (item1.Type == MuftecType.Integer))
-            {
-                data.RuntimeStack.Push(new MuftecStackItem(System.Math.Sqrt(item1.AsDouble())));
-            }
-            else
-            {
-                throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
-            }
-        }
-
-        /// <summary>
-        /// round (float1 int1 -- float2)
-        /// Round a number to a given precision.
-        /// </summary>
-        /// <example>
-        /// 7.899 1 round ( returns ) 7.9
-        /// </example>
-        /// <param name="data">Opcode reference data.</param>
-        [OpCode("round")]
-        public static void Round(OpCodeData data)
-        {
-            var precision = Shared.PopInt(data.RuntimeStack);
-            var value = Shared.PopFloat(data.RuntimeStack);
-            data.RuntimeStack.Push(new MuftecStackItem(System.Math.Round(value, precision)));
         }
 
         /// <summary>

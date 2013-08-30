@@ -14,7 +14,7 @@ namespace Muftec.BCL.FunctionClasses
         /// 2 itof ( returns ) 2.0
         /// </example>
         /// <param name="data">Opcode reference data.</param>
-        [OpCode("itof")]
+        [OpCode("itof", "float")]
         public static void IntToFloat(OpCodeData data)
         {
             var item1 = Shared.PopInt(data.RuntimeStack);
@@ -73,8 +73,9 @@ namespace Muftec.BCL.FunctionClasses
         /// <example>
         /// 2.7 ftos ( returns ) "2.7"
         /// </example>
+        /// <remarks>ftostr and ftostrc may not behave for compatibility.</remarks>
         /// <param name="data">Opcode reference data.</param>
-        [OpCode("ftos")]
+        [OpCode("ftos", "ftostr", "ftostrc")]
         public static void FloatToString(OpCodeData data)
         {
             var item1 = Shared.PopStringify(data.RuntimeStack);
@@ -116,7 +117,7 @@ namespace Muftec.BCL.FunctionClasses
         /// "2.2" stof ( returns ) 2.2
         /// </example>
         /// <param name="data">Opcode reference data.</param>
-        [OpCode("stof")]
+        [OpCode("stof", "strtof")]
         public static void StringToFloat(OpCodeData data)
         {
             var item1 = Shared.PopStr(data.RuntimeStack);

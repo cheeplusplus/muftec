@@ -15,7 +15,24 @@ namespace Muftec.Test
             for (var i = 0; i < expectedArr.Length; i++)
             {
                 Assert.AreEqual(expectedArr[i].Type, actualArr[i].Type);
-                Assert.AreEqual(expectedArr[i].Item, actualArr[i].Item);
+
+                // Handle specific AreEqual cases
+                switch (expectedArr[i].Type)
+                {
+                    case MuftecType.Float:
+                        var expectedFloat = expectedArr[i].AsDouble();
+                        var actualFloat = actualArr[i].AsDouble();
+                        Assert.AreEqual(expectedFloat, actualFloat, 0.00000001); // 8 digits of precision
+                        break;
+                    case MuftecType.String:
+                        var expectedStr = (string) expectedArr[i].Item;
+                        var actualStr = (string) actualArr[i].Item;
+                        Assert.AreEqual(expectedStr, actualStr);
+                        break;
+                    default:
+                        Assert.AreEqual(expectedArr[i].Item, actualArr[i].Item);
+                        break;
+                }
             }
         }
     }

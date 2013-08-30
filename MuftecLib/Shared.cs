@@ -8,9 +8,15 @@ namespace Muftec.Lib
         /// Pop the next item from the stack
         /// </summary>
         /// <param name="runtimeStack">Reference to the current execution stack</param>
+        /// <param name="itemType">The expected type of the next stack item</param>
         /// <returns>The next stack item</returns>
-        public static MuftecStackItem Pop(Stack<MuftecStackItem> runtimeStack)
+        public static MuftecStackItem Pop(this Stack<MuftecStackItem> runtimeStack, MuftecType itemType = MuftecType.None)
         {
+            if ((itemType != MuftecType.None) && (runtimeStack.Peek().Type != itemType))
+            {
+                throw new MuftecInvalidStackItemTypeException(runtimeStack);
+            }
+
             if (runtimeStack.Count == 0)
             {
                 throw new MuftecStackUnderflowException();
@@ -20,27 +26,11 @@ namespace Muftec.Lib
         }
 
         /// <summary>
-        /// Pop the next item from the stack and check its type
-        /// </summary>
-        /// <param name="runtimeStack">The current execution stack</param>
-        /// <param name="itemType">The expected type of the next stack item</param>
-        /// <returns>The next stack item</returns>
-        public static MuftecStackItem Pop(Stack<MuftecStackItem> runtimeStack, MuftecType itemType)
-        {
-            if (runtimeStack.Peek().Type != itemType)
-            {
-                throw new MuftecInvalidStackItemTypeException(runtimeStack);
-            }
-            
-            return Pop(runtimeStack);
-        }
-
-        /// <summary>
         /// Pop the next item from the stack and coerce to a string
         /// </summary>
         /// <param name="runtimeStack">The current execution stack</param>
         /// <returns>The next stack item</returns>
-        public static string PopStringify(Stack<MuftecStackItem> runtimeStack)
+        public static string PopStringify(this Stack<MuftecStackItem> runtimeStack)
         {
             return Pop(runtimeStack).ToString();
         }
@@ -50,7 +40,7 @@ namespace Muftec.Lib
         /// </summary>
         /// <param name="runtimeStack">The current execution stack</param>
         /// <returns>The next stack item</returns>
-        public static string PopStr(Stack<MuftecStackItem> runtimeStack)
+        public static string PopStr(this Stack<MuftecStackItem> runtimeStack)
         {
             return (string)Pop(runtimeStack, MuftecType.String).Item;
         }
@@ -60,7 +50,7 @@ namespace Muftec.Lib
         /// </summary>
         /// <param name="runtimeStack">The current execution stack</param>
         /// <returns>The next stack item</returns>
-        public static int PopInt(Stack<MuftecStackItem> runtimeStack)
+        public static int PopInt(this Stack<MuftecStackItem> runtimeStack)
         {
             return (int)Pop(runtimeStack, MuftecType.Integer).Item;
         }
@@ -70,9 +60,29 @@ namespace Muftec.Lib
         /// </summary>
         /// <param name="runtimeStack">The current execution stack</param>
         /// <returns>The next stack item</returns>
-        public static double PopFloat(Stack<MuftecStackItem> runtimeStack)
+        public static double PopFloat(this Stack<MuftecStackItem> runtimeStack)
         {
             return (double)Pop(runtimeStack, MuftecType.Float).Item;
+        }
+
+        public static void Push(this Stack<MuftecStackItem> runtimeStack, int value)
+        {
+            runtimeStack.Push(new MuftecStackItem(value));
+        }
+
+        public static void Push(this Stack<MuftecStackItem> runtimeStack, bool value)
+        {
+            runtimeStack.Push(new MuftecStackItem(value));
+        }
+
+        public static void Push(this Stack<MuftecStackItem> runtimeStack, double value)
+        {
+            runtimeStack.Push(new MuftecStackItem(value));
+        }
+
+        public static void Push(this Stack<MuftecStackItem> runtimeStack, string value)
+        {
+            runtimeStack.Push(new MuftecStackItem(value));
         }
 
         /// <summary>

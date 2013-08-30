@@ -113,22 +113,7 @@ namespace Muftec.Test
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
 
-        /// <summary>
-        ///A test for Ceiling
-        ///</summary>
-        [TestMethod]
-        public void CeilingTest()
-        {
-            var runtimeStack = new Stack<MuftecStackItem>();
-            var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem(3.2));
-            Math.Ceiling(data);
 
-            var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem(4f));
-
-            TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
-        }
 
         /// <summary>
         ///A test for Divide
@@ -166,23 +151,6 @@ namespace Muftec.Test
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
             runtimeStackExpected.Push(new MuftecStackItem(9f));
-
-            TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
-        }
-
-        /// <summary>
-        ///A test for Floor
-        ///</summary>
-        [TestMethod]
-        public void FloorTest()
-        {
-            var runtimeStack = new Stack<MuftecStackItem>();
-            var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem(3.8));
-            Math.Floor(data);
-
-            var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem(3f));
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -280,32 +248,6 @@ namespace Muftec.Test
         }
 
         /// <summary>
-        ///A test for Round
-        ///</summary>
-        [TestMethod]
-        public void RoundTest()
-        {
-            var runtimeStack = new Stack<MuftecStackItem>();
-            var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem(3.239));
-            runtimeStack.Push(new MuftecStackItem(2));
-            Math.Round(data);
-            runtimeStack.Push(new MuftecStackItem(3.9));
-            runtimeStack.Push(new MuftecStackItem(0));
-            Math.Round(data);
-            runtimeStack.Push(new MuftecStackItem(3f));
-            runtimeStack.Push(new MuftecStackItem(0));
-            Math.Round(data);
-
-            var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem(3.24));
-            runtimeStackExpected.Push(new MuftecStackItem(4f));
-            runtimeStackExpected.Push(new MuftecStackItem(3f));
-
-            TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
-        }
-
-        /// <summary>
         ///A test for Sign
         ///</summary>
         [TestMethod]
@@ -333,26 +275,6 @@ namespace Muftec.Test
             runtimeStackExpected.Push(new MuftecStackItem(0));
             runtimeStackExpected.Push(new MuftecStackItem(1));
             runtimeStackExpected.Push(new MuftecStackItem(1));
-
-            TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
-        }
-
-        /// <summary>
-        ///A test for SquareRoot
-        ///</summary>
-        [TestMethod]
-        public void SquareRootTest()
-        {
-            var runtimeStack = new Stack<MuftecStackItem>();
-            var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem(9));
-            Math.SquareRoot(data);
-            runtimeStack.Push(new MuftecStackItem(9f));
-            Math.SquareRoot(data);
-
-            var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem(3f));
-            runtimeStackExpected.Push(new MuftecStackItem(3f));
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }

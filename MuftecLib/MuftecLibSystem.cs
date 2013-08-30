@@ -37,6 +37,14 @@ namespace Muftec.Lib
         private void AddOpToCache(OpCodeItem item)
         {
             _opcodeCache.Add(item.Attribute.OpCodeName, item);
+            
+            if (item.Attribute.Aliases != null)
+            {
+                foreach (var alias in item.Attribute.Aliases)
+                {
+                    _opcodeCache.Add(alias, item);
+                }
+            }
         }
 
         /// <summary>

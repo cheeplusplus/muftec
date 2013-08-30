@@ -84,5 +84,10 @@ namespace Muftec.Lib
             
             return (double)Item;
         }
-    };
+
+        public bool IsNumber()
+        {
+            return ((Type == MuftecType.Integer) || (Type == MuftecType.Float));
+        }
+    }
 }
