@@ -17,8 +17,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("strcat")]
         public static void Concatenate(OpCodeData data)
         {
-            var item2 = Shared.PopStr(data.RuntimeStack);
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item2 = data.RuntimeStack.PopStr();
+            var item1 = data.RuntimeStack.PopStr();
 
             data.RuntimeStack.Push(new MuftecStackItem(String.Concat(item1, item2)));
         }
@@ -34,8 +34,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("strcmp")]
         public static void StringCompare(OpCodeData data)
         {
-            var item2 = Shared.PopStr(data.RuntimeStack);
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item2 = data.RuntimeStack.PopStr();
+            var item1 = data.RuntimeStack.PopStr();
 
             data.RuntimeStack.Push(new MuftecStackItem(item1 == item2));
         }
@@ -51,8 +51,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("strcmpi")]
         public static void StringCompareI(OpCodeData data)
         {
-            var item2 = Shared.PopStr(data.RuntimeStack);
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item2 = data.RuntimeStack.PopStr();
+            var item1 = data.RuntimeStack.PopStr();
 
             data.RuntimeStack.Push(new MuftecStackItem(item1.ToLower() == item2.ToLower()));
         }
@@ -68,9 +68,9 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("subst")]
         public static void Substitute(OpCodeData data)
         {
-            var item3 = Shared.PopStr(data.RuntimeStack);
-            var item2 = Shared.PopStr(data.RuntimeStack);
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item3 = data.RuntimeStack.PopStr();
+            var item2 = data.RuntimeStack.PopStr();
+            var item1 = data.RuntimeStack.PopStr();
 
             data.RuntimeStack.Push(new MuftecStackItem(item1.Replace(item3, item2)));
         }
@@ -86,8 +86,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("strleft")]
         public static void StrLeft(OpCodeData data)
         {
-            var item2 = Shared.PopInt(data.RuntimeStack);
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item2 = data.RuntimeStack.PopInt();
+            var item1 = data.RuntimeStack.PopStr();
 
             data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(0, item2)));
         }
@@ -103,8 +103,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("strright")]
         public static void StrRight(OpCodeData data)
         {
-            var item2 = Shared.PopInt(data.RuntimeStack);
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item2 = data.RuntimeStack.PopInt();
+            var item1 = data.RuntimeStack.PopStr();
 
             data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(item1.Length - item2, item2)));
         }
@@ -120,9 +120,9 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("midstr")]
         public static void StrMid(OpCodeData data)
         {
-            var item3 = Shared.PopInt(data.RuntimeStack);
-            var item2 = Shared.PopInt(data.RuntimeStack);
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item3 = data.RuntimeStack.PopInt();
+            var item2 = data.RuntimeStack.PopInt();
+            var item1 = data.RuntimeStack.PopStr();
 
             data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(item2 + 1, item3)));
         }
@@ -138,8 +138,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("explode")]
         public static void Explode(OpCodeData data)
         {
-            var item2 = Shared.PopStr(data.RuntimeStack);
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item2 = data.RuntimeStack.PopStr();
+            var item1 = data.RuntimeStack.PopStr();
             var exploded = item1.Split(new[] { item2 }, StringSplitOptions.None);
 
             data.RuntimeStack.Push(new MuftecStackItem(exploded.Length));
@@ -161,8 +161,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("instr")]
         public static void InStr(OpCodeData data)
         {
-            var item2 = Shared.PopStr(data.RuntimeStack);
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item2 = data.RuntimeStack.PopStr();
+            var item1 = data.RuntimeStack.PopStr();
 
             data.RuntimeStack.Push(new MuftecStackItem(item1.IndexOf(item2)));
         }
@@ -178,8 +178,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("rinstr")]
         public static void InStrReverse(OpCodeData data)
         {
-            var item2 = Shared.PopStr(data.RuntimeStack);
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item2 = data.RuntimeStack.PopStr();
+            var item1 = data.RuntimeStack.PopStr();
 
             data.RuntimeStack.Push(new MuftecStackItem(item1.LastIndexOf(item2)));
         }
@@ -195,8 +195,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("split")]
         public static void Split(OpCodeData data)
         {
-            var item2 = Shared.PopStr(data.RuntimeStack);
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item2 = data.RuntimeStack.PopStr();
+            var item1 = data.RuntimeStack.PopStr();
 
             var splitPos = item1.IndexOf(item2);
 
@@ -215,8 +215,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("rsplit")]
         public static void SplitReverse(OpCodeData data)
         {
-            var item2 = Shared.PopStr(data.RuntimeStack);
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item2 = data.RuntimeStack.PopStr();
+            var item1 = data.RuntimeStack.PopStr();
 
             int splitPos = item1.LastIndexOf(item2);
 
@@ -235,8 +235,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("strcut")]
         public static void StrCut(OpCodeData data)
         {
-            var item2 = Shared.PopInt(data.RuntimeStack);
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item2 = data.RuntimeStack.PopInt();
+            var item1 = data.RuntimeStack.PopStr();
 
             data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(0, item2)));
             data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(item2)));
@@ -253,7 +253,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("strip")]
         public static void Strip(OpCodeData data)
         {
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item1 = data.RuntimeStack.PopStr();
             data.RuntimeStack.Push(new MuftecStackItem(item1.Trim()));
         }
 
@@ -268,7 +268,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("striplead")]
         public static void StripLeading(OpCodeData data)
         {
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item1 = data.RuntimeStack.PopStr();
             data.RuntimeStack.Push(new MuftecStackItem(item1.TrimStart()));
         }
 
@@ -283,7 +283,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("striptail")]
         public static void StripTailing(OpCodeData data)
         {
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item1 = data.RuntimeStack.PopStr();
             data.RuntimeStack.Push(new MuftecStackItem(item1.TrimEnd()));
         }
 
@@ -298,7 +298,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("strlen")]
         public static void StrLen(OpCodeData data)
         {
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item1 = data.RuntimeStack.PopStr();
             data.RuntimeStack.Push(new MuftecStackItem(item1.Length));
         }
 
@@ -313,7 +313,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("toupper")]
         public static void StrToUpper(OpCodeData data)
         {
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item1 = data.RuntimeStack.PopStr();
             data.RuntimeStack.Push(new MuftecStackItem(item1.ToUpper()));
         }
 
@@ -328,7 +328,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("tolower")]
         public static void StrToLower(OpCodeData data)
         {
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item1 = data.RuntimeStack.PopStr();
             data.RuntimeStack.Push(new MuftecStackItem(item1.ToLower()));
         }
     }

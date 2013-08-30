@@ -45,7 +45,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("dupn")]
         public static void StackItemDupN(OpCodeData data)
         {
-            var count = Shared.PopInt(data.RuntimeStack);
+            var count = data.RuntimeStack.PopInt();
             if (count == 0) return;
             if (count < 0)
                 throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
@@ -150,7 +150,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("rotate")]
         public static void StackItemRotate(OpCodeData data)
         {
-            var position = Shared.PopInt(data.RuntimeStack);
+            var position = data.RuntimeStack.PopInt();
             if (position == 0) return; // nop
 
             var popped = new List<MuftecStackItem>();
@@ -186,7 +186,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("pick")]
         public static void StackItemPick(OpCodeData data)
         {
-            var position = Shared.PopInt(data.RuntimeStack);
+            var position = data.RuntimeStack.PopInt();
             if (position == 0) return;
             if (position < 0)
                 throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
@@ -207,7 +207,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("put")]
         public static void StackItemPut(OpCodeData data)
         {
-            var position = Shared.PopInt(data.RuntimeStack);
+            var position = data.RuntimeStack.PopInt();
             if (position <= 0)
                 throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 
@@ -246,7 +246,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("reverse")]
         public static void StackItemReverse(OpCodeData data)
         {
-            var count = Shared.PopInt(data.RuntimeStack);
+            var count = data.RuntimeStack.PopInt();
             if (count == 0) return;
             if (count < 0)
                 throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
@@ -278,7 +278,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("lreverse")]
         public static void StackItemLReverse(OpCodeData data)
         {
-            var count = Shared.PopInt(data.RuntimeStack);
+            var count = data.RuntimeStack.PopInt();
             if (count == 0) return;
             if (count < 0)
                 throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);

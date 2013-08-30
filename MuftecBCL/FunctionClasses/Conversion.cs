@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Muftec.Lib;
 
 namespace Muftec.BCL.FunctionClasses
@@ -17,7 +16,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("itof", "float")]
         public static void IntToFloat(OpCodeData data)
         {
-            var item1 = Shared.PopInt(data.RuntimeStack);
+            var item1 = data.RuntimeStack.PopInt();
             data.RuntimeStack.Push(new MuftecStackItem(Convert.ToDouble(item1)));
         }
 
@@ -32,7 +31,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("itos")]
         public static void IntToString(OpCodeData data)
         {
-            var item1 = Shared.PopStringify(data.RuntimeStack);
+            var item1 = data.RuntimeStack.PopStringify();
             data.RuntimeStack.Push(new MuftecStackItem(item1));
         }
 
@@ -47,7 +46,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("ftoi")]
         public static void FloatToIntTruncate(OpCodeData data)
         {
-            var item1 = Shared.PopFloat(data.RuntimeStack);
+            var item1 = data.RuntimeStack.PopFloat();
             data.RuntimeStack.Push(new MuftecStackItem(Convert.ToInt32(item1)));
         }
 
@@ -62,7 +61,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("ftior")]
         public static void FloatToIntRound(OpCodeData data)
         {
-            var item1 = Shared.PopFloat(data.RuntimeStack);
+            var item1 = data.RuntimeStack.PopFloat();
             data.RuntimeStack.Push(new MuftecStackItem((int)System.Math.Round(item1, 0)));
         }
 
@@ -78,7 +77,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("ftos", "ftostr", "ftostrc")]
         public static void FloatToString(OpCodeData data)
         {
-            var item1 = Shared.PopStringify(data.RuntimeStack);
+            var item1 = data.RuntimeStack.PopStringify();
             data.RuntimeStack.Push(new MuftecStackItem(item1));
         }
 
@@ -93,7 +92,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("stoi")]
         public static void StringToInt(OpCodeData data)
         {
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item1 = data.RuntimeStack.PopStr();
             MuftecStackItem result;
             int outVal;
 
@@ -120,7 +119,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("stof", "strtof")]
         public static void StringToFloat(OpCodeData data)
         {
-            var item1 = Shared.PopStr(data.RuntimeStack);
+            var item1 = data.RuntimeStack.PopStr();
             MuftecStackItem result;
             float outVal;
 

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Muftec.Lib;
 
 namespace Muftec.BCL.FunctionClasses
@@ -337,7 +336,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("setseed")]
         public static void SetRandomSeed(OpCodeData data)
         {
-            var seed = Shared.PopStr(data.RuntimeStack);
+            var seed = data.RuntimeStack.PopStr();
             data.RandomSeed = seed;
             data.RandomSeeded = new Random(seed.GetHashCode());
         }

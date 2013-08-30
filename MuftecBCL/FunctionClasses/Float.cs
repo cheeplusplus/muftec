@@ -1,24 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System;
 using Muftec.Lib;
 
 namespace Muftec.BCL.FunctionClasses
 {
     public static class Float
     {
-        /*
-        acos           asin           atan           atan2          ceil
-        clear          clear_error    cos            diff3          dist3d
-        epsilon        error?         error_bit      error_name     error_num
-        error_str      exp            fabs           float          floor
-        fmod           frand          ftostr         ftostrc        gaussian
-        inf            is_set?        log            log10          modf
-        pi             polar_to_xyz   pow            round          set_error
-        sin            sqrt           strtof         tan            xyz_to_polar
-        */
-
         /// <summary>
         /// acos (f -- f)
         /// Returns the inverse cosine of a float.

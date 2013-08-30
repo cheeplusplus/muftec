@@ -117,14 +117,14 @@ namespace Muftec.Lib
         [OpCode("loadlibdll")]
         private void LoadLibraryDLL(OpCodeData data)
         {
-            var library = Shared.PopStr(data.RuntimeStack);
+            var library = data.RuntimeStack.PopStr();
             AddLibrary(library);
         }
 
         [OpCode("abort", Magic = MagicOpcodes.Abort)]
         private void Abort(OpCodeData data)
         {
-            var message = Shared.PopStr(data.RuntimeStack);
+            var message = data.RuntimeStack.PopStr();
             Console.WriteLine("ABORT (line {0}): {1}", data.LineNumber, message);
         }
 
@@ -312,7 +312,7 @@ namespace Muftec.Lib
                         if (container == null)
                             throw new MuftecGeneralException(runtimeStack, "Unable to process conditional statement.");
 
-                        var check = Shared.PopInt(runtimeStack);
+                        var check = runtimeStack.PopInt();
                         var queueToExecute = (check > 0) ? container.TrueQueue : container.FalseQueue;
                         
                         if (Run(queueToExecute, runtimeStack))

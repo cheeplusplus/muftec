@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Muftec.Lib;
 
 namespace Muftec.BCL.FunctionClasses
@@ -17,7 +16,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("print")]
         public static void Print(OpCodeData data)
         {
-            Console.WriteLine(Shared.PopStringify(data.RuntimeStack));
+            Console.WriteLine(data.RuntimeStack.PopStringify());
         }
 
         /// <summary>
