@@ -1,17 +1,54 @@
 ﻿using System;
+using System.Linq;
 
 namespace Muftec.Lib.CompilerStates
 {
     class EvaluatorState : ICompilerState
     {
-        public ApplicationCore Core { get; set; }
+        public ApplicationCore Core { get; private set; }
         protected ICompilerState CurrentMachine { get; set; }
         protected bool IsFunction { get; set; }
-        public string LastFunction { get; set; }
+        public string LastFunction { get; private set; }
 
         public EvaluatorState(ApplicationCore core)
         {
             Core = core;
+        }
+
+        public void EvaluateLine(string line, int lineNum)
+        {
+            Core.LineNumber = lineNum;
+
+            var splitTokens = line.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToList();
+            var handled = false;
+
+            if (splitTokens.Count() > 1)
+            {
+                // TODO: Add proper error handling
+                switch (splitTokens[0])
+                {
+                    case "var":
+                        Core.Variables.Add(splitTokens[1]);
+                        handled = true;
+                        break;
+                    case "$def":
+                    case "$define":
+                        var name = splitTokens[1];
+                        var opers = splitTokens.Skip(2).ToList();
+                        Core.Defines.Add(name, String.Join(" ", opers));
+                        handled = true;
+                        break;
+                }
+            }
+
+            if (!handled)
+            {
+                // Split tokens in line
+                foreach (var token in splitTokens)
+                {
+                    EvaluateToken(token);
+                }
+            }
         }
 
         public bool EvaluateToken(string token)
@@ -50,21 +87,17 @@ namespace Muftec.Lib.CompilerStates
                 return true;
             }
 
+            // Perform define replacement
+            if (Core.Defines.ContainsKey(token))
+            {
+                token = Core.Defines[token];
+            }
+
             // Comments
             if (token.StartsWith("("))
             {
-                CurrentMachine = new StringState(Core, "(", ")", true, true);
+                CurrentMachine = new StringState("(", ")", true, true);
                 CurrentMachine.EvaluateToken(token);
-                return true;
-            }
-
-            // Variable initialization (var varname)
-            if (token == "var")
-            {
-                if (IsFunction)
-                    throw new MuftecCompilerException("Can't instance a global variable inside a function.", Core.LineNumber);
-
-                CurrentMachine = new VariableState(Core);
                 return true;
             }
 

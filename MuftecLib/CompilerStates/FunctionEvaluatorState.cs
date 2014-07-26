@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Muftec.Lib.CompilerStates
+﻿namespace Muftec.Lib.CompilerStates
 {
     class FunctionEvaluatorState : EvaluatorState
     {
@@ -17,9 +15,11 @@ namespace Muftec.Lib.CompilerStates
             // Strings
             if (token.StartsWith("\""))
             {
-                CurrentMachine = new StringState(Core, "\"");
+                CurrentMachine = new StringState("\"");
                 if (!CurrentMachine.EvaluateToken(token))
                 {
+                    var ss = CurrentMachine as StringState;
+                    Core.Queue.Enqueue(ss.ResultString);
                     CurrentMachine = null;
                 }
                 return true;
@@ -43,7 +43,7 @@ namespace Muftec.Lib.CompilerStates
             {
                 if (token.Contains("."))
                 {
-                    Core.Queue.Enqueue(new MuftecStackItem(floatVal));
+                    Core.Queue.Enqueue(floatVal);
                     return true;
                 }
             }
@@ -52,7 +52,7 @@ namespace Muftec.Lib.CompilerStates
             int intVal;
             if (int.TryParse(token, out intVal))
             {
-                Core.Queue.Enqueue(new MuftecStackItem(intVal));
+                Core.Queue.Enqueue(intVal);
                 return true;
             }
 

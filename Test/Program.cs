@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
 using Muftec.BCL;
 using Muftec.Lib;
 
@@ -9,15 +11,60 @@ namespace Test
     {
         public static void Main(string[] args)
         {
+            var evalCount = 100000;
+
+            var appRun = new StringBuilder();
+            appRun.AppendLine(": main");
+            for (var i = 0; i < evalCount; i++)
+            {
+                appRun.Append("100 100 + pop ");
+            }
+            appRun.AppendLine();
+            appRun.AppendLine(";");
+            var runStr = appRun.ToString();
+
+            var buildTimer = new Stopwatch();
+            buildTimer.Start();
+
             //// Create Muftec base system ////
             var system = new MuftecLibSystem();
             var bcl = new MuftecBaseClassLibrary();
             system.AddLibrary(bcl);
 
-            var execQueue = new Queue<MuftecStackItem>();
+            var execStack = new Queue<MuftecStackItem>();
+            var runStack = new Stack<MuftecStackItem>();
             var variables = new List<string>();
             var functions = new Dictionary<string, Queue<MuftecStackItem>>();
 
+            var output = Compiler.ParseString(runStr);
+            variables = output.Variables;
+            functions = output.Functions;
+            execStack.Enqueue(output.MainFunction);
+
+            buildTimer.Stop();
+            Console.WriteLine("Build stage took: {0} ticks", buildTimer.Elapsed);
+
+            var runTimer = new Stopwatch();
+            runTimer.Start();
+
+            system.Run(execStack, runStack, variables, functions);
+
+            runTimer.Stop();
+            Console.WriteLine("Execution stage took: {0} ticks", runTimer.Elapsed);
+
+            var stickTimer = new Stopwatch();
+            stickTimer.Start();
+            var outval = 0;
+
+            for (var i = 0; i < evalCount; i++)
+            {
+                outval += 100 + 100;
+            }
+
+            stickTimer.Stop();
+            Console.WriteLine("Comparison stage took: {0} ticks", stickTimer.Elapsed);
+
+            /*
             //// Sample code ////
             Console.WriteLine("Running sample code.");
 
@@ -80,7 +127,7 @@ namespace Test
 
                 Console.WriteLine();
                 Console.WriteLine("Complete.");
-            }
+            }*/
 
             Console.WriteLine();
             Console.WriteLine("Press any key.");

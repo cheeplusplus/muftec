@@ -2,8 +2,6 @@ namespace Muftec.Lib.CompilerStates
 {
     interface ICompilerState
     {
-        ApplicationCore Core { get; }
-
         /// <summary>
         /// Evaluate a token.
         /// </summary>

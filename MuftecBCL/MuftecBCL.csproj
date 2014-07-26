@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FunctionClasses\Arrays.cs" />
     <Compile Include="FunctionClasses\Conversion.cs" />
     <Compile Include="FunctionClasses\Float.cs" />
     <Compile Include="FunctionClasses\InputOutput.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="FunctionClasses\Strings.cs" />
     <Compile Include="MuftecBCL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SharedUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MuftecLib\MuftecLib.csproj">

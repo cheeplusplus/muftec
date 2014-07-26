@@ -17,7 +17,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("depth")]
         public static void StackDepth(OpCodeData data)
         {
-            data.RuntimeStack.Push(new MuftecStackItem(data.RuntimeStack.Count));
+            data.RuntimeStack.Push(data.RuntimeStack.Count);
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("dup")]
         public static void StackItemDup(OpCodeData data)
         {
-            data.RuntimeStack.Push(data.RuntimeStack.Peek());
+            data.RuntimeStack.Push(data.RuntimeStack.Peek().Clone());
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("over")]
         public static void StackItemOver(OpCodeData data)
         {
-            data.RuntimeStack.Push(new MuftecStackItem(2));
+            data.RuntimeStack.Push(2);
             StackItemPick(data);
         }
 
@@ -135,7 +135,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("rot")]
         public static void StackItemRot(OpCodeData data)
         {
-            data.RuntimeStack.Push(new MuftecStackItem(3));
+            data.RuntimeStack.Push(3);
             StackItemRotate(data);
         }
 
@@ -299,7 +299,7 @@ namespace Muftec.BCL.FunctionClasses
             }
 
             // Re-add count
-            data.RuntimeStack.Push(new MuftecStackItem(count));
+            data.RuntimeStack.Push(count);
         }
     }
 }

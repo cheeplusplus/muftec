@@ -43,7 +43,22 @@ namespace Muftec.Lib
         /// <summary>
         /// Conditional
         /// </summary>
-        Conditional
+        Conditional,
+        
+        /// <summary>
+        /// Array marker
+        /// </summary>
+        ArrayMarker,
+
+        /// <summary>
+        /// List
+        /// </summary>
+        List,
+
+        /// <summary>
+        /// Dictionary
+        /// </summary>
+        Dictionary
     }
 
     /// <summary>

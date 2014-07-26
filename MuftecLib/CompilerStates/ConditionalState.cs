@@ -17,8 +17,8 @@ namespace Muftec.Lib.CompilerStates
         public ConditionalState(ApplicationCore core)
         {
             Core = core;
-            _trueCore = new ApplicationCore(core.Variables, core.Functions, new Queue<MuftecStackItem>(), core.LineNumber);
-            _falseCore = new ApplicationCore(core.Variables, core.Functions, new Queue<MuftecStackItem>(), core.LineNumber);
+            _trueCore = new ApplicationCore(core.Variables, core.Functions, core.Defines, new Queue<MuftecStackItem>(), core.LineNumber);
+            _falseCore = new ApplicationCore(core.Variables, core.Functions, core.Defines, new Queue<MuftecStackItem>(), core.LineNumber);
         }
 
         public bool EvaluateToken(string token)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Muftec.Lib
 {
@@ -12,14 +13,14 @@ namespace Muftec.Lib
         /// <returns>The next stack item</returns>
         public static MuftecStackItem Pop(this Stack<MuftecStackItem> runtimeStack, MuftecType itemType = MuftecType.None)
         {
-            if ((itemType != MuftecType.None) && (runtimeStack.Peek().Type != itemType))
-            {
-                throw new MuftecInvalidStackItemTypeException(runtimeStack);
-            }
-
             if (runtimeStack.Count == 0)
             {
                 throw new MuftecStackUnderflowException();
+            }
+
+            if ((itemType != MuftecType.None) && (runtimeStack.Peek().Type != itemType))
+            {
+                throw new MuftecInvalidStackItemTypeException(runtimeStack);
             }
             
             return runtimeStack.Pop();
@@ -65,26 +66,50 @@ namespace Muftec.Lib
             return (double)Pop(runtimeStack, MuftecType.Float).Item;
         }
 
-        public static void Push(this Stack<MuftecStackItem> runtimeStack, int value)
+        /// <summary>
+        /// Pop the next item from the stack and ensure it is an array
+        /// </summary>
+        /// <param name="runtimeStack">The current execution stack</param>
+        /// <returns>The next stack item</returns>
+        public static MuftecList PopArray(this Stack<MuftecStackItem> runtimeStack)
         {
-            runtimeStack.Push(new MuftecStackItem(value));
+            return (MuftecList)Pop(runtimeStack, MuftecType.List).Item;
         }
 
-        public static void Push(this Stack<MuftecStackItem> runtimeStack, bool value)
+        /// <summary>
+        /// Pop the next item from the stack and ensure it is an dictionary
+        /// </summary>
+        /// <param name="runtimeStack">The current execution stack</param>
+        /// <returns>The next stack item</returns>
+        public static MuftecDict PopDictionary(this Stack<MuftecStackItem> runtimeStack)
         {
-            runtimeStack.Push(new MuftecStackItem(value));
+            return (MuftecDict)Pop(runtimeStack, MuftecType.Dictionary).Item;
         }
 
-        public static void Push(this Stack<MuftecStackItem> runtimeStack, double value)
+        /// <summary>
+        /// Pop the next item from the stack and ensure it is an array, then convert it to a dictionary
+        /// </summary>
+        /// <param name="runtimeStack">The current execution stack</param>
+        /// <returns>The next stack item</returns>
+        public static MuftecDict PopAsDictionary(this Stack<MuftecStackItem> runtimeStack)
         {
-            runtimeStack.Push(new MuftecStackItem(value));
+            var peek = runtimeStack.Peek();
+            if (peek.Type == MuftecType.Dictionary)
+                return runtimeStack.PopDictionary();
+
+            return runtimeStack.PopArray().ToDict();
         }
 
-        public static void Push(this Stack<MuftecStackItem> runtimeStack, string value)
+        public static void Push(this Stack<MuftecStackItem> runtimeStack, IEnumerable<MuftecStackItem> value)
         {
-            runtimeStack.Push(new MuftecStackItem(value));
+            runtimeStack.Push(new MuftecList(value));
         }
 
+        public static void Push(this Stack<MuftecStackItem> runtimeStack, IDictionary<MuftecStackItem, MuftecStackItem> value)
+        {
+            runtimeStack.Push(new MuftecDict(value));
+        }
+        
         /// <summary>
         /// Convert a boolean value into an integer
         /// </summary>

@@ -31,7 +31,7 @@ namespace Muftec
                 system.AddLibrary(bcl);
 
                 var queue = new Queue<MuftecStackItem>();
-                queue.Enqueue(new MuftecStackItem(output.MainFunction, MuftecAdvType.Function));
+                queue.Enqueue(new MuftecStackItem(output.MainFunctionName, MuftecAdvType.Function));
                 var runtime = new Stack<MuftecStackItem>();
                 system.Run(queue, runtime, output.Variables, output.Functions);
             }

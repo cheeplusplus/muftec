@@ -69,14 +69,14 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("2"));
+            runtimeStack.Push("2");
             Conversion.StringToInt(data);
-            runtimeStack.Push(new MuftecStackItem("-10"));
+            runtimeStack.Push("-10");
             Conversion.StringToInt(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem(2));
-            runtimeStackExpected.Push(new MuftecStackItem(-10));
+            runtimeStackExpected.Push(2);
+            runtimeStackExpected.Push(-10);
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -89,17 +89,17 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("2"));
+            runtimeStack.Push("2");
             Conversion.StringToFloat(data);
-            runtimeStack.Push(new MuftecStackItem("2.5"));
+            runtimeStack.Push("2.5");
             Conversion.StringToFloat(data);
-            runtimeStack.Push(new MuftecStackItem("-10.5"));
+            runtimeStack.Push("-10.5");
             Conversion.StringToFloat(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem(2f));
-            runtimeStackExpected.Push(new MuftecStackItem(2.5));
-            runtimeStackExpected.Push(new MuftecStackItem(-10.5));
+            runtimeStackExpected.Push(2f);
+            runtimeStackExpected.Push(2.5);
+            runtimeStackExpected.Push(-10.5);
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -112,14 +112,14 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem(2));
+            runtimeStack.Push(2);
             Conversion.IntToString(data);
-            runtimeStack.Push(new MuftecStackItem(-10));
+            runtimeStack.Push(-10);
             Conversion.IntToString(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem("2"));
-            runtimeStackExpected.Push(new MuftecStackItem("-10"));
+            runtimeStackExpected.Push("2");
+            runtimeStackExpected.Push("-10");
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -132,14 +132,14 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem(2));
+            runtimeStack.Push(2);
             Conversion.IntToFloat(data);
-            runtimeStack.Push(new MuftecStackItem(-10));
+            runtimeStack.Push(-10);
             Conversion.IntToFloat(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem(2f));
-            runtimeStackExpected.Push(new MuftecStackItem(-10f));
+            runtimeStackExpected.Push(2f);
+            runtimeStackExpected.Push(-10f);
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -152,17 +152,17 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem(2f));
+            runtimeStack.Push(2f);
             Conversion.FloatToString(data);
-            runtimeStack.Push(new MuftecStackItem(2.5));
+            runtimeStack.Push(2.5);
             Conversion.FloatToString(data);
-            runtimeStack.Push(new MuftecStackItem(-10.5));
+            runtimeStack.Push(-10.5);
             Conversion.FloatToString(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem("2"));
-            runtimeStackExpected.Push(new MuftecStackItem("2.5"));
-            runtimeStackExpected.Push(new MuftecStackItem("-10.5"));
+            runtimeStackExpected.Push("2");
+            runtimeStackExpected.Push("2.5");
+            runtimeStackExpected.Push("-10.5");
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -175,17 +175,17 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem(2f));
+            runtimeStack.Push(2f);
             Conversion.FloatToIntTruncate(data);
-            runtimeStack.Push(new MuftecStackItem(2.5));
+            runtimeStack.Push(2.5);
             Conversion.FloatToIntTruncate(data);
-            runtimeStack.Push(new MuftecStackItem(-10.5));
+            runtimeStack.Push(-10.5);
             Conversion.FloatToIntTruncate(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem(2));
-            runtimeStackExpected.Push(new MuftecStackItem(2));
-            runtimeStackExpected.Push(new MuftecStackItem(-10));
+            runtimeStackExpected.Push(2);
+            runtimeStackExpected.Push(2);
+            runtimeStackExpected.Push(-10);
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -198,17 +198,17 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem(2f));
+            runtimeStack.Push(2f);
             Conversion.FloatToIntRound(data);
-            runtimeStack.Push(new MuftecStackItem(2.6));
+            runtimeStack.Push(2.6);
             Conversion.FloatToIntRound(data);
-            runtimeStack.Push(new MuftecStackItem(-10.6));
+            runtimeStack.Push(-10.6);
             Conversion.FloatToIntRound(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem(2));
-            runtimeStackExpected.Push(new MuftecStackItem(3));
-            runtimeStackExpected.Push(new MuftecStackItem(-11));
+            runtimeStackExpected.Push(2);
+            runtimeStackExpected.Push(3);
+            runtimeStackExpected.Push(-11);
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }

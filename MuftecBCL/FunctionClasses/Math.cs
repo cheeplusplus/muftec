@@ -22,11 +22,11 @@ namespace Muftec.BCL.FunctionClasses
 
             if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
             {
-                result = new MuftecStackItem(item1.AsDouble() + item2.AsDouble());
+                result = item1.AsDouble() + item2.AsDouble();
             }
             else if ((item1.Type == MuftecType.Integer) && (item2.Type == MuftecType.Integer))
             {
-                result = new MuftecStackItem((int)item1.Item + (int)item2.Item);
+                result = (int)item1.Item + (int)item2.Item;
             }
             else
             {
@@ -54,11 +54,11 @@ namespace Muftec.BCL.FunctionClasses
 
             if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
             {
-                result = new MuftecStackItem(item1.AsDouble() - item2.AsDouble());
+                result = item1.AsDouble() - item2.AsDouble();
             }
             else if ((item1.Type == MuftecType.Integer) && (item2.Type == MuftecType.Integer))
             {
-                result = new MuftecStackItem((int)item1.Item - (int)item2.Item);
+                result = (int)item1.Item - (int)item2.Item;
             }
             else
             {
@@ -85,11 +85,11 @@ namespace Muftec.BCL.FunctionClasses
 
             if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
             {
-                result = new MuftecStackItem(item1.AsDouble() * item2.AsDouble());
+                result = item1.AsDouble() * item2.AsDouble();
             }
             else if ((item1.Type == MuftecType.Integer) && (item2.Type == MuftecType.Integer))
             {
-                result = new MuftecStackItem((int)item1.Item * (int)item2.Item);
+                result = (int)item1.Item * (int)item2.Item;
             }
             else
             {
@@ -116,11 +116,11 @@ namespace Muftec.BCL.FunctionClasses
 
             if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
             {
-                result = new MuftecStackItem(item1.AsDouble() / item2.AsDouble());
+                result = item1.AsDouble() / item2.AsDouble();
             }
             else if ((item1.Type == MuftecType.Integer) && (item2.Type == MuftecType.Integer))
             {
-                result = new MuftecStackItem((int)item1.Item / (int)item2.Item);
+                result = (int)item1.Item / (int)item2.Item;
             }
             else
             {
@@ -147,11 +147,11 @@ namespace Muftec.BCL.FunctionClasses
 
             if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
             {
-                result = new MuftecStackItem(item1.AsDouble() % item2.AsDouble());
+                result = item1.AsDouble() % item2.AsDouble();
             }
             else if ((item1.Type == MuftecType.Integer) && (item2.Type == MuftecType.Integer))
             {
-                result = new MuftecStackItem((int)item1.Item % (int)item2.Item);
+                result = (int)item1.Item % (int)item2.Item;
             }
             else
             {
@@ -179,7 +179,7 @@ namespace Muftec.BCL.FunctionClasses
             if (((item1.Type == MuftecType.Float) || (item1.Type == MuftecType.Integer)) &&
                 ((item2.Type == MuftecType.Float) || (item2.Type == MuftecType.Integer)))
             {
-                result = new MuftecStackItem(System.Math.Pow(item1.AsDouble(), item2.AsDouble()));
+                result = System.Math.Pow(item1.AsDouble(), item2.AsDouble());
             }
             else
             {
@@ -205,11 +205,11 @@ namespace Muftec.BCL.FunctionClasses
 
             if (item1.Type == MuftecType.Float)
             {
-                result = new MuftecStackItem((item1.AsDouble()) + 1);
+                result = (item1.AsDouble()) + 1;
             }
             else if (item1.Type == MuftecType.Integer)
             {
-                result = new MuftecStackItem(((int)item1.Item) + 1);
+                result = ((int)item1.Item) + 1;
             }
             else
             {
@@ -235,11 +235,11 @@ namespace Muftec.BCL.FunctionClasses
 
             if (item1.Type == MuftecType.Float)
             {
-                result = new MuftecStackItem((item1.AsDouble()) - 1);
+                result = (item1.AsDouble()) - 1;
             }
             else if (item1.Type == MuftecType.Integer)
             {
-                result = new MuftecStackItem(((int)item1.Item) - 1);
+                result = ((int)item1.Item) - 1;
             }
             else
             {
@@ -265,11 +265,11 @@ namespace Muftec.BCL.FunctionClasses
 
             if (item1.Type == MuftecType.Float)
             {
-                result = new MuftecStackItem(System.Math.Abs(item1.AsDouble()));
+                result = System.Math.Abs(item1.AsDouble());
             }
             else if (item1.Type == MuftecType.Integer)
             {
-                result = new MuftecStackItem(System.Math.Abs((int)item1.Item));
+                result = System.Math.Abs((int)item1.Item);
             }
             else
             {
@@ -295,11 +295,11 @@ namespace Muftec.BCL.FunctionClasses
 
             if (item1.Type == MuftecType.Float)
             {
-                result = new MuftecStackItem(System.Math.Sign(item1.AsDouble()));
+                result = System.Math.Sign(item1.AsDouble());
             }
             else if (item1.Type == MuftecType.Integer)
             {
-                result = new MuftecStackItem(System.Math.Sign((int)item1.Item));
+                result = System.Math.Sign((int)item1.Item);
             }
             else
             {
@@ -320,7 +320,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("getseed")]
         public static void GetRandomSeed(OpCodeData data)
         {
-            var seed = new MuftecStackItem(String.IsNullOrEmpty(data.RandomSeed) ? "" : data.RandomSeed);
+            var seed = String.IsNullOrEmpty(data.RandomSeed) ? "" : data.RandomSeed;
             data.RuntimeStack.Push(seed);
         }
 
@@ -355,7 +355,7 @@ namespace Muftec.BCL.FunctionClasses
             if (data.RandomSeeded == null)
                 data.RandomSeeded = new Random();
 
-            data.RuntimeStack.Push(new MuftecStackItem(data.RandomSeeded.Next(0, int.MaxValue)));
+            data.RuntimeStack.Push(data.RandomSeeded.Next(0, int.MaxValue));
         }
 
         /// <summary>
@@ -372,7 +372,7 @@ namespace Muftec.BCL.FunctionClasses
             if (data.RandomUnseeded == null)
                 data.RandomUnseeded = new Random();
 
-            data.RuntimeStack.Push(new MuftecStackItem(data.RandomUnseeded.Next(0, int.MaxValue)));
+            data.RuntimeStack.Push(data.RandomUnseeded.Next(0, int.MaxValue));
         }
     }
 }

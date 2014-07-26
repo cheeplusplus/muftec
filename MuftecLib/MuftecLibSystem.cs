@@ -18,7 +18,8 @@ namespace Muftec.Lib
         private readonly Dictionary<string, OpCodeItem> _opcodeCache = new Dictionary<string, OpCodeItem>();
         private readonly Dictionary<string, MuftecStackItem> _globalVariableList = new Dictionary<string, MuftecStackItem>();
         private readonly Dictionary<string, Queue<MuftecStackItem>> _globalFunctionList = new Dictionary<string, Queue<MuftecStackItem>>();
-        private readonly List<Assembly> _libraryList = new List<Assembly>();
+        private readonly Dictionary<string, string> _globalDefineList = new Dictionary<string, string>();
+        private readonly List<IMuftecClassLibrary> _libraryList = new List<IMuftecClassLibrary>();
         
         /// <summary>
         /// Register special opcodes that must be handled from inside THIS class
@@ -146,26 +147,35 @@ namespace Muftec.Lib
         }
 
         /// <summary>
+        /// Add an assembly with a <see>IMuftecClassLibrary</see>
+        /// </summary>
+        /// <param name="classAssembly">Assembly containing opcodes</param>
+        public void AddLibrary(Assembly classAssembly)
+        {
+            var baseReference = classAssembly.GetTypes().Where(w => w.GetInterfaces().Contains(typeof(IMuftecClassLibrary))).ToList();
+            if (baseReference == null || baseReference.Count != 1)
+            {
+                throw new MuftecCompilerException("Assembly " + classAssembly + " does not have only one IMuftecClassLibrary inheritor.");
+            }
+
+            var classConstructor = baseReference.First().GetConstructor(Type.EmptyTypes);
+            if (classConstructor == null) return;
+
+            var classLibrary = classConstructor.Invoke(null) as IMuftecClassLibrary;
+            AddLibrary(classLibrary);
+        }
+
+        /// <summary>
         /// Add a library inherited from <see>IMuftecClassLibrary</see>
         /// </summary>
         /// <param name="classLibrary">Class containing opcodes</param>
         public void AddLibrary(IMuftecClassLibrary classLibrary)
         {
-            var classAssembly = classLibrary.GetType().Assembly;
-            AddLibrary(classAssembly);
-        }
-
-        /// <summary>
-        /// Add an assembly containing classes inheriting <see>IMuftecClassLibraryCollection</see>
-        /// </summary>
-        /// <param name="classAssembly"></param>
-        public void AddLibrary(Assembly classAssembly)
-        {
             // Ignore if already loaded
-            if (_libraryList.Contains(classAssembly)) return;
+            if (_libraryList.Contains(classLibrary)) return;
 
             // Get all opcode methods
-            var methods = classAssembly.GetTypes().SelectMany(t => t.GetMethods()).Where(m => m.GetCustomAttributes(typeof(OpCodeAttribute), false).Length > 0);
+            var methods = classLibrary.Classes.SelectMany(t => t.GetMethods()).Where(m => m.GetCustomAttributes(typeof(OpCodeAttribute), false).Length > 0);
 
             // Add opcodes to index
             foreach (var info in methods)
@@ -190,8 +200,21 @@ namespace Muftec.Lib
                 Console.WriteLine();
             }
 
+            // Add fixed defines to index
+            foreach (var def in classLibrary.Defines)
+            {
+                if (_globalDefineList.ContainsKey(def.Key))
+                {
+                    _globalDefineList[def.Key] = def.Value;
+                }
+                else
+                {
+                    _globalDefineList.Add(def.Key, def.Value);
+                }
+            }
+
             // Add to library list
-            _libraryList.Add(classAssembly);
+            _libraryList.Add(classLibrary);
         }
         #endregion
 

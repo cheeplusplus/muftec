@@ -17,7 +17,7 @@ namespace Muftec.BCL.FunctionClasses
         public static void IntToFloat(OpCodeData data)
         {
             var item1 = data.RuntimeStack.PopInt();
-            data.RuntimeStack.Push(new MuftecStackItem(Convert.ToDouble(item1)));
+            data.RuntimeStack.Push(Convert.ToDouble(item1));
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Muftec.BCL.FunctionClasses
         public static void IntToString(OpCodeData data)
         {
             var item1 = data.RuntimeStack.PopStringify();
-            data.RuntimeStack.Push(new MuftecStackItem(item1));
+            data.RuntimeStack.Push(item1);
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Muftec.BCL.FunctionClasses
         public static void FloatToIntTruncate(OpCodeData data)
         {
             var item1 = data.RuntimeStack.PopFloat();
-            data.RuntimeStack.Push(new MuftecStackItem(Convert.ToInt32(item1)));
+            data.RuntimeStack.Push(Convert.ToInt32(item1));
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Muftec.BCL.FunctionClasses
         public static void FloatToIntRound(OpCodeData data)
         {
             var item1 = data.RuntimeStack.PopFloat();
-            data.RuntimeStack.Push(new MuftecStackItem((int)System.Math.Round(item1, 0)));
+            data.RuntimeStack.Push((int)System.Math.Round(item1, 0));
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Muftec.BCL.FunctionClasses
         public static void FloatToString(OpCodeData data)
         {
             var item1 = data.RuntimeStack.PopStringify();
-            data.RuntimeStack.Push(new MuftecStackItem(item1));
+            data.RuntimeStack.Push(item1);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Muftec.BCL.FunctionClasses
 
             if (int.TryParse(item1, out outVal))
             {
-                result = new MuftecStackItem(outVal);
+                result = outVal;
             }
             else
             {
@@ -125,7 +125,7 @@ namespace Muftec.BCL.FunctionClasses
 
             if (float.TryParse(item1, out outVal))
             {
-                result = new MuftecStackItem(outVal);
+                result = outVal;
             }
             else
             {

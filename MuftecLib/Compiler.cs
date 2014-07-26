@@ -28,9 +28,14 @@ namespace Muftec.Lib
             public Dictionary<string, Queue<MuftecStackItem>> Functions { get; set; }
 
             /// <summary>
-            /// Gets or sets the main function.
+            /// Gets or sets the name of the main function.
             /// </summary>
-            public string MainFunction { get; set; }
+            public string MainFunctionName { get; set; }
+
+            /// <summary>
+            /// Gets or sets a stack item pointing to the main function.
+            /// </summary>
+            public MuftecStackItem MainFunction { get; set; }
         }
 
         /// <summary>
@@ -42,27 +47,21 @@ namespace Muftec.Lib
         {
             var variables = new List<string>();
             var functions = new Dictionary<string, Queue<MuftecStackItem>>();
-            var appState = new ApplicationCore(variables, functions);
+            var defines = new Dictionary<string, string>();
+            var appState = new ApplicationCore(variables, functions, defines);
             var evaluator = new EvaluatorState(appState);
 
             var lineNum = 1;
             
             // Get each line to count
-            foreach (var lines in text.Replace("\r", "").Split('\n'))
+            foreach (var line in text.Replace("\r", "").Split('\n'))
             {
-                evaluator.Core.LineNumber = lineNum;
-
-                // Split tokens in line
-                foreach (var token in lines.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()))
-                {
-                    evaluator.EvaluateToken(token);
-                }
-
+                evaluator.EvaluateLine(line, lineNum);
                 lineNum++;
             }
 
             // Return compiler output
-            return new CompilerOutput { Variables = variables, Functions = functions, MainFunction = evaluator.LastFunction };
+            return new CompilerOutput { Variables = variables, Functions = functions, MainFunctionName = evaluator.LastFunction, MainFunction = new MuftecStackItem(evaluator.LastFunction, MuftecAdvType.Function) };
         }
 
         /// <summary>

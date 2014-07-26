@@ -22,11 +22,11 @@ namespace Muftec.BCL.FunctionClasses
 
             if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
             {
-                result = new MuftecStackItem(System.Math.Abs(item1.AsDouble() - item2.AsDouble()) < 0.00000001);
+                result = System.Math.Abs(item1.AsDouble() - item2.AsDouble()) < 0.00000001;
             }
             else if ((item1.Type == MuftecType.Integer) && (item2.Type == MuftecType.Integer))
             {
-                result = new MuftecStackItem((int)item1.Item == (int)item2.Item);
+                result = (int)item1.Item == (int)item2.Item;
             }
             else
             {
@@ -53,11 +53,11 @@ namespace Muftec.BCL.FunctionClasses
 
             if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
             {
-                result = new MuftecStackItem(item1.AsDouble() < item2.AsDouble());
+                result = item1.AsDouble() < item2.AsDouble();
             }
             else if ((item1.Type == MuftecType.Integer) && (item2.Type == MuftecType.Integer))
             {
-                result = new MuftecStackItem((int)item1.Item < (int)item2.Item);
+                result = (int)item1.Item < (int)item2.Item;
             }
             else
             {
@@ -84,11 +84,11 @@ namespace Muftec.BCL.FunctionClasses
 
             if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
             {
-                result = new MuftecStackItem(item1.AsDouble() <= item2.AsDouble());
+                result = item1.AsDouble() <= item2.AsDouble();
             }
             else if ((item1.Type == MuftecType.Integer) && (item2.Type == MuftecType.Integer))
             {
-                result = new MuftecStackItem((int)item1.Item <= (int)item2.Item);
+                result = (int)item1.Item <= (int)item2.Item;
             }
             else
             {
@@ -115,11 +115,11 @@ namespace Muftec.BCL.FunctionClasses
 
             if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
             {
-                result = new MuftecStackItem(item1.AsDouble() > item2.AsDouble());
+                result = item1.AsDouble() > item2.AsDouble();
             }
             else if ((item1.Type == MuftecType.Integer) && (item2.Type == MuftecType.Integer))
             {
-                result = new MuftecStackItem((int)item1.Item > (int)item2.Item);
+                result = (int)item1.Item > (int)item2.Item;
             }
             else
             {
@@ -146,11 +146,11 @@ namespace Muftec.BCL.FunctionClasses
 
             if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
             {
-                result = new MuftecStackItem(item1.AsDouble() >= item2.AsDouble());
+                result = item1.AsDouble() >= item2.AsDouble();
             }
             else if ((item1.Type == MuftecType.Integer) && (item2.Type == MuftecType.Integer))
             {
-                result = new MuftecStackItem((int)item1.Item >= (int)item2.Item);
+                result = (int)item1.Item >= (int)item2.Item;
             }
             else
             {
@@ -178,7 +178,7 @@ namespace Muftec.BCL.FunctionClasses
             if (((item1.Type == MuftecType.Integer) || (item1.Type == MuftecType.Float)) && 
                 ((item2.Type == MuftecType.Integer) || (item2.Type == MuftecType.Float)))
             {
-                result = new MuftecStackItem(item1.AsBool() && item2.AsBool());
+                result = item1.AsBool() && item2.AsBool();
             }
             else
             {
@@ -206,7 +206,7 @@ namespace Muftec.BCL.FunctionClasses
             if (((item1.Type == MuftecType.Integer) || (item1.Type == MuftecType.Float)) &&
                 ((item2.Type == MuftecType.Integer) || (item2.Type == MuftecType.Float)))
             {
-                result = new MuftecStackItem(item1.AsBool() || item2.AsBool());
+                result = item1.AsBool() || item2.AsBool();
             }
             else
             {
@@ -234,7 +234,7 @@ namespace Muftec.BCL.FunctionClasses
             if (((item1.Type == MuftecType.Integer) || (item1.Type == MuftecType.Float)) &&
                 ((item2.Type == MuftecType.Integer) || (item2.Type == MuftecType.Float)))
             {
-                result = new MuftecStackItem((item1.AsBool() && !item2.AsBool()) || (item2.AsBool() && !item1.AsBool()));
+                result = (item1.AsBool() && !item2.AsBool()) || (item2.AsBool() && !item1.AsBool());
             }
             else
             {
@@ -260,7 +260,7 @@ namespace Muftec.BCL.FunctionClasses
 
             if ((item1.Type == MuftecType.Integer) || (item1.Type == MuftecType.Float))
             {
-                result = new MuftecStackItem(!item1.AsBool());
+                result = !item1.AsBool();
             }
             else
             {
@@ -286,11 +286,11 @@ namespace Muftec.BCL.FunctionClasses
 
             if (item1.Type == MuftecType.Integer)
             {
-                result = new MuftecStackItem(1);
+                result = 1;
             }
             else
             {
-                result = new MuftecStackItem(0);
+                result = 0;
             }
 
             data.RuntimeStack.Push(result);
@@ -316,16 +316,16 @@ namespace Muftec.BCL.FunctionClasses
 
                 if ((number == 0) || (number == 1))
                 {
-                    result = new MuftecStackItem(1);
+                    result = 1;
                 }
                 else
                 {
-                    result = new MuftecStackItem(0);
+                    result = 0;
                 }
             }
             else
             {
-                result = new MuftecStackItem(0);
+                result = 0;
             }
 
             data.RuntimeStack.Push(result);
@@ -344,7 +344,7 @@ namespace Muftec.BCL.FunctionClasses
         {
             var item1 = Shared.Pop(data.RuntimeStack);
 
-            data.RuntimeStack.Push((item1.Type == MuftecType.Float) ? new MuftecStackItem(1) : new MuftecStackItem(0));
+            data.RuntimeStack.Push((item1.Type == MuftecType.Float) ? 1 : 0);
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace Muftec.BCL.FunctionClasses
         {
             var item1 = Shared.Pop(data.RuntimeStack);
 
-            data.RuntimeStack.Push((item1.Type == MuftecType.String) ? new MuftecStackItem(1) : new MuftecStackItem(0));
+            data.RuntimeStack.Push((item1.Type == MuftecType.String) ? 1 : 0);
         }
     }
 }

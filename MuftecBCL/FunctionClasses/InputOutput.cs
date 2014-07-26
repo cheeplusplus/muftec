@@ -30,7 +30,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("read")]
         public static void ReadLine(OpCodeData data)
         {
-            data.RuntimeStack.Push(new MuftecStackItem(Console.ReadLine()));
+            data.RuntimeStack.Push(Console.ReadLine());
         }
     }
 }

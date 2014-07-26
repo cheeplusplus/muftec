@@ -72,7 +72,7 @@ namespace Muftec.Test
             InputOutput.ReadLine(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem(null));
+            runtimeStackExpected.Push(MuftecStackItem.Null);
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -85,7 +85,7 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("Sample string"));
+            runtimeStack.Push("Sample string");
             InputOutput.Print(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();

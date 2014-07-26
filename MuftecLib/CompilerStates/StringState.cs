@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using System.Text;
 
 namespace Muftec.Lib.CompilerStates
 {
     class StringState : ICompilerState
     {
-        public ApplicationCore Core { get; set; }
+        public string ResultString { get; private set; }
 
         public string StartKey { get; private set; }
         public string EndKey { get; private set; }
@@ -15,13 +16,12 @@ namespace Muftec.Lib.CompilerStates
 
         private StringBuilder Builder { get; set; }
 
-        public StringState(ApplicationCore core, string startKey, bool discard = false, bool nested = false) : this(core, startKey, startKey, discard, nested)
+        public StringState(string startKey, bool discard = false, bool nested = false) : this(startKey, startKey, discard, nested)
         {
         }
 
-        public StringState(ApplicationCore core, string startKey, string endKey, bool discard = false, bool nested = false)
+        public StringState(string startKey, string endKey, bool discard = false, bool nested = false)
         {
-            Core = core;
             StartKey = startKey;
             EndKey = endKey;
             Discard = discard;
@@ -44,8 +44,7 @@ namespace Muftec.Lib.CompilerStates
             {
                 if (!Discard)
                 {
-                    var item = new MuftecStackItem(Builder.ToString(StartKey.Length, Builder.Length - StartKey.Length - EndKey.Length));
-                    Core.Queue.Enqueue(item);
+                    ResultString = Builder.ToString(StartKey.Length, Builder.Length - StartKey.Length - EndKey.Length);
                 }
 
                 _nest--;

@@ -20,7 +20,7 @@ namespace Muftec.BCL.FunctionClasses
             var item2 = data.RuntimeStack.PopStr();
             var item1 = data.RuntimeStack.PopStr();
 
-            data.RuntimeStack.Push(new MuftecStackItem(String.Concat(item1, item2)));
+            data.RuntimeStack.Push(String.Concat(item1, item2));
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Muftec.BCL.FunctionClasses
             var item2 = data.RuntimeStack.PopStr();
             var item1 = data.RuntimeStack.PopStr();
 
-            data.RuntimeStack.Push(new MuftecStackItem(item1 == item2));
+            data.RuntimeStack.Push(item1 == item2);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Muftec.BCL.FunctionClasses
             var item2 = data.RuntimeStack.PopStr();
             var item1 = data.RuntimeStack.PopStr();
 
-            data.RuntimeStack.Push(new MuftecStackItem(item1.ToLower() == item2.ToLower()));
+            data.RuntimeStack.Push(item1.ToLower() == item2.ToLower());
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Muftec.BCL.FunctionClasses
             var item2 = data.RuntimeStack.PopStr();
             var item1 = data.RuntimeStack.PopStr();
 
-            data.RuntimeStack.Push(new MuftecStackItem(item1.Replace(item3, item2)));
+            data.RuntimeStack.Push(item1.Replace(item3, item2));
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Muftec.BCL.FunctionClasses
             var item2 = data.RuntimeStack.PopInt();
             var item1 = data.RuntimeStack.PopStr();
 
-            data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(0, item2)));
+            data.RuntimeStack.Push(item1.Substring(0, item2));
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Muftec.BCL.FunctionClasses
             var item2 = data.RuntimeStack.PopInt();
             var item1 = data.RuntimeStack.PopStr();
 
-            data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(item1.Length - item2, item2)));
+            data.RuntimeStack.Push(item1.Substring(item1.Length - item2, item2));
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Muftec.BCL.FunctionClasses
             var item2 = data.RuntimeStack.PopInt();
             var item1 = data.RuntimeStack.PopStr();
 
-            data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(item2 + 1, item3)));
+            data.RuntimeStack.Push(item1.Substring(item2 + 1, item3));
         }
 
         /// <summary>
@@ -142,11 +142,11 @@ namespace Muftec.BCL.FunctionClasses
             var item1 = data.RuntimeStack.PopStr();
             var exploded = item1.Split(new[] { item2 }, StringSplitOptions.None);
 
-            data.RuntimeStack.Push(new MuftecStackItem(exploded.Length));
+            data.RuntimeStack.Push(exploded.Length);
 
             foreach (var s in exploded)
             {
-                data.RuntimeStack.Push(new MuftecStackItem(s));
+                data.RuntimeStack.Push(s);
             }
         }
 
@@ -164,7 +164,7 @@ namespace Muftec.BCL.FunctionClasses
             var item2 = data.RuntimeStack.PopStr();
             var item1 = data.RuntimeStack.PopStr();
 
-            data.RuntimeStack.Push(new MuftecStackItem(item1.IndexOf(item2)));
+            data.RuntimeStack.Push(item1.IndexOf(item2));
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Muftec.BCL.FunctionClasses
             var item2 = data.RuntimeStack.PopStr();
             var item1 = data.RuntimeStack.PopStr();
 
-            data.RuntimeStack.Push(new MuftecStackItem(item1.LastIndexOf(item2)));
+            data.RuntimeStack.Push(item1.LastIndexOf(item2));
         }
 
         /// <summary>
@@ -200,8 +200,8 @@ namespace Muftec.BCL.FunctionClasses
 
             var splitPos = item1.IndexOf(item2);
 
-            data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(0, splitPos)));
-            data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(splitPos)));
+            data.RuntimeStack.Push(item1.Substring(0, splitPos));
+            data.RuntimeStack.Push(item1.Substring(splitPos));
         }
 
         /// <summary>
@@ -220,8 +220,8 @@ namespace Muftec.BCL.FunctionClasses
 
             int splitPos = item1.LastIndexOf(item2);
 
-            data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(0, splitPos)));
-            data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(splitPos)));
+            data.RuntimeStack.Push(item1.Substring(0, splitPos));
+            data.RuntimeStack.Push(item1.Substring(splitPos));
         }
 
         /// <summary>
@@ -238,8 +238,8 @@ namespace Muftec.BCL.FunctionClasses
             var item2 = data.RuntimeStack.PopInt();
             var item1 = data.RuntimeStack.PopStr();
 
-            data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(0, item2)));
-            data.RuntimeStack.Push(new MuftecStackItem(item1.Substring(item2)));
+            data.RuntimeStack.Push(item1.Substring(0, item2));
+            data.RuntimeStack.Push(item1.Substring(item2));
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Muftec.BCL.FunctionClasses
         public static void Strip(OpCodeData data)
         {
             var item1 = data.RuntimeStack.PopStr();
-            data.RuntimeStack.Push(new MuftecStackItem(item1.Trim()));
+            data.RuntimeStack.Push(item1.Trim());
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace Muftec.BCL.FunctionClasses
         public static void StripLeading(OpCodeData data)
         {
             var item1 = data.RuntimeStack.PopStr();
-            data.RuntimeStack.Push(new MuftecStackItem(item1.TrimStart()));
+            data.RuntimeStack.Push(item1.TrimStart());
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace Muftec.BCL.FunctionClasses
         public static void StripTailing(OpCodeData data)
         {
             var item1 = data.RuntimeStack.PopStr();
-            data.RuntimeStack.Push(new MuftecStackItem(item1.TrimEnd()));
+            data.RuntimeStack.Push(item1.TrimEnd());
         }
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace Muftec.BCL.FunctionClasses
         public static void StrLen(OpCodeData data)
         {
             var item1 = data.RuntimeStack.PopStr();
-            data.RuntimeStack.Push(new MuftecStackItem(item1.Length));
+            data.RuntimeStack.Push(item1.Length);
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace Muftec.BCL.FunctionClasses
         public static void StrToUpper(OpCodeData data)
         {
             var item1 = data.RuntimeStack.PopStr();
-            data.RuntimeStack.Push(new MuftecStackItem(item1.ToUpper()));
+            data.RuntimeStack.Push(item1.ToUpper());
         }
 
         /// <summary>
@@ -329,7 +329,7 @@ namespace Muftec.BCL.FunctionClasses
         public static void StrToLower(OpCodeData data)
         {
             var item1 = data.RuntimeStack.PopStr();
-            data.RuntimeStack.Push(new MuftecStackItem(item1.ToLower()));
+            data.RuntimeStack.Push(item1.ToLower());
         }
     }
 }

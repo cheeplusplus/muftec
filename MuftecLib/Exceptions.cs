@@ -47,18 +47,7 @@ namespace Muftec.Lib
 
             foreach (var item in fixedStack)
             {
-                string displayText;
-
-                if (item.Type == MuftecType.String)
-                {
-                    displayText = "\"" + item.Item + "\"";
-                }
-                else
-                {
-                    displayText = item.Item.ToString();
-                }
-
-                Console.WriteLine("{0}: ({1}) {2}", runtimeStack.Count, StackTypeToString(item.Type), displayText);
+                Console.WriteLine("{0}: ({1}) {2}", runtimeStack.Count, StackTypeToString(item.Type), item.ToDebugString());
             }
 
             Console.WriteLine();
@@ -74,6 +63,10 @@ namespace Muftec.Lib
                     return "float";
                 case MuftecType.String:
                     return "string";
+                case MuftecType.List:
+                    return "list";
+                case MuftecType.Dictionary:
+                    return "dict";
                 default:
                     return "invalid";
             }

@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArraysTest.cs" />
     <Compile Include="ConversionTest.cs" />
     <Compile Include="FloatTest.cs" />
     <Compile Include="InputOutputTest.cs" />

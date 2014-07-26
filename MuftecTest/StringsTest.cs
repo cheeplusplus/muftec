@@ -69,14 +69,14 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("lowercase"));
+            runtimeStack.Push("lowercase");
             Strings.StrToUpper(data);
-            runtimeStack.Push(new MuftecStackItem("UPPERCASE"));
+            runtimeStack.Push("UPPERCASE");
             Strings.StrToUpper(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem("LOWERCASE"));
-            runtimeStackExpected.Push(new MuftecStackItem("UPPERCASE"));
+            runtimeStackExpected.Push("LOWERCASE");
+            runtimeStackExpected.Push("UPPERCASE");
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -89,14 +89,14 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("lowercase"));
+            runtimeStack.Push("lowercase");
             Strings.StrToLower(data);
-            runtimeStack.Push(new MuftecStackItem("UPPERCASE"));
+            runtimeStack.Push("UPPERCASE");
             Strings.StrToLower(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem("lowercase"));
-            runtimeStackExpected.Push(new MuftecStackItem("uppercase"));
+            runtimeStackExpected.Push("lowercase");
+            runtimeStackExpected.Push("uppercase");
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -109,12 +109,12 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
-            runtimeStack.Push(new MuftecStackItem(5));
+            runtimeStack.Push("teststring");
+            runtimeStack.Push(5);
             Strings.StrRight(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem("tring"));
+            runtimeStackExpected.Push("tring");
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -127,13 +127,13 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
-            runtimeStack.Push(new MuftecStackItem(4));
-            runtimeStack.Push(new MuftecStackItem(5));
+            runtimeStack.Push("teststring");
+            runtimeStack.Push(4);
+            runtimeStack.Push(5);
             Strings.StrMid(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem("tring"));
+            runtimeStackExpected.Push("tring");
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -146,11 +146,11 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
+            runtimeStack.Push("teststring");
             Strings.StrLen(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem(10));
+            runtimeStackExpected.Push(10);
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -163,12 +163,12 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
-            runtimeStack.Push(new MuftecStackItem(5));
+            runtimeStack.Push("teststring");
+            runtimeStack.Push(5);
             Strings.StrLeft(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem("tests"));
+            runtimeStackExpected.Push("tests");
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -181,17 +181,17 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("  teststring  "));
+            runtimeStack.Push("  teststring  ");
             Strings.StripTailing(data);
-            runtimeStack.Push(new MuftecStackItem("  teststring"));
+            runtimeStack.Push("  teststring");
             Strings.StripTailing(data);
-            runtimeStack.Push(new MuftecStackItem("teststring  "));
+            runtimeStack.Push("teststring  ");
             Strings.StripTailing(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem("  teststring"));
-            runtimeStackExpected.Push(new MuftecStackItem("  teststring"));
-            runtimeStackExpected.Push(new MuftecStackItem("teststring"));
+            runtimeStackExpected.Push("  teststring");
+            runtimeStackExpected.Push("  teststring");
+            runtimeStackExpected.Push("teststring");
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -204,17 +204,17 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("  teststring  "));
+            runtimeStack.Push("  teststring  ");
             Strings.StripLeading(data);
-            runtimeStack.Push(new MuftecStackItem("  teststring"));
+            runtimeStack.Push("  teststring");
             Strings.StripLeading(data);
-            runtimeStack.Push(new MuftecStackItem("teststring  "));
+            runtimeStack.Push("teststring  ");
             Strings.StripLeading(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem("teststring  "));
-            runtimeStackExpected.Push(new MuftecStackItem("teststring"));
-            runtimeStackExpected.Push(new MuftecStackItem("teststring  "));
+            runtimeStackExpected.Push("teststring  ");
+            runtimeStackExpected.Push("teststring");
+            runtimeStackExpected.Push("teststring  ");
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -227,17 +227,17 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("  teststring  "));
+            runtimeStack.Push("  teststring  ");
             Strings.Strip(data);
-            runtimeStack.Push(new MuftecStackItem("  teststring"));
+            runtimeStack.Push("  teststring");
             Strings.Strip(data);
-            runtimeStack.Push(new MuftecStackItem("teststring  "));
+            runtimeStack.Push("teststring  ");
             Strings.Strip(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem("teststring"));
-            runtimeStackExpected.Push(new MuftecStackItem("teststring"));
-            runtimeStackExpected.Push(new MuftecStackItem("teststring"));
+            runtimeStackExpected.Push("teststring");
+            runtimeStackExpected.Push("teststring");
+            runtimeStackExpected.Push("teststring");
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -250,20 +250,20 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
-            runtimeStack.Push(new MuftecStackItem("teststring"));
+            runtimeStack.Push("teststring");
+            runtimeStack.Push("teststring");
             Strings.StringCompare(data);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
-            runtimeStack.Push(new MuftecStackItem("TESTSTRiNG"));
+            runtimeStack.Push("teststring");
+            runtimeStack.Push("TESTSTRiNG");
             Strings.StringCompare(data);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
-            runtimeStack.Push(new MuftecStackItem("sototallywrong"));
+            runtimeStack.Push("teststring");
+            runtimeStack.Push("sototallywrong");
             Strings.StringCompare(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem(1));
-            runtimeStackExpected.Push(new MuftecStackItem(0));
-            runtimeStackExpected.Push(new MuftecStackItem(0));
+            runtimeStackExpected.Push(1);
+            runtimeStackExpected.Push(0);
+            runtimeStackExpected.Push(0);
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -276,20 +276,20 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
-            runtimeStack.Push(new MuftecStackItem("teststring"));
+            runtimeStack.Push("teststring");
+            runtimeStack.Push("teststring");
             Strings.StringCompareI(data);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
-            runtimeStack.Push(new MuftecStackItem("TESTSTRiNG"));
+            runtimeStack.Push("teststring");
+            runtimeStack.Push("TESTSTRiNG");
             Strings.StringCompareI(data);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
-            runtimeStack.Push(new MuftecStackItem("sototallywrong"));
+            runtimeStack.Push("teststring");
+            runtimeStack.Push("sototallywrong");
             Strings.StringCompareI(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem(1));
-            runtimeStackExpected.Push(new MuftecStackItem(1));
-            runtimeStackExpected.Push(new MuftecStackItem(0));
+            runtimeStackExpected.Push(1);
+            runtimeStackExpected.Push(1);
+            runtimeStackExpected.Push(0);
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -302,13 +302,13 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
-            runtimeStack.Push(new MuftecStackItem(3));
+            runtimeStack.Push("teststring");
+            runtimeStack.Push(3);
             Strings.StrCut(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem("tes"));
-            runtimeStackExpected.Push(new MuftecStackItem("tstring"));
+            runtimeStackExpected.Push("tes");
+            runtimeStackExpected.Push("tstring");
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -321,13 +321,13 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
-            runtimeStack.Push(new MuftecStackItem("s"));
+            runtimeStack.Push("teststring");
+            runtimeStack.Push("s");
             Strings.SplitReverse(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem("test"));
-            runtimeStackExpected.Push(new MuftecStackItem("string"));
+            runtimeStackExpected.Push("test");
+            runtimeStackExpected.Push("string");
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -340,13 +340,13 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
-            runtimeStack.Push(new MuftecStackItem("s"));
+            runtimeStack.Push("teststring");
+            runtimeStack.Push("s");
             Strings.Split(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem("te"));
-            runtimeStackExpected.Push(new MuftecStackItem("ststring"));
+            runtimeStackExpected.Push("te");
+            runtimeStackExpected.Push("ststring");
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -359,16 +359,16 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
-            runtimeStack.Push(new MuftecStackItem("s"));
+            runtimeStack.Push("teststring");
+            runtimeStack.Push("s");
             Strings.InStrReverse(data);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
-            runtimeStack.Push(new MuftecStackItem("z"));
+            runtimeStack.Push("teststring");
+            runtimeStack.Push("z");
             Strings.InStrReverse(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem(4));
-            runtimeStackExpected.Push(new MuftecStackItem(-1));
+            runtimeStackExpected.Push(4);
+            runtimeStackExpected.Push(-1);
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -381,16 +381,16 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
-            runtimeStack.Push(new MuftecStackItem("s"));
+            runtimeStack.Push("teststring");
+            runtimeStack.Push("s");
             Strings.InStr(data);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
-            runtimeStack.Push(new MuftecStackItem("z"));
+            runtimeStack.Push("teststring");
+            runtimeStack.Push("z");
             Strings.InStr(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem(2));
-            runtimeStackExpected.Push(new MuftecStackItem(-1));
+            runtimeStackExpected.Push(2);
+            runtimeStackExpected.Push(-1);
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -403,19 +403,19 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("test:string"));
-            runtimeStack.Push(new MuftecStackItem(":"));
+            runtimeStack.Push("test:string");
+            runtimeStack.Push(":");
             Strings.Explode(data);
-            runtimeStack.Push(new MuftecStackItem("teststring"));
-            runtimeStack.Push(new MuftecStackItem(":"));
+            runtimeStack.Push("teststring");
+            runtimeStack.Push(":");
             Strings.Explode(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem(2));
-            runtimeStackExpected.Push(new MuftecStackItem("test"));
-            runtimeStackExpected.Push(new MuftecStackItem("string"));
-            runtimeStackExpected.Push(new MuftecStackItem(1));
-            runtimeStackExpected.Push(new MuftecStackItem("teststring"));
+            runtimeStackExpected.Push(2);
+            runtimeStackExpected.Push("test");
+            runtimeStackExpected.Push("string");
+            runtimeStackExpected.Push(1);
+            runtimeStackExpected.Push("teststring");
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -428,13 +428,13 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("test_string"));
-            runtimeStack.Push(new MuftecStackItem(" "));
-            runtimeStack.Push(new MuftecStackItem("_"));
+            runtimeStack.Push("test_string");
+            runtimeStack.Push(" ");
+            runtimeStack.Push("_");
             Strings.Substitute(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem("test string"));
+            runtimeStackExpected.Push("test string");
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
@@ -447,12 +447,12 @@ namespace Muftec.Test
         {
             var runtimeStack = new Stack<MuftecStackItem>();
             var data = new OpCodeData(runtimeStack);
-            runtimeStack.Push(new MuftecStackItem("test"));
-            runtimeStack.Push(new MuftecStackItem("string"));
+            runtimeStack.Push("test");
+            runtimeStack.Push("string");
             Strings.Concatenate(data);
 
             var runtimeStackExpected = new Stack<MuftecStackItem>();
-            runtimeStackExpected.Push(new MuftecStackItem("teststring"));
+            runtimeStackExpected.Push("teststring");
 
             TestShared.CompareStacks(runtimeStack, runtimeStackExpected);
         }
