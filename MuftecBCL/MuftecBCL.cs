@@ -17,6 +17,7 @@ namespace Muftec.BCL
 
         private readonly List<Type> _classes = new List<Type>
             {
+                typeof(Core),
                 typeof(Arrays),
                 typeof(Conversion),
                 typeof(Float),

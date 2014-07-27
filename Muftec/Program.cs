@@ -40,7 +40,18 @@ namespace Muftec
                 // Compile a program
                 var text = File.ReadAllText(args[1]);
                 var output = Compiler.ParseString(text);
-                Compiler.SaveAssembly(output, args[1] + ".exe");
+                
+                string filename;
+                if (args.Length > 2)
+                {
+                    filename = args[2];
+                }
+                else
+                {
+                    filename = Path.GetFileNameWithoutExtension(args[1]);
+                }
+
+                Fabricator.SaveAssembly(output, filename + ".exe", true);
             }
             else
             {

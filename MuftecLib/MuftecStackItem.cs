@@ -8,17 +8,32 @@ namespace Muftec.Lib
     /// <summary>
     /// This structure holds an item in the stack, and its type.
     /// </summary>
-    public class MuftecStackItem : IEqualityComparer<MuftecStackItem>, IEquatable<MuftecStackItem>
+    public struct MuftecStackItem : IEqualityComparer<MuftecStackItem>, IEquatable<MuftecStackItem>
     {
-        public MuftecType Type { get; private set; }
-        public object Item { get; private set; }
-        public int LineNumber { get; private set; }
+        private readonly MuftecType _type;
+        private readonly object _item;
+        private readonly int _lineNumber;
+
+        public MuftecType Type
+        {
+            get { return _type; }
+        }
+
+        public object Item
+        {
+            get { return _item; }
+        }
+
+        public int LineNumber
+        {
+            get { return _lineNumber; }
+        }
 
         private MuftecStackItem(object value, MuftecType type, int lineNumber = 0)
         {
-            Type = type;
-            Item = value;
-            LineNumber = lineNumber;
+            _type = type;
+            _item = value;
+            _lineNumber = lineNumber;
         }
 
         public MuftecStackItem(int value, int lineNumber = 0) : this(value, MuftecType.Integer, lineNumber) { }
@@ -55,19 +70,23 @@ namespace Muftec.Lib
         {
             if (type == MuftecAdvType.OpCode)
             {
-                Type = MuftecType.OpCode;
+                _type = MuftecType.OpCode;
             }
             else if (type == MuftecAdvType.Variable)
             {
-                Type = MuftecType.Variable;
+                _type = MuftecType.Variable;
             }
             else if (type == MuftecAdvType.Function)
             {
-                Type = MuftecType.Function;
+                _type = MuftecType.Function;
+            }
+            else
+            {
+                throw new ArgumentException("Invalid advanced type.", "type");
             }
 
-            Item = value;
-            LineNumber = lineNumber;
+            _item = value;
+            _lineNumber = lineNumber;
         }
 
         public static MuftecStackItem CreateArrayMarker(int lineNumber = 0)
@@ -77,7 +96,7 @@ namespace Muftec.Lib
 
         public override bool Equals(object obj)
         {
-            var tmp = obj as MuftecStackItem;
+            var tmp = obj as MuftecStackItem?;
             if (tmp == null) return false;
 
             return Equals(tmp);

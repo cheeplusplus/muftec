@@ -14,6 +14,8 @@ namespace Muftec.Lib
 
         public MagicOpcodes Magic { get; set; }
 
+        public bool Extern { get; set; }
+
         /// <summary>
         /// Sets the OpCode name for this function.
         /// </summary>

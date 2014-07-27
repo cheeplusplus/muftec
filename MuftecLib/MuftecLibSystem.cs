@@ -9,7 +9,7 @@ namespace Muftec.Lib
 
     public class MuftecLibSystem
     {
-        class OpCodeItem
+        public class OpCodeItem
         {
             public OpCodeAttribute Attribute { get; set; }
             public OpCodePointer Pointer { get; set; }
@@ -26,7 +26,7 @@ namespace Muftec.Lib
         /// </summary>
         public MuftecLibSystem()
         {
-            var internalOps = new OpCodePointer[] {ReadVariable, SetVariable, LoadLibraryDLL, Abort, Exit};
+            var internalOps = new OpCodePointer[] {ReadVariable, SetVariable, LoadLibraryDLL};
             AddOpToCache(internalOps);
         }
 
@@ -77,7 +77,7 @@ namespace Muftec.Lib
         #endregion
 
         #region Internal opcodes
-        [OpCode("!")]
+        [OpCode("!", Extern = true)]
         private void ReadVariable(OpCodeData data)
         {
             var item1 = Shared.Pop(data.RuntimeStack);
@@ -99,7 +99,7 @@ namespace Muftec.Lib
             }
         }
 
-        [OpCode("@")]
+        [OpCode("@", Extern = true)]
         private void SetVariable(OpCodeData data)
         {
             var item1 = Shared.Pop(data.RuntimeStack);
@@ -115,24 +115,11 @@ namespace Muftec.Lib
             }
         }
 
-        [OpCode("loadlibdll")]
+        [OpCode("loadlibdll", Extern = true)]
         private void LoadLibraryDLL(OpCodeData data)
         {
             var library = data.RuntimeStack.PopStr();
             AddLibrary(library);
-        }
-
-        [OpCode("abort", Magic = MagicOpcodes.Abort)]
-        private void Abort(OpCodeData data)
-        {
-            var message = data.RuntimeStack.PopStr();
-            Console.WriteLine("ABORT (line {0}): {1}", data.LineNumber, message);
-        }
-
-        [OpCode("exit", Magic = MagicOpcodes.Exit)]
-        private void Exit(OpCodeData data)
-        {
-            // Let magic do its magic
         }
         #endregion
 
@@ -153,16 +140,14 @@ namespace Muftec.Lib
         public void AddLibrary(Assembly classAssembly)
         {
             var baseReference = classAssembly.GetTypes().Where(w => w.GetInterfaces().Contains(typeof(IMuftecClassLibrary))).ToList();
-            if (baseReference == null || baseReference.Count != 1)
+            foreach (var br in baseReference)
             {
-                throw new MuftecCompilerException("Assembly " + classAssembly + " does not have only one IMuftecClassLibrary inheritor.");
+                var classConstructor = br.GetConstructor(Type.EmptyTypes);
+                if (classConstructor == null) return;
+
+                var classLibrary = classConstructor.Invoke(null) as IMuftecClassLibrary;
+                AddLibrary(classLibrary);
             }
-
-            var classConstructor = baseReference.First().GetConstructor(Type.EmptyTypes);
-            if (classConstructor == null) return;
-
-            var classLibrary = classConstructor.Invoke(null) as IMuftecClassLibrary;
-            AddLibrary(classLibrary);
         }
 
         /// <summary>
@@ -219,6 +204,11 @@ namespace Muftec.Lib
         #endregion
 
         #region Execution functions
+        public OpCodeItem FindOpCode(string opCode)
+        {
+            return _opcodeCache[opCode];
+        }
+
         /// <summary>
         /// Execute an opcode.
         /// </summary>
@@ -238,7 +228,7 @@ namespace Muftec.Lib
             }
 
             // Get the opcode pointer
-            var opCodeItem = _opcodeCache[opCode];
+            var opCodeItem = FindOpCode(opCode);
 
             // Handle exception catching inside the language here
             opCodeItem.Pointer(data);
@@ -261,7 +251,7 @@ namespace Muftec.Lib
             {
                 foreach (var variable in variableList.Where(w => !_globalVariableList.ContainsKey(w)))
                 {
-                    _globalVariableList.Add(variable, null);
+                    _globalVariableList.Add(variable, 0);
                 }
             }
 
@@ -309,7 +299,7 @@ namespace Muftec.Lib
 
                         break;
 
-                        // Execute a library opcode
+                    // Execute a library opcode
                     case MuftecType.OpCode:
                         // Collect opcode data
                         var data = new OpCodeData(runtimeStack, currStackItem.LineNumber);

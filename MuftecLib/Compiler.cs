@@ -93,15 +93,5 @@ namespace Muftec.Lib
                 return stack;
             }
         }
-
-        /// <summary>
-        /// Compile a compiled application into an assembly.
-        /// </summary>
-        /// <param name="compiled"></param>
-        /// <param name="filename"></param>
-        public static void SaveAssembly(CompilerOutput compiled, string filename)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
