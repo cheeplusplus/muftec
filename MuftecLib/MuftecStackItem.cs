@@ -99,7 +99,7 @@ namespace Muftec.Lib
             var tmp = obj as MuftecStackItem?;
             if (tmp == null) return false;
 
-            return Equals(tmp);
+            return Equals(tmp.Value);
         }
 
         public bool Equals(MuftecStackItem x, MuftecStackItem y)
