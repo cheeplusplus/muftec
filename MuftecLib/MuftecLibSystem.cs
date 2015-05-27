@@ -80,18 +80,11 @@ namespace Muftec.Lib
         [OpCode("!", Extern = true)]
         private void ReadVariable(OpCodeData data)
         {
-            var item1 = Shared.Pop(data.RuntimeStack);
-            
-            if (item1.Type == MuftecType.Variable)
+            var item = data.RuntimeStack.Pop(MuftecType.Variable);
+
+            if (_globalVariableList.ContainsKey(item.Item.ToString()))
             {
-                if (_globalVariableList.ContainsKey(item1.Item.ToString()))
-                {
-                    data.RuntimeStack.Push(_globalVariableList[item1.Item.ToString()]);
-                }
-                else
-                {
-                    throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
-                }
+                data.RuntimeStack.Push(_globalVariableList[item.Item.ToString()]);
             }
             else
             {
@@ -102,17 +95,10 @@ namespace Muftec.Lib
         [OpCode("@", Extern = true)]
         private void SetVariable(OpCodeData data)
         {
-            var item1 = Shared.Pop(data.RuntimeStack);
-            var item2 = Shared.Pop(data.RuntimeStack);
-            
-            if (item1.Type == MuftecType.Variable)
-            {
-                _globalVariableList.Add((string)item1.Item, item2);
-            }
-            else
-            {
-                throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
-            }
+            var item1 = data.RuntimeStack.Pop(MuftecType.Variable);
+            var item2 = data.RuntimeStack.Pop();
+
+            _globalVariableList.Add((string)item1.Item, item2);
         }
 
         [OpCode("loadlibdll", Extern = true)]

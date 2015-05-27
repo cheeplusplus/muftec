@@ -9,20 +9,20 @@ namespace Muftec.Lib
         /// Pop the next item from the stack
         /// </summary>
         /// <param name="runtimeStack">Reference to the current execution stack</param>
-        /// <param name="itemType">The expected type of the next stack item</param>
+        /// <param name="itemTypes">The expected types of the next stack item</param>
         /// <returns>The next stack item</returns>
-        public static MuftecStackItem Pop(this Stack<MuftecStackItem> runtimeStack, MuftecType itemType = MuftecType.None)
+        public static MuftecStackItem Pop(this Stack<MuftecStackItem> runtimeStack, params MuftecType[] itemTypes)
         {
             if (runtimeStack.Count == 0)
             {
                 throw new MuftecStackUnderflowException();
             }
 
-            if ((itemType != MuftecType.None) && (runtimeStack.Peek().Type != itemType))
+            if ((itemTypes != null) && (itemTypes.Length > 0) && (!itemTypes.Contains(MuftecType.None)) && (!itemTypes.Contains(runtimeStack.Peek().Type)))
             {
                 throw new MuftecInvalidStackItemTypeException(runtimeStack);
             }
-            
+
             return runtimeStack.Pop();
         }
 
@@ -64,6 +64,16 @@ namespace Muftec.Lib
         public static double PopFloat(this Stack<MuftecStackItem> runtimeStack)
         {
             return (double)Pop(runtimeStack, MuftecType.Float).Item;
+        }
+
+        /// <summary>
+        /// Pop the next item from the stack and ensure it is a number
+        /// </summary>
+        /// <param name="runtimeStack">The current execution stack</param>
+        /// <returns>The next stack item</returns>
+        public static MuftecStackItem PopNumber(this Stack<MuftecStackItem> runtimeStack)
+        {
+            return Pop(runtimeStack, MuftecType.Integer, MuftecType.Float);
         }
 
         /// <summary>

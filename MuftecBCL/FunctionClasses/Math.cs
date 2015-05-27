@@ -16,8 +16,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("+")]
         public static void Add(OpCodeData data)
         {
-            var item2 = Shared.Pop(data.RuntimeStack);
-            var item1 = Shared.Pop(data.RuntimeStack);
+            var item2 = data.RuntimeStack.PopNumber();
+            var item1 = data.RuntimeStack.PopNumber();
             MuftecStackItem result;
 
             if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
@@ -48,8 +48,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("-")]
         public static void Subtract(OpCodeData data)
         {
-            var item2 = Shared.Pop(data.RuntimeStack);
-            var item1 = Shared.Pop(data.RuntimeStack);
+            var item2 = data.RuntimeStack.PopNumber();
+            var item1 = data.RuntimeStack.PopNumber();
             MuftecStackItem result;
 
             if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
@@ -79,8 +79,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("*")]
         public static void Multiply(OpCodeData data)
         {
-            var item2 = Shared.Pop(data.RuntimeStack);
-            var item1 = Shared.Pop(data.RuntimeStack);
+            var item2 = data.RuntimeStack.PopNumber();
+            var item1 = data.RuntimeStack.PopNumber();
             MuftecStackItem result;
 
             if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
@@ -110,8 +110,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("/")]
         public static void Divide(OpCodeData data)
         {
-            var item2 = Shared.Pop(data.RuntimeStack);
-            var item1 = Shared.Pop(data.RuntimeStack);
+            var item2 = data.RuntimeStack.PopNumber();
+            var item1 = data.RuntimeStack.PopNumber();
             MuftecStackItem result;
 
             if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
@@ -141,8 +141,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("%")]
         public static void Modulus(OpCodeData data)
         {
-            var item2 = Shared.Pop(data.RuntimeStack);
-            var item1 = Shared.Pop(data.RuntimeStack);
+            var item2 = data.RuntimeStack.PopNumber();
+            var item1 = data.RuntimeStack.PopNumber();
             MuftecStackItem result;
 
             if ((item1.Type == MuftecType.Float) || (item2.Type == MuftecType.Float))
@@ -172,21 +172,9 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("^", "pow")]
         public static void Exponent(OpCodeData data)
         {
-            var item2 = Shared.Pop(data.RuntimeStack);
-            var item1 = Shared.Pop(data.RuntimeStack);
-            MuftecStackItem result;
-
-            if (((item1.Type == MuftecType.Float) || (item1.Type == MuftecType.Integer)) &&
-                ((item2.Type == MuftecType.Float) || (item2.Type == MuftecType.Integer)))
-            {
-                result = System.Math.Pow(item1.AsDouble(), item2.AsDouble());
-            }
-            else
-            {
-                throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
-            }
-
-            data.RuntimeStack.Push(result);
+            var item2 = data.RuntimeStack.PopNumber();
+            var item1 = data.RuntimeStack.PopNumber();
+            data.RuntimeStack.Push(System.Math.Pow(item1.AsDouble(), item2.AsDouble()));
         }
 
         /// <summary>
@@ -200,7 +188,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("++")]
         public static void PlusPlus(OpCodeData data)
         {
-            var item1 = Shared.Pop(data.RuntimeStack);
+            var item1 = data.RuntimeStack.PopNumber();
             MuftecStackItem result;
 
             if (item1.Type == MuftecType.Float)
@@ -230,7 +218,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("--")]
         public static void MinusMinus(OpCodeData data)
         {
-            var item1 = Shared.Pop(data.RuntimeStack);
+            var item1 = data.RuntimeStack.PopNumber();
             MuftecStackItem result;
 
             if (item1.Type == MuftecType.Float)
@@ -260,7 +248,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("abs", "fabs")]
         public static void AbsoluteVal(OpCodeData data)
         {
-            var item1 = Shared.Pop(data.RuntimeStack);
+            var item1 = data.RuntimeStack.PopNumber();
             MuftecStackItem result;
 
             if (item1.Type == MuftecType.Float)
@@ -290,7 +278,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("sign")]
         public static void Sign(OpCodeData data)
         {
-            var item1 = Shared.Pop(data.RuntimeStack);
+            var item1 = data.RuntimeStack.PopNumber();
             MuftecStackItem result;
 
             if (item1.Type == MuftecType.Float)

@@ -42,7 +42,7 @@ namespace Muftec.BCL.FunctionClasses
 
             do
             {
-                item = Shared.Pop(data.RuntimeStack);
+                item = data.RuntimeStack.Pop();
                 if (item.Type != MuftecType.ArrayMarker)
                 {
                     tempStack.Push(item);
@@ -92,7 +92,7 @@ namespace Muftec.BCL.FunctionClasses
         public static void ArrayCut(OpCodeData data)
         {
             var index = data.RuntimeStack.PopInt();
-            var array = Shared.Pop(data.RuntimeStack);
+            var array = data.RuntimeStack.Pop(MuftecType.List, MuftecType.Dictionary);
 
             if (array.Type == MuftecType.List)
             {
@@ -145,7 +145,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("array_excludeval")]
         public static void ArrayExcludeValue(OpCodeData data)
         {
-            var item = Shared.Pop(data.RuntimeStack);
+            var item = data.RuntimeStack.Pop();
             var array = data.RuntimeStack.PopArray();
 
             data.RuntimeStack.Push(array.Where(w => !w.Equals(item)).ToList());
@@ -178,7 +178,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("array_findval")]
         public static void ArrayFindVal(OpCodeData data)
         {
-            var item = Shared.Pop(data.RuntimeStack);
+            var item = data.RuntimeStack.Pop();
             var list = data.RuntimeStack.PopArray();
             
             var matches = list.Select((s, idx) => new {s, idx}).Where(w => w.s.Equals(item)).Select(s => new MuftecStackItem(s.idx));
@@ -225,7 +225,7 @@ namespace Muftec.BCL.FunctionClasses
         {
             var index = data.RuntimeStack.PopInt();
             var array = data.RuntimeStack.PopArray();
-            var item = Shared.Pop(data.RuntimeStack);
+            var item = data.RuntimeStack.Pop();
 
             array.Insert(index, item);
             data.RuntimeStack.Push(array);
@@ -346,7 +346,7 @@ namespace Muftec.BCL.FunctionClasses
         public static void ArrayMatchVal(OpCodeData data)
         {
             var pattern = data.RuntimeStack.PopStr();
-            var array = data.RuntimeStack.Pop();
+            var array = data.RuntimeStack.Pop(MuftecType.List, MuftecType.Dictionary);
 
             MuftecDict origDict;
 
@@ -398,7 +398,7 @@ namespace Muftec.BCL.FunctionClasses
         public static void ArrayNestedDel(OpCodeData data)
         {
             var indexes = data.RuntimeStack.PopArray();
-            var item = data.RuntimeStack.Pop();
+            var item = data.RuntimeStack.Pop(MuftecType.List, MuftecType.Dictionary);
 
             if (indexes.Count < 1)
             {
@@ -439,7 +439,7 @@ namespace Muftec.BCL.FunctionClasses
         public static void ArrayNestedGet(OpCodeData data)
         {
             var indexes = data.RuntimeStack.PopArray();
-            var item = data.RuntimeStack.Pop();
+            var item = data.RuntimeStack.Pop(MuftecType.List, MuftecType.Dictionary);
 
             if (indexes.Count < 1)
             {

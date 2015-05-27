@@ -68,7 +68,7 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("pop")]
         public static void StackItemPop(OpCodeData data)
         {
-            Shared.Pop(data.RuntimeStack);
+            data.RuntimeStack.Pop();
         }
 
         /// <summary>
@@ -82,10 +82,10 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("popn")]
         public static void StackItemPopN(OpCodeData data)
         {
-            var item1 = Shared.Pop(data.RuntimeStack);
+            var item1 = data.RuntimeStack.Pop();
             for (var i = 0; i < (int)item1.Item; i++)
             {
-                Shared.Pop(data.RuntimeStack);
+                data.RuntimeStack.Pop();
             }
 
             // Call TrimExcess in case we got rid of a lot of elements
@@ -103,8 +103,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("swap")]
         public static void StackItemSwap(OpCodeData data)
         {
-            var item2 = Shared.Pop(data.RuntimeStack);
-            var item1 = Shared.Pop(data.RuntimeStack);
+            var item2 = data.RuntimeStack.Pop();
+            var item1 = data.RuntimeStack.Pop();
             data.RuntimeStack.Push(item2);
             data.RuntimeStack.Push(item1);
         }
@@ -211,7 +211,7 @@ namespace Muftec.BCL.FunctionClasses
             if (position <= 0)
                 throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
 
-            var putItem = Shared.Pop(data.RuntimeStack);
+            var putItem = data.RuntimeStack.Pop();
 
             // Get all items in stack
             var popped = new List<MuftecStackItem>();

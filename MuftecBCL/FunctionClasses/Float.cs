@@ -394,16 +394,8 @@ namespace Muftec.BCL.FunctionClasses
         [OpCode("sqrt")]
         public static void SquareRoot(OpCodeData data)
         {
-            var item = Shared.Pop(data.RuntimeStack);
-
-            if (item.IsNumber())
-            {
-                data.RuntimeStack.Push(System.Math.Sqrt(item.AsDouble()));
-            }
-            else
-            {
-                throw new MuftecInvalidStackItemTypeException(data.RuntimeStack);
-            }
+            var item = data.RuntimeStack.PopNumber();
+            data.RuntimeStack.Push(System.Math.Sqrt(item.AsDouble()));
         }
 
         /// <summary>

@@ -124,7 +124,7 @@ namespace Muftec.Lib
                         (double.IsNaN(f1) && double.IsNaN(f2)))
                         return true;
 
-                    return Math.Abs(f1 - f2) < 0.00000001;
+                    return Math.Abs(f1 - f2) < EPSILON;
                 case MuftecType.String:
                 case MuftecType.OpCode:
                 case MuftecType.Variable:
@@ -177,6 +177,11 @@ namespace Muftec.Lib
                 return (int)Item == 1;
             }
 
+            if (Type == MuftecType.Float)
+            {
+                return Math.Abs((double) Item - 1) < EPSILON;
+            }
+
             return false;
         }
 
@@ -186,13 +191,13 @@ namespace Muftec.Lib
             {
                 return Convert.ToDouble((int)Item);
             }
-            
-            return (double)Item;
-        }
 
-        public bool IsNumber()
-        {
-            return ((Type == MuftecType.Integer) || (Type == MuftecType.Float));
+            if (Type == MuftecType.Float)
+            {
+                return (double) Item;
+            }
+
+            throw new MuftecInvalidConversionException(null, null);
         }
 
         public MuftecStackItem Clone()
@@ -208,6 +213,8 @@ namespace Muftec.Lib
                     return this;
             }
         }
+
+        public const double EPSILON = 0.00000001;
 
         public static readonly MuftecStackItem Null = new MuftecStackItem(null, MuftecType.String);
     }
