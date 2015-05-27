@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Text.RegularExpressions;
 using Muftec.Lib;
 using Sigil;
 using Muftec.BCL;
-using Sigil.NonGeneric;
 
 namespace Muftec
 {
@@ -29,9 +29,9 @@ namespace Muftec
             _system.AddLibrary(bcl);
         }
 
-        private MethodInfo Generate(ModuleBuilder moduleBuilder)
+        private MethodInfo Generate(String assemblyName, ModuleBuilder moduleBuilder)
         {
-            var tb = moduleBuilder.DefineType("Muftec.Fabricated.XXXX.Program", TypeAttributes.Class | TypeAttributes.Public);
+            var tb = moduleBuilder.DefineType(assemblyName + ".Program", TypeAttributes.Class | TypeAttributes.Public);
             var main = Emit<Action<string[]>>.BuildStaticMethod(tb, "Main", MethodAttributes.Public);
 
             // Create the runtime stack
@@ -233,9 +233,16 @@ namespace Muftec
 
         public void Save(string filename)
         {
-            var builder = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName("Muftec.Fabricated.XXXX"), AssemblyBuilderAccess.Save);
-            var mod = builder.DefineDynamicModule(builder.GetName().Name, filename);
-            var main = Generate(mod);
+            if (filename == null) return;
+            var name = System.IO.Path.GetFileNameWithoutExtension(filename);
+            if (name == null) return;
+            name = name.Replace('.', '_');
+            name = new Regex("[^a-zA-Z0-9_]").Replace(name, ""); // Strip nonalphanumeric
+            var assemblyName = "Muftec.Fabricated." + name + "_muf";
+
+            var builder = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName(assemblyName), AssemblyBuilderAccess.Save);
+            var mod = builder.DefineDynamicModule(name + "_muf.exe", filename);
+            var main = Generate(assemblyName, mod);
             builder.SetEntryPoint(main);
             builder.Save(filename);
         }
