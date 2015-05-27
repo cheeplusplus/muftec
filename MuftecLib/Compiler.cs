@@ -56,8 +56,27 @@ namespace Muftec.Lib
             // Get each line to count
             foreach (var line in text.Replace("\r", "").Split('\n'))
             {
-                evaluator.EvaluateLine(line, lineNum);
-                lineNum++;
+                try
+                {
+                    evaluator.EvaluateLine(line, lineNum);
+                    lineNum++;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error parsing at line " + lineNum);
+                    Console.WriteLine("-----");
+                    Console.WriteLine(line);
+                    Console.WriteLine("-----");
+
+#if DEBUG
+                    throw;
+#else
+                    Console.WriteLine(e);
+                    Console.WriteLine("-----");
+
+                    return null;
+#endif
+                }
             }
 
             // Return compiler output

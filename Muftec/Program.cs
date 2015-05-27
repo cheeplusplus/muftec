@@ -18,13 +18,18 @@ namespace Muftec
                 Console.WriteLine("----------------------------------------");
                 Console.WriteLine("muftec -x <source file>   -- Execute a source file");
                 Console.WriteLine("muftec -c <source file>   -- Compiles a source file to a executable");
-                Console.WriteLine("       -o <out file>      -- (Optional) Define the output filename");
+                Console.WriteLine("          [<out file>]    -- (Optional) Define the output filename");
             }
             else if (args[0] == "-x")
             {
                 // Run a program
                 var text = File.ReadAllText(args[1]);
                 var output = Compiler.ParseString(text);
+                if (output == null)
+                {
+                    Console.WriteLine("Could not continue.");
+                    return;
+                }
 
                 var system = new MuftecLibSystem();
                 var bcl = new MuftecBaseClassLibrary();
@@ -40,6 +45,11 @@ namespace Muftec
                 // Compile a program
                 var text = File.ReadAllText(args[1]);
                 var output = Compiler.ParseString(text);
+                if (output == null)
+                {
+                    Console.WriteLine("Could not continue.");
+                    return;
+                }
                 
                 string filename;
                 if (args.Length > 2)
